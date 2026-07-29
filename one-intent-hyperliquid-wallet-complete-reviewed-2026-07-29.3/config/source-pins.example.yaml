@@ -1,0 +1,228 @@
+schemaVersion: '1.0'
+generatedAt: '2026-07-28T14:30:00+09:00'
+sources:
+- name: OpenAI App Developer Terms
+  url: https://openai.com/policies/developer-apps-terms/
+  category: OPENAI
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Updated 2026-07-09
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: OpenAI Usage Policies
+  url: https://openai.com/ja-JP/policies/usage-policies/
+  category: OPENAI
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Effective 2025-10-29
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: OpenAI API Data Controls
+  url: https://platform.openai.com/docs/models/default-usage-policies-by-endpoint
+  category: OPENAI
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Hyperliquid Nonces and API Wallets
+  url: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/nonces-and-api-wallets
+  category: HYPERLIQUID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Hyperliquid Exchange Endpoint
+  url: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/exchange-endpoint
+  category: HYPERLIQUID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Hyperliquid Bridge2
+  url: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/bridge2
+  category: HYPERLIQUID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Hyperliquid Python SDK
+  url: https://github.com/hyperliquid-dex/hyperliquid-python-sdk
+  category: GITHUB
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: master pyproject.toml declares 0.24.0; published release not implied
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: 30656a819ba812d5df37759f637202a8db80ba2b
+- name: Hyperliquid Python SDK exchange.py
+  url: https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/exchange.py
+  category: GITHUB
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Observed master blob; not a repository commit pin
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: 41a2f66b568451208770517d5afd58af724edded
+- name: Hyperliquid Python SDK signing.py
+  url: https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/utils/signing.py
+  category: GITHUB
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Observed master blob; not a repository commit pin
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: 560414711218560a8aa48b6adee311361a3a4029
+- name: Hyperliquid Bridge2 Contract
+  url: https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol
+  category: GITHUB
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: 2f2e98e3be5e6eccc3a24e5a8317105e220e7ccb
+- name: Android Hardware-backed Keystore
+  url: https://source.android.com/docs/security/features/keystore
+  category: ANDROID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Page updated 2026-06-17 UTC
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: FSA Crypto Assets and Electronic Payment Instruments
+  url: https://www.fsa.go.jp/policy/virtual_currency02/index.html
+  category: JAPAN_FSA
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Android ConfirmationPrompt
+  url: https://developer.android.com/reference/android/security/ConfirmationPrompt
+  category: ANDROID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: Page updated 2026-02-13 UTC
+  commit: null
+  contentHash: null
+  gitBlob: null
+  status: MONITOR
+- name: Google Play Financial Features Declaration
+  url: https://support.google.com/googleplay/android-developer/answer/13849271
+  category: GOOGLE_PLAY
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  gitBlob: null
+  status: MONITOR
+- name: Google Play Cryptocurrency and Blockchain Policy
+  url: https://support.google.com/googleplay/android-developer/answer/17190352
+  category: GOOGLE_PLAY
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  gitBlob: null
+  status: MONITOR
+- name: Hyperliquid Foundation Non-validating Node
+  url: https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/nodes/foundation-non-validating-node
+  category: HYPERLIQUID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  gitBlob: null
+  status: MONITOR
+- name: Hyperliquid Testnet Faucet
+  url: https://hyperliquid.gitbook.io/hyperliquid-docs/onboarding/testnet-faucet
+  category: HYPERLIQUID
+  retrievedAt: '2026-07-28T13:00:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  gitBlob: null
+  status: MONITOR
+- name: Apple App Review Guidelines
+  url: https://developer.apple.com/app-store/review/guidelines/
+  category: APP_STORE
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: Last updated 2026-06-08
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple SecureEnclave P256 Signing
+  url: https://developer.apple.com/documentation/cryptokit/secureenclave/p256/signing
+  category: IOS
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple App Attest Integrity
+  url: https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity
+  category: IOS
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple App Attest isSupported
+  url: https://developer.apple.com/documentation/devicecheck/dcappattestservice/issupported
+  category: IOS
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple Keychain Accessibility
+  url: https://developer.apple.com/documentation/security/ksecattraccessible
+  category: IOS
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple HIG Accessibility
+  url: https://developer.apple.com/design/human-interface-guidelines/accessibility/
+  category: ACCESSIBILITY
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple Ad Hoc Distribution
+  url: https://developer.apple.com/help/account/provisioning-profiles/create-an-ad-hoc-provisioning-profile
+  category: APP_STORE
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: null
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null
+- name: Apple Screen Capture State
+  url: https://developer.apple.com/documentation/uikit/uiscreen/iscaptured
+  category: IOS
+  retrievedAt: '2026-07-28T14:30:00+09:00'
+  version: isCaptured deprecated; use sceneCaptureState
+  commit: null
+  contentHash: null
+  status: MONITOR
+  gitBlob: null

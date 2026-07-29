@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.0",
+  "packageVersion": "2026-07-29.3",
+  "status": "PARTIAL_DESIGN_LOCK_NOT_RELEASE_LOCK",
+  "complete": false,
+  "recordedAt": "2026-07-29T00:00:00Z",
+  "validationHost": {
+    "os": "macOS 26.5.2",
+    "kernel": "Darwin 25.5.0",
+    "architecture": "arm64"
+  },
+  "python": {
+    "version": "3.14.6",
+    "executable": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+    "requirements": {
+      "jsonschema": "4.26.0",
+      "PyYAML": "6.0.3",
+      "cryptography": "46.0.4",
+      "playwright": "1.57.0"
+    }
+  },
+  "browser": {
+    "playwright": "1.57.0",
+    "chromium": "143.0.7499.4"
+  },
+  "swift": {
+    "swift": "6.3.3",
+    "xcode": "26.6",
+    "iphoneOsSdk": "26.5",
+    "packageTarget": "macOS 13"
+  },
+  "android": {
+    "gradleWrapper": "GRADLE_WRAPPER_9.3.1_PRESENT_LOCAL_ONLY",
+    "gradle": "GRADLE_9.3.1_PRESENT_LOCAL_ONLY",
+    "androidSdk": "ANDROID_SDK_API_35_36_PRESENT_LOCAL_ONLY",
+    "sdkManager": "SDKMANAGER_PRESENT_LOCAL_ONLY",
+    "compileSdk": 35,
+    "targetSdk": 35,
+    "applicationId": "jp.offlinewallet"
+  },
+  "java": {
+    "distribution": "OpenJDK",
+    "version": "17.0.18"
+  },
+  "releaseControls": {
+    "networkAccessForValidation": false,
+    "productionWritePermitted": false,
+    "nativeSignedArtifactsAvailable": false,
+    "sourcePinContentHashesPopulated": false,
+    "artifactSigningAvailable": false,
+    "twoPersonApprovalProvisioned": false
+  },
+  "limitations": [
+    "Gradle Wrapper 9.3.1, local Gradle, Android SDK API 35/36 and sdkmanager are available locally; the unsigned debug build and Pixel 9a proof remain local-only evidence.",
+    "The iOS OfflineWalletApp target has a local Team 8R3B5675ZJ Apple Development device build and iPhone 12 UI proof; archive/IPA, distribution signing, full device matrix, and production attestation remain unavailable.",
+    "This file records a design-only validation environment and is not a production toolchain attestation."
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "1.0",
+  "planId": "plan-composite-001",
+  "overallState": "PARTIAL",
+  "steps": [
+    {
+      "stepId": "step-sell-hype",
+      "state": "COMPLETE",
+      "attemptGeneration": 0,
+      "remoteIdentifier": "order:123456",
+      "errorCode": null,
+      "retryable": false,
+      "updatedAt": "2026-07-28T12:10:05+09:00"
+    },
+    {
+      "stepId": "step-hlp-deposit",
+      "state": "COMPLETE",
+      "attemptGeneration": 0,
+      "remoteIdentifier": "action:nonce:1785208205000",
+      "errorCode": null,
+      "retryable": false,
+      "updatedAt": "2026-07-28T12:10:08+09:00"
+    },
+    {
+      "stepId": "step-withdraw-arb",
+      "state": "FAILED_RETRYABLE",
+      "attemptGeneration": 0,
+      "remoteIdentifier": null,
+      "errorCode": "UPSTREAM_TIMEOUT_UNCERTAIN",
+      "retryable": true,
+      "updatedAt": "2026-07-28T12:10:12+09:00"
+    }
+  ],
+  "assetLocations": [
+    {
+      "assetId": "hyperliquid:USDC",
+      "location": "HyperCore account 0x1111…1111",
+      "amount": "647.2",
+      "confidence": "CONFIRMED"
+    },
+    {
+      "assetId": "hyperliquid:USDC",
+      "location": "HLP",
+      "amount": "300",
+      "confidence": "CONFIRMED"
+    }
+  ],
+  "nextSafeActions": [
+    "Arbitrum出金履歴と残高を再照合する",
+    "未実行が確認できた場合だけ新しいCapsuleで出金を再承認する"
+  ],
+  "updatedAt": "2026-07-28T12:10:13+09:00"
+}

@@ -1,0 +1,473 @@
+{
+  "schemaVersion": "1.0",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "evaluatedArtifactVersion": "2026-07-29.3",
+  "generatedAt": "2026-07-29T00:00:00Z",
+  "validUntil": "2026-07-29T00:00:00Z",
+  "decisionInputs": {
+    "operationalTrustPolicySha256": "765aea911e8e50e54532463ac7ed7d39cf58b0ff46691dcc87c6766f9cf273b2",
+    "readinessVerifierBundleSha256": "abcc6f0769c4ed5c089658c3bc36d0bdf1d9b69d4c2618dbb135989950db68b0",
+    "releaseSubjectSha256": "796b1b18303e6e6523216a04525da51f944e5be55010c54e9116b7bfc7820e1e",
+    "evidenceIndexSha256": "49c0ad6910166d7b99773a9f9334e6186b2de4b8467d36f8c2f8f6abde08f57d",
+    "evidenceIndexSequence": 0,
+    "trustedTimeAttestationSha256": null,
+    "trustedTimeSequence": 0
+  },
+  "status": "BLOCKED_NOT_OPERATIONAL",
+  "releaseEligibleForRuntimeActivation": false,
+  "productionWritePermitted": false,
+  "releaseSubject": {
+    "sourceCommit": null,
+    "sourceTreeSha256": null,
+    "androidArtifactSha256": null,
+    "iosArtifactSha256": null,
+    "backendImageDigest": null,
+    "signerImageDigest": null,
+    "configurationBundleSha256": null,
+    "policyBundleSha256": null,
+    "assetRegistrySha256": null,
+    "sbomSha256": null,
+    "releaseId": "2026-07-29.3-design-package",
+    "environment": "DESIGN_ONLY"
+  },
+  "summary": {
+    "mandatoryGates": 37,
+    "passedGates": 0,
+    "blockedGates": 37,
+    "requiredClaims": 93,
+    "acceptedClaims": 0,
+    "missingOrRejectedClaims": 93
+  },
+  "gates": [
+    {
+      "gateId": "SCOPE_AND_TRACEABILITY",
+      "titleJa": "提供範囲と要求追跡",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "SCOPE_LOCKED",
+        "REQUIREMENTS_TRACED"
+      ]
+    },
+    {
+      "gateId": "ANDROID_RELEASE",
+      "titleJa": "Android本番版",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "ANDROID_BUILD_SIGNED",
+        "ANDROID_DEVICE_MATRIX",
+        "ANDROID_PLATFORM_SECURITY"
+      ]
+    },
+    {
+      "gateId": "IOS_RELEASE",
+      "titleJa": "iPhone本番版",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "IOS_BUILD_SIGNED",
+        "IOS_DEVICE_MATRIX",
+        "IOS_PLATFORM_SECURITY"
+      ]
+    },
+    {
+      "gateId": "BACKEND_RELEASE",
+      "titleJa": "本番backend・取引Intent Parser・非取引Support Gateway",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "BACKEND_ARTIFACT_PINNED",
+        "BACKEND_POLICY_ENFORCED"
+      ]
+    },
+    {
+      "gateId": "DETERMINISTIC_CORE",
+      "titleJa": "決定論的共通処理",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "CROSS_LANGUAGE_VECTORS",
+        "OVERFLOW_ROUNDING_SAFE"
+      ]
+    },
+    {
+      "gateId": "AUTH_SESSION_RECOVERY",
+      "titleJa": "認証・セッション・復旧",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "AUTHENTICATION_HARDENED",
+        "RECOVERY_DRILLED",
+        "ACCOUNT_TAKEOVER_RESPONSE"
+      ]
+    },
+    {
+      "gateId": "KEY_CUSTODY_SIGNER",
+      "titleJa": "鍵管理と署名基盤",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "SIGNER_ARCHITECTURE_AUDITED",
+        "KEY_CEREMONY_COMPLETE",
+        "SIGNER_FAIL_CLOSED"
+      ]
+    },
+    {
+      "gateId": "DEVICE_ATTESTATION",
+      "titleJa": "端末・アプリ完全性",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "ATTESTATION_VERIFIED_SERVER_SIDE",
+        "UNSUPPORTED_DEVICE_POLICY"
+      ]
+    },
+    {
+      "gateId": "TRANSACTION_AUTHORIZATION",
+      "titleJa": "操作ごとの承認",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "CAPSULE_EXACT_BINDING",
+        "ONE_TIME_REPLAY_PROTECTION",
+        "LIMITED_AUTHORIZATION_SAFE"
+      ]
+    },
+    {
+      "gateId": "ASSET_REGISTRY",
+      "titleJa": "資産・network登録簿",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "REGISTRY_SIGNED_PINNED",
+        "TOKEN_BEHAVIOR_ALLOWLIST"
+      ]
+    },
+    {
+      "gateId": "JPYC_INTEGRATION",
+      "titleJa": "JPYCとJPYC EX",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "JPYC_OFFICIAL_DATA_PINNED",
+        "JPYC_EX_CONTRACTED_TESTED"
+      ]
+    },
+    {
+      "gateId": "HYPERLIQUID_INTEGRATION",
+      "titleJa": "Hyperliquid接続",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "HL_API_VERSION_PINNED",
+        "HL_ORDER_LIFECYCLE_TESTED",
+        "HL_MARGIN_MODEL_VERIFIED"
+      ]
+    },
+    {
+      "gateId": "LIQUIDATION_RISK",
+      "titleJa": "清算価格と先物リスク",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "LIQUIDATION_PREVIEW_VALIDATED",
+        "STALE_OR_UNKNOWN_BLOCKED"
+      ]
+    },
+    {
+      "gateId": "FEE_READINESS",
+      "titleJa": "JPYCだけの場合の手数料準備",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "ZERO_GAS_PATH_PROVEN",
+        "FEE_QUOTE_BOUND_CAPPED",
+        "FEE_BUDGET_CONCURRENT_SAFE"
+      ]
+    },
+    {
+      "gateId": "SWAP_AND_CROSS_NETWORK",
+      "titleJa": "交換と別networkへの資金移動",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "ROUTE_ALLOWLIST_AUDITED",
+        "QUOTE_FINALITY_PARTIAL_SAFE",
+        "APPROVALS_MINIMIZED_REVOKABLE"
+      ]
+    },
+    {
+      "gateId": "RECONCILIATION_LEDGER",
+      "titleJa": "台帳と照合",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "DOUBLE_ENTRY_INVARIANTS",
+        "ZERO_UNEXPLAINED_DIFFERENCE"
+      ]
+    },
+    {
+      "gateId": "FAILURE_RECOVERY",
+      "titleJa": "障害・部分成功・復旧",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "STATE_MACHINE_EXHAUSTIVE",
+        "NO_BLIND_RETRY"
+      ]
+    },
+    {
+      "gateId": "AI_NATURAL_LANGUAGE",
+      "titleJa": "自然言語・音声の安全境界",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "MATERIAL_AMBIGUITY_BLOCKED",
+        "PROMPT_TOOL_INJECTION_BLOCKED",
+        "MODEL_CHANGE_GATED"
+      ]
+    },
+    {
+      "gateId": "CHATGPT_BOUNDARY",
+      "titleJa": "ChatGPT連携の非取引境界",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "CHATGPT_READ_ONLY_CONTRACT",
+        "OPENAI_TERMS_RECHECKED"
+      ]
+    },
+    {
+      "gateId": "UX_PLAIN_JAPANESE",
+      "titleJa": "やさしい日本語と誤操作防止",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "PLAIN_JAPANESE_COMPLETE",
+        "CRITICAL_REVIEW_COMPLETE",
+        "NO_INVENTED_VALUES"
+      ]
+    },
+    {
+      "gateId": "ACCESSIBILITY",
+      "titleJa": "アクセシビリティ",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "WCAG_AND_NATIVE_A11Y",
+        "COGNITIVE_COMPREHENSION"
+      ]
+    },
+    {
+      "gateId": "PRIVACY_DATA_GOVERNANCE",
+      "titleJa": "個人情報・会話・住所・残高",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "DATA_MAP_AND_MINIMIZATION",
+        "LOG_REDACTION_VERIFIED",
+        "DSAR_BREACH_PROCESS"
+      ]
+    },
+    {
+      "gateId": "ADMIN_CHANGE_CONTROL",
+      "titleJa": "管理者・変更管理",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "TWO_PERSON_HIGH_RISK",
+        "BREAK_GLASS_AUDITED"
+      ]
+    },
+    {
+      "gateId": "SRE_RESILIENCE",
+      "titleJa": "可用性と障害対応",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "SLO_CAPACITY_DDOS",
+        "BACKUP_RESTORE_RTO_RPO",
+        "VOLATILITY_FAIL_CLOSED"
+      ]
+    },
+    {
+      "gateId": "SUPPLY_CHAIN",
+      "titleJa": "供給網と再現可能性",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "SBOM_PROVENANCE_SIGNED",
+        "DEPENDENCY_VULNERABILITIES_CLEARED",
+        "ANTI_ROLLBACK_UPDATE_SAFE"
+      ]
+    },
+    {
+      "gateId": "SECURITY_ASSESSMENT",
+      "titleJa": "独立セキュリティ評価",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "MOBILE_BACKEND_PENTEST",
+        "CRYPTO_SMART_CONTRACT_AUDIT",
+        "NO_OPEN_CRITICAL_HIGH"
+      ]
+    },
+    {
+      "gateId": "LEGAL_JAPAN",
+      "titleJa": "日本での法務・規制",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "JP_LEGAL_OPINION",
+        "REGISTRATIONS_PERMISSIONS",
+        "TERMS_DISCLOSURES_TAX"
+      ]
+    },
+    {
+      "gateId": "APPLE_DISTRIBUTION",
+      "titleJa": "Apple App Store",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "APPLE_ORGANIZATION_ELIGIBLE",
+        "APPLE_REVIEW_APPROVED"
+      ]
+    },
+    {
+      "gateId": "GOOGLE_DISTRIBUTION",
+      "titleJa": "Google Play",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "PLAY_DECLARATIONS_COMPLETE",
+        "PLAY_REVIEW_APPROVED"
+      ]
+    },
+    {
+      "gateId": "PROVIDER_CONTRACTS",
+      "titleJa": "外部提供者",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "VENDORS_CONTRACTED",
+        "VENDOR_EXIT_AND_OUTAGE"
+      ]
+    },
+    {
+      "gateId": "TESTNET_E2E",
+      "titleJa": "Testnet端から端",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "TESTNET_ALL_FLOWS",
+        "TESTNET_NO_UNEXPLAINED_DIFF"
+      ]
+    },
+    {
+      "gateId": "MAINNET_CANARY",
+      "titleJa": "実資金の限定本番試験",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "CANARY_LIMITS_APPROVED",
+        "CANARY_ALL_CRITICAL_PATHS",
+        "CANARY_RECONCILED_ZERO_DIFF"
+      ]
+    },
+    {
+      "gateId": "INCIDENT_DRILLS",
+      "titleJa": "インシデント・停止・復旧訓練",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "KILL_SWITCH_DRILLED",
+        "KEY_PROVIDER_DATA_BREACH_DRILLS"
+      ]
+    },
+    {
+      "gateId": "USER_ACCEPTANCE",
+      "titleJa": "利用者受入れ",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "BEGINNER_TASK_SUCCESS",
+        "RISK_COMPREHENSION"
+      ]
+    },
+    {
+      "gateId": "RELEASE_APPROVAL",
+      "titleJa": "独立した最終リリース承認",
+      "status": "BLOCKED",
+      "requiredClaims": 2,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "EVIDENCE_BOUND_TO_RELEASE",
+        "INDEPENDENT_GO_APPROVAL"
+      ]
+    },
+    {
+      "gateId": "RUNTIME_ACTIVATION",
+      "titleJa": "稼働時の書込み有効化",
+      "status": "BLOCKED",
+      "requiredClaims": 4,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "TRUSTED_TIME_AVAILABLE",
+        "RUNTIME_STATE_HEALTHY",
+        "SHORT_LIVED_WRITE_LEASE",
+        "PER_OPERATION_USER_AUTH"
+      ]
+    },
+    {
+      "gateId": "POST_LAUNCH_MONITORING",
+      "titleJa": "公開後監視と継続判定",
+      "status": "BLOCKED",
+      "requiredClaims": 3,
+      "acceptedClaims": 0,
+      "blockingClaims": [
+        "REALTIME_RISK_MONITORING",
+        "SOURCE_POLICY_REVALIDATION",
+        "ROLLBACK_AND_USER_NOTICE"
+      ]
+    }
+  ],
+  "blockingReasons": [
+    "No signed production operational evidence is included in this design package."
+  ],
+  "disclaimer": "This result is a finite, exact-release gate evaluation. It never proves the absence of unknown vulnerabilities, market loss, external-service change, or future legal/policy change. It never grants a transaction. Runtime writes still require a fresh signed runtime state, a short-lived capability lease, exact single-use user/device authorization, signer-side revalidation, and an unused nonce."
+}

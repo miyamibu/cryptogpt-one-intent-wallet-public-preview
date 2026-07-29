@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>START HERE — 会話ウォレット完全レビュー版</title>
+  <style>
+    :root{--bg:#eef2f7;--panel:#fff;--text:#142033;--muted:#526176;--line:#cdd6e3;--brand:#164fa8;--brand2:#0b3778;--ok:#066b45;--danger:#a32218;--warn:#765000;--soft:#f5f7fa;--shadow:0 14px 40px rgba(20,32,51,.09)}
+    @media(prefers-color-scheme:dark){:root{--bg:#07111f;--panel:#0e1b2d;--text:#f2f6fb;--muted:#bcc8d8;--line:#40516a;--brand:#8ab9ff;--brand2:#c4dcff;--ok:#73dfb0;--danger:#ff9d96;--warn:#ffd77b;--soft:#14243a;--shadow:0 14px 42px rgba(0,0,0,.34)}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;max-width:100%;overflow-x:clip}body{margin:0;max-width:100%;overflow-x:clip;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans JP",sans-serif;line-height:1.65}
+    a{color:var(--brand2);text-underline-offset:.18em}a:focus-visible,button:focus-visible{outline:3px solid #ff8a00;outline-offset:3px;border-radius:8px}
+    .top{position:sticky;top:0;z-index:20;max-width:100%;padding:9px 14px;background:#17120a;color:#fff2cf;border-bottom:1px solid #d39b00;text-align:center;font-size:12px;font-weight:900;letter-spacing:.035em;overflow-wrap:anywhere}
+    main{width:100%;max-width:1220px;margin:auto;padding:32px 18px 70px}.hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(310px,.75fr);gap:18px;align-items:stretch}.hero,.review-grid,.card,.status,.boundary,.callout,.prototype-head{min-width:0;max-width:100%}.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow)}
+    .kicker{display:inline-flex;align-items:center;min-height:30px;padding:4px 11px;border:1px solid var(--line);border-radius:999px;background:var(--soft);font-size:12px;font-weight:850}h1{font-size:clamp(31px,5.3vw,52px);line-height:1.08;letter-spacing:-.042em;margin:.28em 0 .25em}h2{font-size:clamp(21px,3vw,27px);line-height:1.25;margin:0 0 11px}h3{font-size:17px;margin:20px 0 8px}.lead{font-size:clamp(17px,2vw,20px);color:var(--muted);max-width:770px}.small{font-size:13px;color:var(--muted)}
+    .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 16px;border:1px solid var(--brand);border-radius:12px;background:transparent;color:var(--brand2);font-weight:850;text-decoration:none}.button.primary{background:#174fa8;color:#fff;border-color:#174fa8}.button:hover{filter:brightness(.96)}
+    .status-grid{display:grid;gap:10px}.status{padding:13px 14px;border-radius:13px;background:var(--soft);border:1px solid var(--line)}.status strong{display:block;margin-bottom:2px}.go{color:var(--ok)}.no{color:var(--danger)}
+    .boundary{margin-top:13px;padding:13px 14px;border-left:5px solid var(--danger);border-radius:10px;background:color-mix(in srgb,var(--danger) 9%,var(--panel));font-size:14px}.section{margin-top:20px}.review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.metric{font-size:32px;font-weight:900;line-height:1.1}.metric-label{color:var(--muted);font-size:13px}.prototype{padding:12px}.prototype-head{padding:10px 10px 16px}.frame{display:block;width:100%;height:min(1080px,84vh);min-height:720px;border:1px solid var(--line);border-radius:15px;background:#fff}
+    .table-wrap{max-width:100%;overflow:auto}pre{max-width:100%;margin:0;overflow:auto;padding:12px;border-radius:10px;background:var(--soft);font-size:12px;line-height:1.55}table{width:100%;border-collapse:collapse;min-width:640px}th,td{text-align:left;vertical-align:top;padding:11px;border-bottom:1px solid var(--line)}th{font-size:13px;color:var(--muted)}code,.path{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;overflow-wrap:anywhere}.path{display:inline-block;padding:2px 6px;background:var(--soft);border-radius:6px}.callout{padding:14px;border:1px solid color-mix(in srgb,var(--warn) 55%,var(--line));border-left:5px solid var(--warn);border-radius:11px;background:color-mix(in srgb,var(--warn) 8%,var(--panel))}.list{margin:0;padding-left:1.2em}.list li{margin:.45em 0}.footer{margin-top:22px;text-align:center;color:var(--muted);font-size:12px}
+    @media(max-width:900px){.hero,.review-grid{grid-template-columns:1fr}.frame{height:830px;min-height:690px}}@media(max-width:520px){main{padding:23px 11px 50px}.card{padding:17px;border-radius:16px}.frame{height:780px;min-height:640px}.actions{display:grid}.button{width:100%}}
+    @media(forced-colors:active){.card,.status,.button,.callout,.boundary{border:2px solid CanvasText}.top{border-bottom:2px solid CanvasText}}
+  </style>
+</head>
+<body>
+  <div class="top" role="status">BLOCKED_NOT_OPERATIONAL — 設計資料と完全オフライン画面見本です。実際の送金・取引・署名・外部通信は行いません</div>
+  <main>
+    <section class="hero" aria-labelledby="title">
+      <article class="card">
+        <span class="kicker">完全レビュー版 2026-07-29.3</span>
+        <h1 id="title">会話ウォレット<br />最終設計パッケージ</h1>
+        <p class="lead">初心者、経験者、デザイナー、管理者、セキュリティ担当、法務・Store審査、そして「1pxのずれまで疑うQA」の視点で再監査した版です。</p>
+        <div class="actions">
+          <a class="button primary" href="#prototype">このページで画面を操作する</a>
+          <a class="button" href="prototype/index.html">画面見本だけ開く</a>
+          <a class="button" href="FINAL_DELIVERY_INDEX.md">納品インデックスを読む</a>
+        </div>
+      </article>
+      <aside class="card" aria-labelledby="current-status">
+        <h2 id="current-status">現在の判定</h2>
+        <div class="status-grid">
+          <div class="status"><strong class="no">NO-GO／BLOCKED_NOT_OPERATIONAL</strong>本番writeは無効です。37の必須gateと93のclaimは、現在0件承認です。</div>
+          <div class="status"><strong class="go">確認可能</strong>設計、Schema、API契約、オフライン画面見本、非破壊検証、Codex実装指示</div>
+          <div class="status"><strong class="no">未実装・未承認</strong>Android／iOS本番アプリ、Signer、Testnet／Mainnet、JPYC EX本番、手数料提供者、外部監査、法務、Store公開</div>
+        </div>
+        <div class="boundary"><strong>重要：</strong>このZIPは運用可能なwallet binaryではありません。将来`PRODUCTION_OPERATIONAL_GO`を得ても、freshなruntime state、短期限lease、single-use操作別承認がなければ一操作も実行できない設計です。</div>
+      </aside>
+    </section>
+
+    <section class="section review-grid" aria-label="検証の要約">
+      <article class="card"><div class="metric">288</div><div class="metric-label">6画面サイズ × 12流れ × 2文字設定 × 2テーマ</div></article>
+      <article class="card"><div class="metric">97</div><div class="metric-label">敵対的な抜け穴回帰ケース</div></article>
+      <article class="card"><div class="metric">10</div><div class="metric-label">安定レビュー用スクリーンショット</div></article>
+    </section>
+
+    <section class="section card prototype" id="prototype" aria-labelledby="prototype-title">
+      <div class="prototype-head">
+        <h2 id="prototype-title">実際の画面見本を操作する</h2>
+        <p>左側でiPhone／Android、通常／大きな文字、明るい／暗い表示、12種類の操作を切り替えられます。外部通信、ウォレット接続、署名、取引はありません。</p>
+      </div>
+      <iframe class="frame" src="prototype/index.html" title="会話ウォレットの完全オフライン画面見本" loading="eager"></iframe>
+    </section>
+
+    <section class="section review-grid">
+      <article class="card">
+        <h2>利用者の言葉</h2>
+        <ul class="list">
+          <li>期限なし先物取引</li>
+          <li>現物取引</li>
+          <li>予定価格と成立価格のずれ</li>
+          <li>別ネットワークへの資金移動</li>
+          <li>運用口座</li>
+          <li>ネットワーク手数料</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>今回ふさいだ穴</h2>
+        <ul class="list">
+          <li>音声誤変換を確認せず実行</li>
+          <li>大きな文字で依頼原文が消える</li>
+          <li>固定ボタンが明細を隠す</li>
+          <li>固定のPOL量を案内する</li>
+          <li>画面例を本番値と誤認する</li>
+          <li>検証中に証拠を書き換える</li>
+          <li>別network／別見積もりを署名する</li>
+          <li>送信結果不明を再署名する</li>
+        </ul>
+      </article>
+      <article class="card">
+        <h2>手数料準備の修正</h2>
+        <p>JPYC残高だけでは自動処理可能と判定しません。資産登録情報、口座方式、代理支払い能力、今回の見積もりを別々に証明し、欠ければ手動手順へ止めます。</p>
+        <p><a href="47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md">詳しい仕様を読む</a></p>
+      </article>
+    </section>
+
+    <section class="section card">
+      <h2>Codexへ渡す運用化の残作業</h2>
+      <p>展開したフォルダー全体をCodexの作業場所にし、次の正本を最初に読ませます。</p>
+      <p><span class="path">codex/CODEX_REMAINING_WORK_MASTER_PROMPT.md</span></p>
+      <p>Android、iOS、共有決定論コア、backend、Hyperliquid、JPYC EX handoff、手数料経路、Signer、照合、管理画面、CI、Testnet、極小Mainnet canary、外部監査、法務・Store、37 gate・93 claim、runtime activationまで、証拠と停止条件を含めて指示しています。</p>
+      <div class="callout"><strong>Codexができない外部作業：</strong>資格情報、契約、Mac／Xcode、実機、Testnet資産、MPC／HSM、法務判断、Storeアカウントがない場合、完了扱いにせず、担当者・画面・ボタン・必要資料・再検査コマンドまで残すよう指定しています。</div>
+    </section>
+
+    <section class="section card">
+      <h2>読む順番</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>目的</th><th>ファイル</th><th>要点</th></tr></thead>
+          <tbody>
+            <tr><td>完成／未完成</td><td><span class="path">RUNNABILITY_AND_STATUS.md</span></td><td>現在のBLOCKED状態と今使える範囲</td></tr>
+            <tr><td>運用判定</td><td><span class="path">51_OPERATIONAL_READINESS_AND_RUNTIME_ACTIVATION.md</span></td><td>37 gate・93 claim、runtime lease、操作別承認</td></tr>
+            <tr><td>最終不足</td><td><span class="path">52_FINAL_OPERATIONAL_GAP_REVIEW.md</span></td><td>多視点の未実装・未証明項目</td></tr>
+            <tr><td>最終レビュー</td><td><span class="path">50_FINAL_MULTI_PERSPECTIVE_REVIEW.md</span></td><td>複数の対立視点と残存リスク</td></tr>
+            <tr><td>自信の範囲</td><td><span class="path">45_RELEASE_ASSURANCE_CASE.md</span></td><td>主張、証拠、失効条件</td></tr>
+            <tr><td>手数料・JPYC</td><td><span class="path">47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md</span></td><td>zero-gasと本番登録情報</td></tr>
+            <tr><td>署名前の最終照合</td><td><span class="path">54_CANONICAL_QUOTE_REGISTRY_AND_ATOMIC_SIGNER.md</span></td><td>見積もり本文、registry、chain ID、最終payload、結果不明時の再署名禁止</td></tr>
+            <tr><td>UIの重箱検査</td><td><span class="path">46_PIXEL_AND_INTERACTION_AUDIT.md</span></td><td>重なり、切れ、到達性、物理mmの限界</td></tr>
+            <tr><td>監査反復</td><td><span class="path">AUDIT_ITERATION_LOG.md</span></td><td>何を疑い、どう直したか</td></tr>
+            <tr><td>Codex</td><td><span class="path">CODEX_START_HERE.md</span></td><td>正本プロンプトへの入口</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section card">
+      <h2>パッケージ検証</h2>
+      <pre><code>python -m pip install -r tools/requirements.txt
+python -m pip install -r tools/requirements-visual.txt
+python tools/prepare_release_artifacts.py
+python tools/run_full_validation.py
+python tools/check_operational_readiness.py
+python tools/build_release.py ../one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.3.zip</code></pre>
+      <p class="small">ブラウザ検証はlogical pixelの代理試験です。SwiftUI／Jetpack Compose、VoiceOver／TalkBack、safe area、生体認証、物理mmは実機証拠が揃うまで未証明です。</p>
+    </section>
+
+    <p class="footer">Hyperliquid連携・非公式。画面例の値、アドレス、提供者は本番値ではありません。</p>
+  </main>
+</body>
+</html>

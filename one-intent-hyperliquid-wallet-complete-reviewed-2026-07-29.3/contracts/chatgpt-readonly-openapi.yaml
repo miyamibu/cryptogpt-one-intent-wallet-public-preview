@@ -1,0 +1,277 @@
+openapi: 3.1.0
+info:
+  title: One-Intent Wallet ChatGPT Read-Only Support API
+  version: 1.0.0
+  description: >-
+    Non-transactional support surface only. It exposes reconciled read-only status,
+    glossary explanations, generic safety help, fixed non-executable error guidance, and one fixed neutral handoff.
+    It cannot accept transaction intent, amount, destination, asset or network selection,
+    transaction-specific steps, private key material, signing challenges, calldata,
+    order payloads, handoff tokens, or executable wallet links.
+servers:
+- url: https://support-api.example.invalid
+  description: Intentionally non-routable documentation placeholder
+security:
+- oauth2ReadOnly:
+  - wallet.status.read
+paths:
+  /v1/support/status/{referenceId}:
+    get:
+      operationId: getReadOnlyStatus
+      summary: Return a redacted reconciled status for a previously created reference
+      parameters:
+      - $ref: '#/components/parameters/ReferenceId'
+      responses:
+        '200':
+          description: Redacted status without transaction payloads or executable links
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReadOnlyStatus'
+        '404':
+          $ref: '#/components/responses/Problem'
+  /v1/support/glossary/{termId}:
+    get:
+      operationId: getPlainJapaneseTerm
+      summary: Return a plain-Japanese explanation of a fixed glossary term
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/TermId'
+      responses:
+        '200':
+          description: Plain-Japanese glossary entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GlossaryEntry'
+        '404':
+          $ref: '#/components/responses/Problem'
+  /v1/support/explain-error:
+    post:
+      operationId: explainNonTransactionalError
+      summary: Explain a fixed error code without accepting transaction data
+      description: >-
+        This endpoint accepts only a catalog error code, locale, and opaque support
+        reference. It must not return a transaction payload, signer request, write
+        URL, executable deep link, address, amount, asset quantity, or order details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorExplanationRequest'
+      responses:
+        '200':
+          description: Generic non-executable explanation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportExplanation'
+        '400':
+          $ref: '#/components/responses/Problem'
+  /v1/support/safety-help:
+    post:
+      operationId: getGenericSafetyHelp
+      summary: Return generic safety guidance for a fixed help topic
+      description: >-
+        The request cannot contain a recipient, wallet address, amount, asset or network
+        selection, order, approval, transaction, quote, calldata, signature, screen or
+        button sequence, recovery instruction, handoff token, or executable link. The
+        response is selected from a fixed versioned catalog and cannot use transaction context.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafetyHelpRequest'
+      responses:
+        '200':
+          description: Generic safety guidance and a neutral instruction to open the independent wallet app
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportExplanation'
+        '400':
+          $ref: '#/components/responses/Problem'
+components:
+  securitySchemes:
+    oauth2ReadOnly:
+      type: oauth2
+      description: Read-only OAuth scopes. No write or transaction scope exists in this contract.
+      flows:
+        authorizationCode:
+          authorizationUrl: https://auth.example.invalid/authorize
+          tokenUrl: https://auth.example.invalid/token
+          scopes:
+            wallet.status.read: Read redacted reconciled status only
+  parameters:
+    ReferenceId:
+      name: referenceId
+      in: path
+      required: true
+      description: Opaque random read-only reference. It must not encode recipient, amount, asset, network, order, quote, or transaction content.
+      schema:
+        type: string
+        pattern: '^[A-Za-z0-9._-]{12,128}$'
+    TermId:
+      name: termId
+      in: path
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-z0-9-]{2,64}$'
+  schemas:
+    ReadOnlyStatus:
+      type: object
+      additionalProperties: false
+      required:
+      - referenceId
+      - status
+      - updatedAt
+      - messageCode
+      - writeAvailableHere
+      properties:
+        referenceId:
+          type: string
+          pattern: '^[A-Za-z0-9._-]{12,128}$'
+        status:
+          type: string
+          enum:
+          - INFORMATION_ONLY
+          - NOT_STARTED
+          - IN_PROGRESS
+          - ACCEPTED_NOT_FINAL
+          - COMPLETED
+          - FAILED
+          - UNKNOWN_RECONCILIATION_REQUIRED
+        updatedAt:
+          type: string
+          format: date-time
+        messageCode:
+          type: string
+          enum:
+          - STATUS_INFORMATION_ONLY
+          - STATUS_NOT_STARTED
+          - STATUS_IN_PROGRESS
+          - STATUS_ACCEPTED_NOT_FINAL
+          - STATUS_COMPLETED
+          - STATUS_FAILED
+          - STATUS_UNKNOWN_RECONCILIATION_REQUIRED
+        supportCode:
+          type:
+          - string
+          - 'null'
+          pattern: '^[A-Z0-9_]{3,64}$'
+        writeAvailableHere:
+          const: false
+    GlossaryEntry:
+      type: object
+      additionalProperties: false
+      required:
+      - termId
+      - labelJa
+      - explanationJa
+      properties:
+        termId:
+          type: string
+          pattern: '^[a-z0-9-]{2,64}$'
+        labelJa:
+          type: string
+          minLength: 1
+          maxLength: 64
+        explanationJa:
+          type: string
+          minLength: 1
+          maxLength: 512
+    ErrorExplanationRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - errorCode
+      - locale
+      properties:
+        errorCode:
+          type: string
+          enum:
+          - SUPPORT_UNAVAILABLE
+          - STATUS_DELAYED
+          - STATUS_UNKNOWN
+          - AUTHENTICATION_REQUIRED
+          - REFERENCE_NOT_FOUND
+        locale:
+          const: ja-JP
+        supportReference:
+          type:
+          - string
+          - 'null'
+          pattern: '^[A-Za-z0-9._-]{12,128}$'
+    SafetyHelpRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - topic
+      - locale
+      properties:
+        topic:
+          type: string
+          enum:
+          - CHECK_RECIPIENT_SAFELY
+          - RECOGNIZE_FAKE_TOKEN
+          - PROTECT_RECOVERY_SECRET
+          - UNDERSTAND_NETWORK_FEE
+          - CONTACT_SUPPORT
+        locale:
+          const: ja-JP
+    SupportExplanation:
+      type: object
+      additionalProperties: false
+      required:
+      - catalogEntryId
+      - catalogVersion
+      - titleJa
+      - explanationJa
+      - neutralHandoffJa
+      - executable
+      properties:
+        catalogEntryId:
+          type: string
+          pattern: '^[A-Z0-9_]{3,64}$'
+        catalogVersion:
+          type: string
+          pattern: '^[A-Za-z0-9._-]{1,64}$'
+        titleJa:
+          type: string
+          minLength: 1
+          maxLength: 128
+        explanationJa:
+          type: string
+          description: Fixed catalog text only; it must not be generated from transaction context or contain transaction-specific steps or values.
+          minLength: 1
+          maxLength: 1024
+        neutralHandoffJa:
+          const: 独立したウォレットアプリを開いて、内容を確認してください。
+        executable:
+          const: false
+  responses:
+    Problem:
+      description: Non-transactional support error
+      content:
+        application/problem+json:
+          schema:
+            type: object
+            additionalProperties: false
+            required:
+            - title
+            - status
+            - code
+            properties:
+              title:
+                type: string
+                maxLength: 256
+              status:
+                type: integer
+                minimum: 400
+                maximum: 599
+              code:
+                type: string
+                pattern: '^[A-Z0-9_]{3,64}$'

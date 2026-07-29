@@ -1,0 +1,15 @@
+stateDiagram-v2
+    [*] --> DRAFT
+    DRAFT --> COMPILED
+    COMPILED --> SIMULATED
+    SIMULATED --> USER_AUTHORIZED
+    USER_AUTHORIZED --> EXECUTING
+    EXECUTING --> COMPLETE
+    EXECUTING --> PARTIAL
+    EXECUTING --> FAILED
+    EXECUTING --> RECOVERY_REQUIRED
+    PARTIAL --> USER_AUTHORIZED: replan/re-authorize
+    PARTIAL --> RECOVERY_REQUIRED
+    FAILED --> COMPILED: safe retry after reconciliation
+    RECOVERY_REQUIRED --> USER_AUTHORIZED: manual recovery plan
+    COMPLETE --> [*]

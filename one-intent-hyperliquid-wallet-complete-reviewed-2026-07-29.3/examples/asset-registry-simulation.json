@@ -1,0 +1,37 @@
+{
+  "schemaVersion": "1.0",
+  "registryId": "registry_simulation_polygon_001",
+  "environment": "SIMULATION",
+  "generatedAt": "2026-07-28T10:40:00Z",
+  "validUntil": "2026-07-29T09:00:00Z",
+  "signatureState": "UNSIGNED_SIMULATION",
+  "signerKeyId": null,
+  "signature": null,
+  "entries": [
+    {
+      "networkId": "eip155:137",
+      "displayNameJa": "Polygon（画面例）",
+      "chainId": 137,
+      "nativeFeeAsset": {
+        "symbol": "POL",
+        "decimals": 18
+      },
+      "jpyc": {
+        "symbol": "JPYC",
+        "contract": "0x0000000000000000000000000000000000000137",
+        "decimals": 18,
+        "verificationStatus": "SIMULATION_ONLY",
+        "codeHash": null
+      },
+      "sources": [
+        {
+          "name": "画面例のための非本番登録情報",
+          "url": "https://example.invalid/simulation/asset-registry",
+          "retrievedAt": "2026-07-28T10:40:00Z",
+          "contentSha256": null
+        }
+      ],
+      "productionEligible": false
+    }
+  ]
+}

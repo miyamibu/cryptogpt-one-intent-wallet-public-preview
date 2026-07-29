@@ -1,0 +1,196 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.3-design-only-sbom",
+  "documentNamespace": "https://example.invalid/cryptogpt/2026-07-29.3/sbom",
+  "creationInfo": {
+    "created": "2026-07-29T00:00:00Z",
+    "creators": [
+      "Tool: CryptoGPT Design Artifact Generator 1.0"
+    ]
+  },
+  "documentDescribes": [
+    "SPDXRef-Package-CryptoGPTDesign"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-CryptoGPTDesign",
+      "name": "one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.3",
+      "versionInfo": "2026-07-29.3",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-01",
+      "name": "jsonschema",
+      "versionInfo": "4.26.0",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: PyPI"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-02",
+      "name": "PyYAML",
+      "versionInfo": "6.0.3",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: PyPI"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-03",
+      "name": "cryptography",
+      "versionInfo": "46.0.4",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: PyPI"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-04",
+      "name": "playwright",
+      "versionInfo": "1.57.0",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: PyPI"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-05",
+      "name": "Chromium",
+      "versionInfo": "143.0.7499.4",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: Playwright managed browser"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-06",
+      "name": "Android Gradle Plugin",
+      "versionInfo": "8.7.3",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: apps/android/build.gradle.kts"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-07",
+      "name": "Kotlin",
+      "versionInfo": "2.0.21",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: apps/android/build.gradle.kts"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-08",
+      "name": "Compose BOM",
+      "versionInfo": "2024.09.03",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: apps/android/app/build.gradle.kts"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-09",
+      "name": "activity-compose",
+      "versionInfo": "1.9.2",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: apps/android/app/build.gradle.kts"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-10",
+      "name": "JUnit",
+      "versionInfo": "4.13.2",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: apps/android/app/build.gradle.kts"
+        }
+      ]
+    }
+  ],
+  "designOnly": true,
+  "signed": false,
+  "productionEvidence": false,
+  "notes": [
+    "This SPDX document records declared design/build inputs only.",
+    "NOASSERTION means license, integrity, supplier, and provenance claims require independent release-time verification.",
+    "No native signed artifact, production image, wallet key, or live dependency fetch is included."
+  ]
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>会話で使える資産ウォレット — 完全オフライン画面見本</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="prototype-banner" role="status">画面見本です — 実際の送金・取引・署名・外部通信は行いません</div>
+  <main class="workspace">
+    <aside class="controls" aria-label="画面見本の切り替え">
+      <p class="product-kicker">監査強化版・完全オフライン</p>
+      <h1><span>会話で使える</span><span>資産ウォレット</span></h1>
+      <p class="muted">iPhone／Android向けの画面見本です。表示値は説明用であり、価格・残高・手数料の現在値ではありません。</p>
+
+      <fieldset>
+        <legend>表示する端末</legend>
+        <div class="segmented" role="group" aria-label="表示する端末">
+          <button type="button" class="seg active" data-platform="ios" aria-pressed="true">iPhone</button>
+          <button type="button" class="seg" data-platform="android" aria-pressed="false">Pixel 9a</button>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>確認する画面</legend>
+        <div class="flow-grid" role="group" aria-label="確認する画面">
+          <button type="button" class="flow active" data-flow="perp" aria-pressed="true">先物取引<br><small>期限なし</small></button>
+          <button type="button" class="flow" data-flow="spot" aria-pressed="false">現物取引</button>
+          <button type="button" class="flow" data-flow="send" aria-pressed="false">アプリ内で送る</button>
+          <button type="button" class="flow" data-flow="withdraw" aria-pressed="false">別ネットワークへ送る</button>
+          <button type="button" class="flow" data-flow="bridge" aria-pressed="false">別ネットワークから受け取る</button>
+          <button type="button" class="flow" data-flow="vault" aria-pressed="false">運用口座</button>
+          <button type="button" class="flow" data-flow="jpyc" aria-pressed="false">JPYCを受け取る</button>
+          <button type="button" class="flow" data-flow="fee" aria-pressed="false">手数料を準備</button>
+          <button type="button" class="flow" data-flow="setup" aria-pressed="false">会話操作を設定</button>
+          <button type="button" class="flow" data-flow="composite" aria-pressed="false">まとめて操作</button>
+          <button type="button" class="flow" data-flow="partial" aria-pressed="false">途中で停止</button>
+          <button type="button" class="flow" data-flow="manual" aria-pressed="false">自動でできない場合</button>
+        </div>
+      </fieldset>
+
+      <label class="switch-row"><span>暗い表示</span><input id="themeToggle" type="checkbox" /></label>
+      <label class="switch-row"><span>文字を大きくする</span><input id="largeTextToggle" type="checkbox" /></label>
+
+      <section class="review-box" aria-labelledby="review-title">
+        <strong id="review-title">この版で確認できること</strong>
+        <ul>
+          <li>音声の誤変換を確認するまで実行できない導線</li>
+          <li>現在の口座状態に基づく清算価格の目安</li>
+          <li>JPYCだけの場合の手数料準備と、できない場合の手順</li>
+          <li>ネットワーク、相手、上限、期限を限定した会話操作</li>
+          <li>大きな文字・暗い表示でも依頼内容を消さない設計</li>
+        </ul>
+      </section>
+    </aside>
+
+    <section class="stage" aria-label="スマートフォン画面見本">
+      <div id="phone" class="phone ios" data-theme="light">
+        <div class="sensor" aria-hidden="true"></div>
+        <div class="screen">
+          <header class="app-header">
+            <div class="app-title">
+              <span class="eyebrow">Hyperliquid連携・非公式</span>
+              <h2>会話ウォレット</h2>
+            </div>
+            <button type="button" class="account" aria-label="口座と利用ネットワークを確認">0x1111…1111</button>
+          </header>
+
+          <div class="simulation-strip" aria-label="画面見本の状態"><span aria-hidden="true">●</span>画面見本・実際の処理なし</div>
+
+          <section class="permission-rail" aria-label="会話操作の許可状態">
+            <span class="rail-dot" aria-hidden="true"></span>
+            <div><strong>制限付きで有効（画面例）</strong><small>30分・保存済みの相手・上限あり</small></div>
+            <button id="permissionButton" class="rail-button" type="button">確認・停止</button>
+          </section>
+
+          <section class="conversation" aria-label="依頼内容">
+            <div class="bubble assistant">話すだけで下書きを作ります。曖昧な金額・相手・ネットワーク・聞き間違いは、勝手に決めず確認します。</div>
+            <div id="userBubble" class="bubble user">BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。</div>
+          </section>
+
+          <p id="liveStatus" class="sr-only" role="status" aria-live="polite"></p>
+          <section id="executionCard" class="execution-card" aria-label="実行前の確認内容"></section>
+          <section id="timeline" class="timeline hidden" aria-label="処理の現在地"></section>
+
+          <footer class="composer">
+            <div class="input-row">
+              <button type="button" class="plus" aria-label="画像や資料を追加">＋</button>
+              <button type="button" class="fake-input" aria-label="文字で入力する">話すか、文字で入力</button>
+              <button id="micButton" type="button" class="mic" aria-label="音声入力を試す">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15.25a3.75 3.75 0 0 0 3.75-3.75V6.75a3.75 3.75 0 1 0-7.5 0v4.75A3.75 3.75 0 0 0 12 15.25Zm-6-4a1 1 0 1 0-2 0 8 8 0 0 0 7 7.93V21H8.75a1 1 0 1 0 0 2h6.5a1 1 0 1 0 0-2H13v-1.82a8 8 0 0 0 7-7.93 1 1 0 1 0-2 0 6 6 0 1 1-12 0Z"/></svg>
+              </button>
+            </div>
+            <p id="assuranceText" class="assurance"></p>
+          </footer>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

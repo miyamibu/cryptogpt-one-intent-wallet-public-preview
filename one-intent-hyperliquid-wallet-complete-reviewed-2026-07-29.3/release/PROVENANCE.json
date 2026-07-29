@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "0.1",
+  "format": "SLSA_DESIGN_ONLY_UNSIGNED",
+  "status": "DESIGN_ONLY_NOT_RELEASE_EVIDENCE",
+  "subject": [
+    {
+      "name": "one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.3",
+      "digest": {
+        "sha256": "bdaeb8dd4e4832a2aa8b40363f3ff8de495d97ac01565afdc768a0ffa0504980"
+      }
+    }
+  ],
+  "source": {
+    "sourceCommit": null,
+    "sourceTreeSha256": "bdaeb8dd4e4832a2aa8b40363f3ff8de495d97ac01565afdc768a0ffa0504980",
+    "sourceTreeDigestDomain": "secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata",
+    "sourceControlCommitRecordedOutsidePackage": true
+  },
+  "builder": {
+    "id": "https://example.invalid/cryptogpt/design-only-builder",
+    "version": "1.0",
+    "authenticated": false
+  },
+  "invocation": {
+    "entrypoint": "python3 -B tools/prepare_release_artifacts.py",
+    "networkAccess": false,
+    "productionWritePermitted": false,
+    "walletKeyAccess": false
+  },
+  "materials": [
+    {
+      "uri": "config/build-metadata.json",
+      "digest": {
+        "sha256": "ccd0138d2e6759de6bf50dfee4073c09c664ce99ec5b5e017d0b5699c50cfa37"
+      }
+    },
+    {
+      "uri": "config/toolchain-lock.json",
+      "digest": {
+        "sha256": "7af554cddaca4d4dd92e4f4f0bb00286c72302ce90f5f9e296a4ef7322c041a1"
+      }
+    },
+    {
+      "uri": "config/source-pins.json",
+      "digest": {
+        "sha256": "10289f96373a7f4aff2dfbaf34193a7f670a9a3c96c5ab374b0ce350b2aaafc8"
+      }
+    },
+    {
+      "uri": "shared/canonical-vectors-v1.json",
+      "digest": {
+        "sha256": "112d55f8054447364ebebcd6bf655a49371143b7ac5bd670c3fd1beb6ff925b1"
+      }
+    }
+  ],
+  "signatures": [],
+  "independentReview": false,
+  "notes": [
+    "This is a deterministic design provenance record, not a signed SLSA attestation.",
+    "The source-control commit is maintained by the external canonical-stage Git repository and is not inferred inside a clean ZIP extraction."
+  ]
+}

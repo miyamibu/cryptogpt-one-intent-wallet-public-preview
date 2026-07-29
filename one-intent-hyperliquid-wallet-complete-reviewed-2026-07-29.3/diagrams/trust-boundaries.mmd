@@ -1,0 +1,50 @@
+flowchart LR
+    subgraph Untrusted
+      INPUT[User text]
+      LLM[LLM output]
+      WEB[Web/RAG]
+      DEVICE[Potentially compromised UI process]
+    end
+
+    subgraph Deterministic_Control
+      RES[Alias/Asset Resolver]
+      COMP[Compiler]
+      POLICY[Policy Engine]
+      REG[Signed Registry]
+      CAPSULE[Canonical Capsule]
+    end
+
+    subgraph Authorization
+      AUTH[Keystore / Wallet Confirmation]
+      INTEGRITY[Integrity signal]
+    end
+
+    subgraph Signing
+      TRADE[Trade Signer]
+      ROOT[Root Signer]
+    end
+
+    subgraph Networks
+      CORE[HyperCore]
+      ARB[Arbitrum]
+      EVM[HyperEVM]
+    end
+
+    INPUT --> LLM --> COMP
+    WEB --> LLM
+    DEVICE --> COMP
+    RES --> COMP
+    REG --> COMP
+    COMP --> POLICY --> CAPSULE
+    CAPSULE --> AUTH
+    INTEGRITY --> AUTH
+    AUTH --> TRADE
+    AUTH --> ROOT
+    TRADE --> CORE
+    ROOT --> CORE
+    ROOT --> ARB
+    ROOT --> EVM
+
+    LLM -. forbidden .-> TRADE
+    LLM -. forbidden .-> ROOT
+    WEB -. forbidden .-> RES

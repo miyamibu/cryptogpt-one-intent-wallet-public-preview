@@ -1,0 +1,49 @@
+version: 2026-07-29.3
+scope: browser_logical_pixel_proxy
+viewports:
+  - id: iphone-se-stress
+    width: 320
+    height: 568
+    platform: IOS
+    priority: P0
+    purpose: smallest_width_and_short_height_stress
+  - id: iphone-small
+    width: 375
+    height: 667
+    platform: IOS
+    priority: P0
+  - id: iphone-faceid
+    width: 390
+    height: 844
+    platform: IOS
+    baseline_device: iPhone_12_logical_proxy
+    priority: P0
+  - id: iphone-large
+    width: 430
+    height: 932
+    platform: IOS
+    priority: P1
+  - id: android-compact
+    width: 360
+    height: 800
+    platform: ANDROID
+    priority: P0
+  - id: pixel9a-logical
+    width: 412
+    height: 915
+    platform: ANDROID
+    priority: P0
+variants_executed_in_prototype:
+  locale: [ja-JP]
+  theme: [light, dark]
+  text_mode: [default, large_text_stress]
+  flows: [perp, spot, send, withdraw, bridge, vault, jpyc, fee, setup, composite, partial, manual]
+case_count: 288
+not_proven:
+  - native_safe_area
+  - physical_millimetres
+  - VoiceOver
+  - TalkBack
+  - IME
+  - OS_font_renderer
+  - rotation

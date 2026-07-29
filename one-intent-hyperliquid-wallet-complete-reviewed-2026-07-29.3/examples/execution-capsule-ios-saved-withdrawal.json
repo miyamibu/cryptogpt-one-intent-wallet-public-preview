@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0",
+  "domain": "ONE_INTENT_EXECUTION_CAPSULE_V1",
+  "hashProfile": "ONE_INTENT_HASH_PROFILE_V1",
+  "capsuleId": "capsule-ios-saved-withdrawal-001",
+  "planId": "plan-ios-saved-withdrawal-001",
+  "environment": "TESTNET",
+  "userId": "user-demo-ios-001",
+  "deviceId": "iphone-demo-001",
+  "platform": "IOS",
+  "sessionId": "session-ios-001",
+  "account": "0x1111111111111111111111111111111111111111",
+  "accountMode": "UNIFIED",
+  "createdAt": "2026-07-28T12:20:00+09:00",
+  "expiresAt": "2026-07-28T12:20:30+09:00",
+  "policyVersion": "policy-2026-07-28.2",
+  "registryVersions": {
+    "assets": "assets-testnet-001",
+    "contracts": "contracts-testnet-001",
+    "addresses": "addresses-user-001",
+    "sources": "sources-2026-07-28.1"
+  },
+  "steps": [
+    {
+      "stepId": "step-ios-withdraw-arb",
+      "type": "ARBITRUM_WITHDRAW",
+      "signerRole": "ROOT_SIGNER",
+      "account": "0x1111111111111111111111111111111111111111",
+      "assetId": "hyperliquid:USDC",
+      "quoteAssetId": null,
+      "side": null,
+      "positionEffect": null,
+      "amountMode": "EXACT_NOTIONAL",
+      "amount": "200",
+      "percent": null,
+      "computedMaximumAmount": "200",
+      "leverage": null,
+      "orderType": null,
+      "limitPrice": null,
+      "triggerPrice": null,
+      "triggerKind": null,
+      "reduceOnly": null,
+      "destination": "0x2222222222222222222222222222222222222222",
+      "destinationAlias": "自分のArbitrum（事前登録済み）",
+      "vaultId": null,
+      "contractAddress": null,
+      "functionSelector": null,
+      "sourceDex": null,
+      "destinationDex": "arbitrum",
+      "minOutput": "199",
+      "maxFee": "1",
+      "maxSlippageBps": null,
+      "expiresAt": "2026-07-28T12:20:30+09:00",
+      "dependsOn": [],
+      "failurePolicy": "MANUAL_RECOVERY",
+      "idempotencyKey": "plan-ios-saved-withdrawal-001:step-ios-withdraw-arb:0",
+      "cloid": null,
+      "riskTier": "R3",
+      "requiredAuth": "AUTH_PER_USE",
+      "statePreconditions": {
+        "snapshotId": "snapshot-ios-001",
+        "maxAgeMs": 30000,
+        "positionVersion": null,
+        "balanceVersion": "bal-ios-v1",
+        "marketVersion": null
+      }
+    }
+  ],
+  "warnings": [
+    "IOS_NOT_TRUSTED_DISPLAY",
+    "SAVED_DESTINATION_POLICY_REQUIRED",
+    "AUTH_PER_USE_REQUIRED"
+  ],
+  "semanticHash": "0xc84e26c0bf1c332b83128242004c3b97bcbb1d3cd2fb3790da5be276195d9aa6",
+  "renderReceiptHash": "0x4c5e15a41d1dbaf32b8f91324e3245d915fc564c405b51f95620202cb968b5b3",
+  "compilerVersion": "compiler-0.1.0",
+  "featureGateVersion": "gates-testnet-001",
+  "sourceStateHash": "0xe165691721a5d0fe9810758e82534d31367ffd15b0c3ee06095def61ca504967",
+  "renderReceipt": {
+    "locale": "ja-JP",
+    "buttonLabel": "自分のArbitrumへ200 USDC出金",
+    "warningIds": [
+      "IOS_NOT_TRUSTED_DISPLAY",
+      "SAVED_DESTINATION_POLICY_REQUIRED",
+      "AUTH_PER_USE_REQUIRED"
+    ],
+    "renderedAt": "2026-07-28T12:20:01+09:00"
+  },
+  "stateEvidence": {
+    "policy": "DUAL_SOURCE_R2_PLUS",
+    "sources": [
+      {
+        "sourceId": "hl-api-testnet-ios-001",
+        "kind": "OFFICIAL_API",
+        "independenceClass": "hyperliquid-public-api",
+        "observedAt": "2026-07-28T12:20:00+09:00",
+        "blockHeight": null,
+        "digest": "0x7171717171717171717171717171717171717171717171717171717171717171"
+      },
+      {
+        "sourceId": "independent-indexer-ios-001",
+        "kind": "INDEPENDENT_API",
+        "independenceClass": "separate-provider-and-cache",
+        "observedAt": "2026-07-28T12:20:00+09:00",
+        "blockHeight": null,
+        "digest": "0x7272727272727272727272727272727272727272727272727272727272727272"
+      }
+    ],
+    "observedAt": "2026-07-28T12:20:00+09:00",
+    "stateHash": "0x7373737373737373737373737373737373737373737373737373737373737373",
+    "divergenceStatus": "WITHIN_TOLERANCE",
+    "maxAgeMs": 3000
+  },
+  "authorizationPresentation": {
+    "mode": "IOS_APP_ATTESTED_AUTHENTICATED_UI",
+    "criticalFields": [
+      "OPERATION",
+      "NETWORK",
+      "ASSET",
+      "AMOUNT",
+      "DESTINATION",
+      "MAX_FEE",
+      "PLAN_FINGERPRINT"
+    ],
+    "promptText": null,
+    "promptTextHash": null,
+    "fallbackPolicy": "EXTERNAL_WALLET",
+    "assurance": "AUTHENTICATED_APP_UI_NOT_TRUSTED_DISPLAY",
+    "standingAuthorizationId": "standing-policy-ios-saved-destination-001",
+    "destinationRegistrationEvidenceId": "destination-registration-ios-001"
+  },
+  "networkContext": {
+    "sourceNetworkId": "hyperliquid:testnet",
+    "destinationNetworkIds": [
+      "eip155:421614"
+    ],
+    "networkRegistrySha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "chainId": null
+  }
+}

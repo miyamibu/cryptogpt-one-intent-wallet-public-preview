@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/runtime-authorization-decision.schema.json",
+  "title": "RuntimeAuthorizationDecision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "evaluatedAt",
+    "decisionValidUntil",
+    "status",
+    "eligibleForAtomicSignerFinalization",
+    "transactionAuthorizationGranted",
+    "releaseSubject",
+    "deploymentId",
+    "runtimeBundleId",
+    "leaseId",
+    "authorizationId",
+    "account",
+    "executionCapsuleHash",
+    "nonce",
+    "requiredCapabilities",
+    "decisionInputs",
+    "blockingReasons",
+    "disclaimer"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{8,96}$"
+    },
+    "evaluatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "decisionValidUntil": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "status": {
+      "enum": [
+        "BLOCKED",
+        "ELIGIBLE_FOR_ATOMIC_SIGNER_FINALIZATION"
+      ]
+    },
+    "eligibleForAtomicSignerFinalization": {
+      "type": "boolean"
+    },
+    "transactionAuthorizationGranted": {
+      "const": false
+    },
+    "releaseSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "releaseId",
+        "environment",
+        "sourceCommit",
+        "sourceTreeSha256",
+        "androidArtifactSha256",
+        "iosArtifactSha256",
+        "backendImageDigest",
+        "signerImageDigest",
+        "configurationBundleSha256",
+        "policyBundleSha256",
+        "assetRegistrySha256",
+        "sbomSha256"
+      ],
+      "properties": {
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "environment": {
+          "enum": [
+            "DESIGN_ONLY",
+            "STAGING",
+            "TESTNET",
+            "PRODUCTION"
+          ]
+        },
+        "sourceCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40,64}$"
+        },
+        "sourceTreeSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "androidArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "iosArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "backendImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "signerImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "configurationBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assetRegistrySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sbomSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "deploymentId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "runtimeBundleId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "leaseId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "authorizationId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 1,
+      "maxLength": 160
+    },
+    "account": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-fA-F]{40}$"
+    },
+    "executionCapsuleHash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "nonce": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "minLength": 16,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "AGENT_ADMIN",
+          "ASSET_SEND",
+          "BRIDGE_DEPOSIT",
+          "BUILDER_FEE_ADMIN",
+          "CANCEL_ORDERS",
+          "EMERGENCY_CLOSE",
+          "INTERNAL_TRANSFER",
+          "PERP_TRADE",
+          "SPOT_TRADE",
+          "VAULT_MANAGE",
+          "WITHDRAWAL"
+        ]
+      }
+    },
+    "decisionInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationalTrustPolicySha256",
+        "runtimeAuthorizationPolicySha256",
+        "runtimeAuthorizerBundleSha256",
+        "releaseReadinessReportSha256",
+        "releaseSubjectSha256",
+        "trustedTimeAttestationSha256",
+        "accountAuthorizationBindingSha256",
+        "runtimeStateBundleSha256",
+        "runtimeLeaseSha256",
+        "operationAuthorizationSha256",
+        "executionCapsuleSha256",
+        "trustedTimeSequence",
+        "evidenceIndexSequence"
+      ],
+      "properties": {
+        "operationalTrustPolicySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "runtimeAuthorizationPolicySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "runtimeAuthorizerBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "releaseReadinessReportSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "releaseSubjectSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "trustedTimeAttestationSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "runtimeStateBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "runtimeLeaseSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "operationAuthorizationSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "executionCapsuleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "accountAuthorizationBindingSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "trustedTimeSequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "evidenceIndexSequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "blockingReasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disclaimer": {
+      "type": "string",
+      "minLength": 30
+    }
+  }
+}

@@ -1,0 +1,740 @@
+{
+  "schemaVersion": "1.0",
+  "evidenceType": "PUBLIC_OFFICIAL_SOURCE_ACQUISITION",
+  "generatedAt": "2026-07-29T13:53:33Z",
+  "startedAt": "2026-07-29T13:53:27Z",
+  "decision": "EVIDENCE_ONLY_NOT_PRODUCTION_GO",
+  "productionGo": false,
+  "constraints": {
+    "officialPrimarySourcesOnly": true,
+    "publicHttpsOnly": true,
+    "authenticationUsed": false,
+    "secretsReadOrRecorded": false,
+    "canonicalSourcePinsModified": false,
+    "responseBodiesPersisted": false,
+    "failurePolicy": "RECORD_UNAVAILABLE"
+  },
+  "input": {
+    "path": "release/SOURCE_PINS.json",
+    "sha256": "10289f96373a7f4aff2dfbaf34193a7f670a9a3c96c5ab374b0ce350b2aaafc8",
+    "sourceCount": 25,
+    "unchangedDuringAcquisition": true
+  },
+  "acquisitionPolicy": {
+    "timeoutSeconds": 30,
+    "maximumResponseBytes": 16777216,
+    "workers": 4,
+    "userAgent": "CryptoGPT-Source-Pin-Evidence/1.0 (public-read-only; no-auth)",
+    "allowedHosts": [
+      "api.github.com",
+      "developer.android.com",
+      "developer.apple.com",
+      "developers.openai.com",
+      "github.com",
+      "hyperliquid.gitbook.io",
+      "openai.com",
+      "platform.openai.com",
+      "raw.githubusercontent.com",
+      "source.android.com",
+      "support.google.com",
+      "www.fsa.go.jp",
+      "www.openai.com"
+    ],
+    "contentHashDefinition": "SHA-256 of exact successful HTTP GET response body with Accept-Encoding identity"
+  },
+  "summary": {
+    "total": 25,
+    "available": 25,
+    "unavailable": 0,
+    "publisherVersionsObserved": 6,
+    "publisherCommitsObserved": 4,
+    "allSourcesAvailable": true
+  },
+  "sources": [
+    {
+      "index": 1,
+      "name": "OpenAI App Developer Terms",
+      "category": "OPENAI",
+      "sourceUrl": "https://openai.com/policies/developer-apps-terms/",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://openai.com/policies/developer-apps-terms/",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "d9532edb3c1081e3b2b314a090bbeef694c0b6c03fbc9d5a1144571edd51afb5",
+      "contentLengthBytes": 371801,
+      "contentType": "text/html; charset=utf-8",
+      "etag": null,
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "Updated July 9, 2026",
+        "method": "visible-update-label"
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 2,
+      "name": "OpenAI Usage Policies",
+      "category": "OPENAI",
+      "sourceUrl": "https://openai.com/ja-JP/policies/usage-policies/",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://openai.com/ja-JP/policies/usage-policies/",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "c93b8520c67e519bede1b7effb74ce23e54e338e44bb194564ec6acce424d8cb",
+      "contentLengthBytes": 324095,
+      "contentType": "text/html; charset=utf-8",
+      "etag": null,
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 3,
+      "name": "OpenAI API Data Controls",
+      "category": "OPENAI",
+      "sourceUrl": "https://platform.openai.com/docs/models/default-usage-policies-by-endpoint",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developers.openai.com/api/docs/guides/your-data#default-usage-policies-by-endpoint",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "a830def9039bd5eb33d831b78357c88584e77b24f0c6705c4f9541927ab80752",
+      "contentLengthBytes": 543364,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "\"73b8bf8136fce5d683e333a6a9143325\"",
+      "lastModified": "Wed, 29 Jul 2026 01:52:44 GMT",
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 4,
+      "name": "Hyperliquid Nonces and API Wallets",
+      "category": "HYPERLIQUID",
+      "sourceUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/nonces-and-api-wallets",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/nonces-and-api-wallets",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "e84af8b01743406f93e0b48014656aa6b2bc3ff9d90863962ce22dd6e3915820",
+      "contentLengthBytes": 389943,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "71f5ef0a65b643ddff2a1dbea84ac23b",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 5,
+      "name": "Hyperliquid Exchange Endpoint",
+      "category": "HYPERLIQUID",
+      "sourceUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/exchange-endpoint",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/exchange-endpoint",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "fbed539dc638838cc845d40d7111c8ee071124b29b45b99da74f375636e62846",
+      "contentLengthBytes": 2725899,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "efdb33aa24d2b9fc322890287a9d7876",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 6,
+      "name": "Hyperliquid Bridge2",
+      "category": "HYPERLIQUID",
+      "sourceUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/bridge2",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/api/bridge2",
+      "retrievedAt": "2026-07-29T13:53:28Z",
+      "contentSha256": "39ecaadd9fa4ed6e7c7cb5f0936f6b5e88261096b0d0b24794dddc4f6e34f6dc",
+      "contentLengthBytes": 557917,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "2007f5b1190f369fa39e0249f2925d0d",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 7,
+      "name": "Hyperliquid Python SDK",
+      "category": "GITHUB",
+      "sourceUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk",
+      "retrievedAt": "2026-07-29T13:53:29Z",
+      "contentSha256": "fa6c99d378b4fe78aeb6852dcec7f88c88b679833cfa3c31ca7a327662b47aac",
+      "contentLengthBytes": 334466,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "W/\"f187294ac1071e2d72bbb911b3c9acbb\"",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "0.24.0",
+        "method": "pinned-pyproject-toml",
+        "evidenceUrl": "https://raw.githubusercontent.com/hyperliquid-dex/hyperliquid-python-sdk/2fdb18f9517675ea03695a0962bd19eece9c83f0/pyproject.toml",
+        "evidenceContentSha256": "9503682e2a210752f6be164f7377755692c0f457476b8f4bfffc2c43700a3d33"
+      },
+      "publisherCommit": {
+        "status": "OBSERVED",
+        "value": "2fdb18f9517675ea03695a0962bd19eece9c83f0",
+        "evidenceUrl": "https://api.github.com/repos/hyperliquid-dex/hyperliquid-python-sdk/commits/master",
+        "retrievedAt": "2026-07-29T13:53:30Z",
+        "httpStatus": 200
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 8,
+      "name": "Hyperliquid Python SDK exchange.py",
+      "category": "GITHUB",
+      "sourceUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/exchange.py",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/exchange.py",
+      "retrievedAt": "2026-07-29T13:53:29Z",
+      "contentSha256": "07c294c833834e5e00e9927f9cd4fc2d8ec09400ccbe9d89fc8583a1113bb69a",
+      "contentLengthBytes": 876414,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "W/\"efea10cd1c1833f9d5e3f3f2a40165bc\"",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "OBSERVED",
+        "value": "2fdb18f9517675ea03695a0962bd19eece9c83f0",
+        "evidenceUrl": "https://api.github.com/repos/hyperliquid-dex/hyperliquid-python-sdk/commits?sha=master&path=hyperliquid/exchange.py&per_page=1",
+        "retrievedAt": "2026-07-29T13:53:30Z",
+        "httpStatus": 200
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 9,
+      "name": "Hyperliquid Python SDK signing.py",
+      "category": "GITHUB",
+      "sourceUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/utils/signing.py",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://github.com/hyperliquid-dex/hyperliquid-python-sdk/blob/master/hyperliquid/utils/signing.py",
+      "retrievedAt": "2026-07-29T13:53:29Z",
+      "contentSha256": "feebe24c48838350cc249714aede9a3460f9a2aa0db23847bd338406eee4dbe0",
+      "contentLengthBytes": 578675,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "W/\"366d14636ba3678a7c82a26168dd2c55\"",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "OBSERVED",
+        "value": "7ee976d123b1e04295e4a1e37a424ca6a13bef88",
+        "evidenceUrl": "https://api.github.com/repos/hyperliquid-dex/hyperliquid-python-sdk/commits?sha=master&path=hyperliquid/utils/signing.py&per_page=1",
+        "retrievedAt": "2026-07-29T13:53:30Z",
+        "httpStatus": 200
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 10,
+      "name": "Hyperliquid Bridge2 Contract",
+      "category": "GITHUB",
+      "sourceUrl": "https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://github.com/hyperliquid-dex/contracts/blob/master/Bridge2.sol",
+      "retrievedAt": "2026-07-29T13:53:29Z",
+      "contentSha256": "9d4d9658fba45120aa8b641b582e3afba49ac134062ee348226fb086841467f6",
+      "contentLengthBytes": 629984,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "W/\"c6a2953ed1a9c07361e722af5b93d290\"",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "OBSERVED",
+        "value": "d7e66aa751ffbd19bfd2b90fd5d9a3d8f32d99ee",
+        "evidenceUrl": "https://api.github.com/repos/hyperliquid-dex/contracts/commits?sha=master&path=Bridge2.sol&per_page=1",
+        "retrievedAt": "2026-07-29T13:53:30Z",
+        "httpStatus": 200
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 11,
+      "name": "Android Hardware-backed Keystore",
+      "category": "ANDROID",
+      "sourceUrl": "https://source.android.com/docs/security/features/keystore",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://source.android.com/docs/security/features/keystore",
+      "retrievedAt": "2026-07-29T13:53:30Z",
+      "contentSha256": "99bd0d0e416b8caf79cf100db5a5f42812f7aeb5a97d78e19fa1bd3477648038",
+      "contentLengthBytes": 276397,
+      "contentType": "text/html; charset=utf-8",
+      "etag": null,
+      "lastModified": "Wed, 17 Jun 2026 23:23:26 GMT",
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "Last updated 2026-06-17",
+        "method": "visible-update-label"
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 12,
+      "name": "FSA Crypto Assets and Electronic Payment Instruments",
+      "category": "JAPAN_FSA",
+      "sourceUrl": "https://www.fsa.go.jp/policy/virtual_currency02/index.html",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://www.fsa.go.jp/policy/virtual_currency02/index.html",
+      "retrievedAt": "2026-07-29T13:53:30Z",
+      "contentSha256": "a3876bf412577456fac10aaa62ccf772a3907b820f2d63bd48835c0e3ada2ea3",
+      "contentLengthBytes": 83180,
+      "contentType": "text/html",
+      "etag": null,
+      "lastModified": "Wed, 15 Jul 2026 18:20:42 GMT",
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 13,
+      "name": "Android ConfirmationPrompt",
+      "category": "ANDROID",
+      "sourceUrl": "https://developer.android.com/reference/android/security/ConfirmationPrompt",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.android.com/reference/android/security/ConfirmationPrompt",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "8717424a6fa32a9d31c7504810ffef4c4f5c1fa09d6d12312ab431c284212500",
+      "contentLengthBytes": 2208369,
+      "contentType": "text/html; charset=utf-8",
+      "etag": null,
+      "lastModified": "Fri, 13 Feb 2026 19:12:27 GMT",
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "Last updated 2026-02-13",
+        "method": "visible-update-label"
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 14,
+      "name": "Google Play Financial Features Declaration",
+      "category": "GOOGLE_PLAY",
+      "sourceUrl": "https://support.google.com/googleplay/android-developer/answer/13849271",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://support.google.com/googleplay/android-developer/answer/13849271",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "3a6fc8bd544e50a0edec7b499364d749f523309cab071aababa7ace4da11ea98",
+      "contentLengthBytes": 1432228,
+      "contentType": "text/html; charset=UTF-8",
+      "etag": null,
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 15,
+      "name": "Google Play Cryptocurrency and Blockchain Policy",
+      "category": "GOOGLE_PLAY",
+      "sourceUrl": "https://support.google.com/googleplay/android-developer/answer/17190352",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://support.google.com/googleplay/android-developer/answer/17190352",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "c717223ec69d21ff3c1cd7e8baf802b3654a43969822c9e640370efad8f24908",
+      "contentLengthBytes": 1745959,
+      "contentType": "text/html; charset=UTF-8",
+      "etag": null,
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "effective July 15, 2026",
+        "method": "visible-update-label"
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 16,
+      "name": "Hyperliquid Foundation Non-validating Node",
+      "category": "HYPERLIQUID",
+      "sourceUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/nodes/foundation-non-validating-node",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/for-developers/nodes/foundation-non-validating-node",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "211db979d15d58a2e1efe534a7d136a05d2e30d13b3f76b4556653e7ac0933cd",
+      "contentLengthBytes": 365020,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "6b58466c86d515ea08a98189c00e883a",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 17,
+      "name": "Hyperliquid Testnet Faucet",
+      "category": "HYPERLIQUID",
+      "sourceUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/onboarding/testnet-faucet",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://hyperliquid.gitbook.io/hyperliquid-docs/onboarding/testnet-faucet",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "0ad055b52c3338b2d0d23beb2b65d296e5f39b7bcf2dc81bd1afce5ff233da54",
+      "contentLengthBytes": 320954,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "94c9c40f895b8d792496f7f4850d63ae",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 18,
+      "name": "Apple App Review Guidelines",
+      "category": "APP_STORE",
+      "sourceUrl": "https://developer.apple.com/app-store/review/guidelines/",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/app-store/review/guidelines/",
+      "retrievedAt": "2026-07-29T13:53:31Z",
+      "contentSha256": "7eff0592e5b50de761823e63b4a0126ef7c270aff528b43b89c9d8f1a9290648",
+      "contentLengthBytes": 237999,
+      "contentType": "text/html",
+      "etag": null,
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "OBSERVED",
+        "value": "Last Updated June 8, 2026",
+        "method": "visible-update-label"
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 19,
+      "name": "Apple SecureEnclave P256 Signing",
+      "category": "IOS",
+      "sourceUrl": "https://developer.apple.com/documentation/cryptokit/secureenclave/p256/signing",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/documentation/cryptokit/secureenclave/p256/signing",
+      "retrievedAt": "2026-07-29T13:53:32Z",
+      "contentSha256": "9deaad47f83e745e811ccd21e5235f00c39c5408736b2f7b0ca8f03582456809",
+      "contentLengthBytes": 17404,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "f9885fff4d3951a3bac5fd4decdaba12",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 20,
+      "name": "Apple App Attest Integrity",
+      "category": "IOS",
+      "sourceUrl": "https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/documentation/devicecheck/establishing-your-app-s-integrity",
+      "retrievedAt": "2026-07-29T13:53:32Z",
+      "contentSha256": "be03b15bb9ddeeab56320e84ba0fa5280fdb97cb8e6642ff2e96c1898e4ea5ce",
+      "contentLengthBytes": 17230,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "85d53d4e4ea0a3061bd7da2403931e5c",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 21,
+      "name": "Apple App Attest isSupported",
+      "category": "IOS",
+      "sourceUrl": "https://developer.apple.com/documentation/devicecheck/dcappattestservice/issupported",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/documentation/devicecheck/dcappattestservice/issupported",
+      "retrievedAt": "2026-07-29T13:53:32Z",
+      "contentSha256": "b7ab7067d5227d281fce4202c669e023f5f285bb112385445d3218a8aa1c9d63",
+      "contentLengthBytes": 17167,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "6506b4e26bce3357a3f3ac8a87260e3c",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 22,
+      "name": "Apple Keychain Accessibility",
+      "category": "IOS",
+      "sourceUrl": "https://developer.apple.com/documentation/security/ksecattraccessible",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/documentation/security/ksecattraccessible",
+      "retrievedAt": "2026-07-29T13:53:32Z",
+      "contentSha256": "c9672e0ac9a23593df87a855f7f23d25a64669a462abb9fbf7302dce9f7fa72f",
+      "contentLengthBytes": 17083,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "678c00087efb05080303271446f47f6d",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 23,
+      "name": "Apple HIG Accessibility",
+      "category": "ACCESSIBILITY",
+      "sourceUrl": "https://developer.apple.com/design/human-interface-guidelines/accessibility/",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/design/human-interface-guidelines/accessibility/",
+      "retrievedAt": "2026-07-29T13:53:32Z",
+      "contentSha256": "bc376423e47acc51c76a34d89b79346a101c631a922b7cd691ebf0124d3b52d6",
+      "contentLengthBytes": 17005,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "d25f0e580bc9f97059366389f7c9cb05",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 24,
+      "name": "Apple Ad Hoc Distribution",
+      "category": "APP_STORE",
+      "sourceUrl": "https://developer.apple.com/help/account/provisioning-profiles/create-an-ad-hoc-provisioning-profile",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/help/account/provisioning-profiles/create-an-ad-hoc-provisioning-profile",
+      "retrievedAt": "2026-07-29T13:53:33Z",
+      "contentSha256": "2712009e6f7998cc3570ea18a6e69e110a8fbcedf016a1681dc199c91fdb700f",
+      "contentLengthBytes": 195469,
+      "contentType": "text/html; charset=UTF-8",
+      "etag": null,
+      "lastModified": "Mon, 27 Jul 2026 22:47:51 GMT",
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    },
+    {
+      "index": 25,
+      "name": "Apple Screen Capture State",
+      "category": "IOS",
+      "sourceUrl": "https://developer.apple.com/documentation/uikit/uiscreen/iscaptured",
+      "status": "AVAILABLE",
+      "httpStatus": 200,
+      "finalUrl": "https://developer.apple.com/documentation/uikit/uiscreen/iscaptured",
+      "retrievedAt": "2026-07-29T13:53:33Z",
+      "contentSha256": "9b2228bd895f9748e29865172fc916be8aef961e0d2e6645045f0e9fd531d841",
+      "contentLengthBytes": 17152,
+      "contentType": "text/html; charset=utf-8",
+      "etag": "9b7f8d972ab2e12fc722caf5bd61d316",
+      "lastModified": null,
+      "publisherVersion": {
+        "status": "UNAVAILABLE",
+        "value": null,
+        "method": null
+      },
+      "publisherCommit": {
+        "status": "NOT_APPLICABLE",
+        "value": null,
+        "evidenceUrl": null
+      },
+      "unavailableReason": null,
+      "productionGo": false
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "1.0",
+  "draftId": "draft-btc-long-001",
+  "classification": "EXPLICIT_ACTION",
+  "operations": [
+    {
+      "operationId": "op-btc-long-001",
+      "type": "PERP_ORDER",
+      "assetAlias": "BTC",
+      "quoteAssetAlias": "USDC",
+      "side": "BUY",
+      "positionEffect": "OPEN",
+      "amountMode": "EXACT_NOTIONAL",
+      "amount": "500",
+      "percent": null,
+      "leverage": 3,
+      "orderType": "IOC",
+      "limitPrice": null,
+      "triggerPrice": null,
+      "triggerKind": null,
+      "reduceOnly": false,
+      "destinationAlias": null,
+      "vaultAlias": null,
+      "sourceDexAlias": null,
+      "destinationDexAlias": null,
+      "maxSlippageBpsRequested": 30,
+      "dependsOn": [],
+      "userTextFragment": "BTCを500 USDC、3倍でロング",
+      "triggerOffsetPercent": null,
+      "triggerReference": null,
+      "quantityReferenceOperationId": null
+    },
+    {
+      "operationId": "op-btc-sl-001",
+      "type": "PERP_ORDER",
+      "assetAlias": "BTC",
+      "quoteAssetAlias": "USDC",
+      "side": "SELL",
+      "positionEffect": "REDUCE",
+      "amountMode": "PERCENT",
+      "amount": null,
+      "percent": "100",
+      "leverage": null,
+      "orderType": "TRIGGER_MARKET",
+      "limitPrice": null,
+      "triggerPrice": null,
+      "triggerKind": "SL",
+      "triggerOffsetPercent": "2",
+      "triggerReference": "ENTRY_FILL_PRICE",
+      "quantityReferenceOperationId": "op-btc-long-001",
+      "reduceOnly": true,
+      "destinationAlias": null,
+      "vaultAlias": null,
+      "sourceDexAlias": null,
+      "destinationDexAlias": null,
+      "maxSlippageBpsRequested": 100,
+      "dependsOn": [
+        "op-btc-long-001"
+      ],
+      "userTextFragment": "損切りは2％"
+    }
+  ],
+  "missingFields": [],
+  "warnings": [
+    "PROTECTIVE_ORDER_FAILURE_MUST_CLOSE_OR_ESCALATE"
+  ],
+  "modelConfidence": "0.99",
+  "userLanguage": "ja",
+  "sourceTextHash": "0x5a2c12d547fe5a2afe1403f5a51ed546083ecfd3c3b9621a96fe21f2aa2fb45b",
+  "sourceTextHashProfile": "ONE_INTENT_SOURCE_TEXT_HASH_V1"
+}

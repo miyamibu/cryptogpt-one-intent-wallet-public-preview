@@ -1,0 +1,13 @@
+{
+  "status": "BLOCKED_NOT_OPERATIONAL",
+  "releaseEligibleForRuntimeActivation": false,
+  "productionWritePermitted": false,
+  "runtimeLease": null,
+  "leaseMaxLifetimeSeconds": 300,
+  "leaseAuthorizesTransaction": false,
+  "runtimeDeployment": "NOT_DEPLOYED",
+  "writeGate": "STATICALLY_DISABLED",
+  "killSwitch": "STATIC_FAIL_CLOSED_ONLY",
+  "killSwitchOperationallyVerified": false,
+  "reason": "No production runtime deployment, signed health bundle, protected high-water marks, or trusted-time attestation exists; this report does not prove an operational kill-switch endpoint."
+}

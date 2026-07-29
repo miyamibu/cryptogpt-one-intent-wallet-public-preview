@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "1.0",
+  "defaultMode": "plain-ja",
+  "policy": {
+    "primaryUiLanguage": "ja-JP",
+    "showTechnicalAliasByDefault": false,
+    "allowTechnicalAliasInAdvancedDetails": true,
+    "neverGuessMoneyAddressNetwork": true
+  },
+  "entries": [
+    {
+      "internal": "perpetual",
+      "preferred": "期限なし先物取引",
+      "explanation": "満期日がなく、価格の上げ下げを予想する取引です。損失が大きいと自動決済される場合があります。",
+      "forbiddenPrimaryLabels": [
+        "Perp",
+        "Perpetual",
+        "ペイパチャル",
+        "パーペチュアル"
+      ],
+      "advancedAliases": [
+        "perpetual futures",
+        "perp"
+      ]
+    },
+    {
+      "internal": "spot",
+      "preferred": "現物取引",
+      "explanation": "代金と引き換えに、実際の資産を売買する取引です。",
+      "forbiddenPrimaryLabels": [
+        "Spot",
+        "スポット"
+      ],
+      "advancedAliases": [
+        "spot"
+      ]
+    },
+    {
+      "internal": "slippage",
+      "preferred": "予定価格と成立価格のずれ",
+      "explanation": "注文を出してから成立するまでに価格が動くことで生じる差です。",
+      "forbiddenPrimaryLabels": [
+        "Slippage",
+        "スリッページ",
+        "スリップページ"
+      ],
+      "advancedAliases": [
+        "slippage"
+      ]
+    },
+    {
+      "internal": "bridge",
+      "preferred": "別ネットワークへの資金移動",
+      "explanation": "あるネットワークにある資産を、別のネットワークで使える状態へ移します。",
+      "forbiddenPrimaryLabels": [
+        "Bridge",
+        "ブリッジ"
+      ],
+      "advancedAliases": [
+        "bridge"
+      ]
+    },
+    {
+      "internal": "vault",
+      "preferred": "運用口座",
+      "explanation": "資産を預けて運用する仕組みです。元本保証ではなく、損失や引き出せない期間がある場合があります。",
+      "forbiddenPrimaryLabels": [
+        "Vault",
+        "ボルト"
+      ],
+      "advancedAliases": [
+        "vault"
+      ]
+    },
+    {
+      "internal": "gas",
+      "preferred": "ネットワーク手数料",
+      "explanation": "ブロックチェーン上で送金や交換を処理するために必要な手数料です。",
+      "forbiddenPrimaryLabels": [
+        "Gas",
+        "ガス代"
+      ],
+      "advancedAliases": [
+        "gas fee"
+      ]
+    },
+    {
+      "internal": "gas-token",
+      "preferred": "ネットワーク手数料を払う資産",
+      "explanation": "送金や交換の手数料を支払うために、そのネットワークで必要な資産です。",
+      "forbiddenPrimaryLabels": [
+        "Gas token",
+        "ネイティブトークン"
+      ],
+      "advancedAliases": [
+        "native fee token"
+      ]
+    },
+    {
+      "internal": "leverage",
+      "preferred": "取引倍率",
+      "explanation": "元手に対して、どれくらい大きな取引をするかを示す倍率です。倍率が高いほど損失も大きくなりやすくなります。",
+      "forbiddenPrimaryLabels": [
+        "Leverage",
+        "レバレッジ"
+      ],
+      "advancedAliases": [
+        "leverage"
+      ]
+    },
+    {
+      "internal": "margin",
+      "preferred": "取引の担保",
+      "explanation": "先物取引を続けるために預けている資産です。",
+      "forbiddenPrimaryLabels": [
+        "Margin",
+        "マージン"
+      ],
+      "advancedAliases": [
+        "margin"
+      ]
+    },
+    {
+      "internal": "liquidation-price",
+      "preferred": "清算価格",
+      "explanation": "損失が一定以上になり、ポジションが自動決済される目安の価格です。口座全体の状態で変わります。",
+      "forbiddenPrimaryLabels": [
+        "Liquidation Price",
+        "生産価格"
+      ],
+      "advancedAliases": [
+        "liquidationPx"
+      ]
+    },
+    {
+      "internal": "mark-price",
+      "preferred": "清算判定に使う価格",
+      "explanation": "清算の判定などに使われる基準価格です。最後に成立した価格と異なる場合があります。",
+      "forbiddenPrimaryLabels": [
+        "Mark Price",
+        "マーク価格"
+      ],
+      "advancedAliases": [
+        "markPx"
+      ]
+    },
+    {
+      "internal": "reduce-only",
+      "preferred": "ポジションを増やさず減らすだけ",
+      "explanation": "現在の取引量を減らす方向にしか使わない注文です。",
+      "forbiddenPrimaryLabels": [
+        "Reduce Only",
+        "reduce-only"
+      ],
+      "advancedAliases": [
+        "reduceOnly"
+      ]
+    },
+    {
+      "internal": "ioc",
+      "preferred": "すぐ成立する分だけ",
+      "explanation": "今すぐ成立できる分だけ取引し、残りは自動で取り消します。",
+      "forbiddenPrimaryLabels": [
+        "IOC"
+      ],
+      "advancedAliases": [
+        "Immediate or Cancel"
+      ]
+    },
+    {
+      "internal": "saga",
+      "preferred": "順番に進める複数の操作",
+      "explanation": "複数の操作を順に行い、途中で止まった場合は完了済みと未完了を分けて扱います。",
+      "forbiddenPrimaryLabels": [
+        "Saga",
+        "サガ"
+      ],
+      "advancedAliases": [
+        "saga"
+      ]
+    },
+    {
+      "internal": "root-action",
+      "preferred": "特別な権限が必要な操作",
+      "explanation": "出金、鍵の変更、権限設定など、通常より強い確認が必要な操作です。",
+      "forbiddenPrimaryLabels": [
+        "Root action",
+        "ルート操作"
+      ],
+      "advancedAliases": [
+        "root action"
+      ]
+    },
+    {
+      "internal": "agent-wallet",
+      "preferred": "取引用の限定権限",
+      "explanation": "取引だけに使えるよう、範囲を狭く制限した権限です。出金や鍵変更には使えません。",
+      "forbiddenPrimaryLabels": [
+        "Agent wallet",
+        "エージェントウォレット"
+      ],
+      "advancedAliases": [
+        "API wallet"
+      ]
+    },
+    {
+      "internal": "apy",
+      "preferred": "1年あたりの利益の目安",
+      "explanation": "現在の実績が続いたと仮定した目安で、将来の利益を保証しません。",
+      "forbiddenPrimaryLabels": [
+        "APY"
+      ],
+      "advancedAliases": [
+        "annual percentage yield"
+      ]
+    },
+    {
+      "internal": "tvl",
+      "preferred": "運用中の総額",
+      "explanation": "その運用先に現在預けられている資産の合計です。",
+      "forbiddenPrimaryLabels": [
+        "TVL"
+      ],
+      "advancedAliases": [
+        "total value locked"
+      ]
+    },
+    {
+      "internal": "drawdown",
+      "preferred": "過去の最大下落",
+      "explanation": "過去の最高点から、最も大きく下がった割合です。",
+      "forbiddenPrimaryLabels": [
+        "Drawdown",
+        "最大DD"
+      ],
+      "advancedAliases": [
+        "maximum drawdown"
+      ]
+    },
+    {
+      "internal": "lock-period",
+      "preferred": "引き出せない期間",
+      "explanation": "預けた資産を取り出せない期間です。",
+      "forbiddenPrimaryLabels": [
+        "Lock",
+        "ロック期間"
+      ],
+      "advancedAliases": [
+        "lock period"
+      ]
+    }
+  ]
+}

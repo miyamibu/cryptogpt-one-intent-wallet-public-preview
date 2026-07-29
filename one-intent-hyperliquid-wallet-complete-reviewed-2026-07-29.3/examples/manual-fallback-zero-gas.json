@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "2.1",
+  "fallbackId": "manual_zero_gas_polygon_001",
+  "reasonCode": "ZERO_FEE_ASSET_NO_VERIFIED_ROUTE",
+  "titleJa": "送金手数料を手動で準備する",
+  "currentScreenJa": "ウォレットのホーム画面",
+  "networkId": "eip155:137",
+  "feeAsset": "POL",
+  "recipientAddress": "0x1111111111111111111111111111111111111111",
+  "recipientFingerprint": "1111・1111・1111",
+  "recommendedAmount": null,
+  "amountSource": "NOT_AVAILABLE",
+  "estimateGeneratedAt": null,
+  "estimateExpiresAt": null,
+  "steps": [
+    {
+      "order": 1,
+      "screenJa": "ホーム",
+      "controlLabelJa": "資産",
+      "actionJa": "画面下の「資産」を押します。",
+      "expectedResultJa": "資産一覧が開きます。",
+      "safetyCheckJa": "似た名前の外部アプリへ移動していないことを確認します。"
+    },
+    {
+      "order": 2,
+      "screenJa": "資産一覧",
+      "controlLabelJa": "受け取る",
+      "actionJa": "右上の「受け取る」を押します。",
+      "expectedResultJa": "受取ネットワークを選ぶ画面が開きます。",
+      "safetyCheckJa": "「送る」ではなく「受け取る」を選びます。"
+    },
+    {
+      "order": 3,
+      "screenJa": "受取ネットワーク",
+      "controlLabelJa": "Polygon",
+      "actionJa": "「Polygon」を選びます。",
+      "expectedResultJa": "Polygon用の受取アドレスが表示されます。",
+      "safetyCheckJa": "EthereumやArbitrumを選ばないでください。"
+    },
+    {
+      "order": 4,
+      "screenJa": "受取アドレス",
+      "controlLabelJa": "アドレスをコピー",
+      "actionJa": "表示された完全なアドレスをコピーし、指紋も控えます。",
+      "expectedResultJa": "アドレスが端末へコピーされます。",
+      "safetyCheckJa": "先頭・末尾・照合用の指紋が画面表示と一致することを確認します。"
+    },
+    {
+      "order": 5,
+      "screenJa": "このウォレット",
+      "controlLabelJa": "手数料見積もりを更新",
+      "actionJa": "対象のJPYC送金に結び付いた最新の推奨量と有効期限を取得します。推奨量が表示されない間は送金しません。",
+      "expectedResultJa": "推奨量、上限、有効期限、対象操作が表示されます。",
+      "safetyCheckJa": "固定額や古い見積もりを使わず、送金元の最低出金額と費用も確認します。"
+    },
+    {
+      "order": 6,
+      "screenJa": "別のウォレットまたは取引所",
+      "controlLabelJa": "送金",
+      "actionJa": "PolygonとPOLを選び、表示された推奨量以上かつ上限以下だけを、コピーしたアドレスへ送ります。",
+      "expectedResultJa": "Polygon上の送金が受け付けられます。",
+      "safetyCheckJa": "ネットワーク、資産、完全な宛先、指紋、数量をもう一度確認します。"
+    },
+    {
+      "order": 7,
+      "screenJa": "このウォレット",
+      "controlLabelJa": "残高を更新",
+      "actionJa": "アプリへ戻り「残高を更新」を押します。",
+      "expectedResultJa": "手数料用残高が表示され、元のJPYC送金を新しい見積もりで作り直せます。",
+      "safetyCheckJa": "反映前に同じ送金を繰り返さず、元の処理を二重実行しないでください。"
+    }
+  ],
+  "retryControlLabelJa": "手数料見積もりを更新する",
+  "supportCode": "FEE-POL-ZERO-002",
+  "expiresAt": "2026-07-29T09:00:00Z",
+  "exampleOnly": true,
+  "maximumAmount": null,
+  "estimateId": null,
+  "operationDigest": null
+}

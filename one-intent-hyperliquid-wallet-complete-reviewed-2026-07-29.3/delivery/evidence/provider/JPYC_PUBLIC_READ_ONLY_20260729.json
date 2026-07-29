@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "capturedAt": "2026-07-29T13:39:30Z",
+  "sources": [
+    {
+      "name": "JPYC official public site",
+      "url": "https://jpyc.jp/",
+      "httpStatus": 200,
+      "contentSha256": "c156901546e9fb20dcd996c4b013c0cfb7d00cc333b347604a70edd4a4201fda",
+      "etag": "54a6312551c48740d8fac41b6f947060",
+      "lastModified": "Thu, 29 Jan 2026 03:14:52 GMT"
+    },
+    {
+      "name": "JPYC EX public site",
+      "url": "https://ex.jpycjp.cc/",
+      "httpStatus": 200,
+      "contentSha256": "c33820676575740467b3146534ae60e8304e8ffffbcfba58a2978c7f02dea872",
+      "etag": "69d50ae7-748",
+      "lastModified": "Tue, 07 Apr 2026 13:47:19 GMT"
+    }
+  ],
+  "status": "PUBLIC_READ_ONLY_RETRIEVED_NOT_PARTNER_OR_CONTRACT_EVIDENCE",
+  "walletConnectionUsed": false,
+  "transactionPerformed": false,
+  "contractAddressAccepted": false,
+  "partnerCredentialAccessed": false,
+  "boundary": "Public pages do not establish the exact JPYC contract/network, JPYC EX partner agreement, issuer authorization, redemption/settlement route, or fee provider contract required for E2E or release approval."
+}

@@ -1,0 +1,73 @@
+status: BLOCKED_NOT_OPERATIONAL
+profile: JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1
+scope: loopback_operational_sandbox_and_offline_reference_implementation
+implemented:
+  - strict_duplicate_key_nfc_decimal_canonicalization
+  - untrusted_local_intent_draft_and_voice_ambiguity_gate
+  - execution_capsule_quote_registry_payload_binding
+  - read_only_chatgpt_fixed_catalog_boundary
+  - fail_closed_fee_readiness_and_manual_fallback
+  - jpyc_ex_controlled_handoff_contract
+  - fake_hyperliquid_lifecycle_and_emergency_cancel
+  - single_use_authorization_and_signer_state_machine
+  - durable_saga_idempotency_and_reconciliation_states
+  - non_mutating_validation_and_deterministic_double_build
+  - readiness_model_with_37_gates_and_93_claims
+  - loopback_only_nontransactional_http_sandbox
+  - canonical_resource_limits_and_strict_runtime_types
+  - host_origin_request_smuggling_and_error_leakage_hardening
+  - durable_nonce_schema_verification_and_pending_signature_lock
+  - external_operationalization_codex_execution_contract
+  - operationalization_evidence_binding_801_37_93
+tested_locally:
+  command: python3 -B -m unittest discover -s tests -p 'test_*.py'
+  result: PASS
+  python_source_files_compiled: 103
+  test_count: 86
+  browser_matrix: 288
+  local_sandbox_self_test: PASS
+  swift_contract_tests: 5
+  swift_contract_test: PASS
+  evidence_source: delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json
+simulated_only:
+  - hyperliquid_testnet
+  - jpyc_ex_partner
+  - zero_native_balance_provider
+  - native_android_release
+  - native_ios_release
+local_only_verified:
+  android:
+    - gradle_wrapper_9_3_1
+    - debug_unit_tests_5
+    - unsigned_debug_apk_build
+    - unsigned_release_apk_and_aab_build
+    - pixel_9a_launch_render_tap_scroll
+  ios:
+    - OfflineWalletApp_unsigned_iphoneos_compile
+    - OfflineWalletApp_unsigned_simulator_compile
+    - OfflineWalletApp_signed_iphoneos_build_team_8R3B5675ZJ
+    - iphone_12_install_launch_appium_tap_scroll
+not_verified:
+  - android_release_signing_play_signing_and_integrity
+  - ios_archive_or_ipa
+  - ios_full_device_matrix
+  - ios_voiceover_dynamic_type_rotation_matrix
+  - compact_android_physical_device_matrix
+  - live_read_only_staging
+  - testnet_write
+  - mainnet
+  - external_security_audit
+  - legal_approval
+  - app_store_or_google_play_approval
+  - production_credentials_and_contracts
+local_runtime:
+  status: LOCAL_SANDBOX_OPERATIONAL_GO
+  bind_scope: LOOPBACK_ONLY
+  external_network: DISABLED
+  signer: UNAVAILABLE
+  transaction_routes: UNAVAILABLE
+write_gates:
+  native_build: NO_GO_RELEASE_SIGNING_REQUIRED
+  testnet_write: NO_GO
+  mainnet: NO_GO
+  public_stores: NO_GO

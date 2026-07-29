@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/runtime-control-plane-lease.schema.json",
+  "title": "RuntimeControlPlaneLease",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "leaseId",
+    "profileId",
+    "releaseSubject",
+    "deploymentId",
+    "runtimeBundleId",
+    "sequence",
+    "issuedAt",
+    "expiresAt",
+    "capabilities",
+    "transactionAuthorizationGranted",
+    "signatures"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "leaseId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "releaseSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "releaseId",
+        "environment",
+        "sourceCommit",
+        "sourceTreeSha256",
+        "androidArtifactSha256",
+        "iosArtifactSha256",
+        "backendImageDigest",
+        "signerImageDigest",
+        "configurationBundleSha256",
+        "policyBundleSha256",
+        "assetRegistrySha256",
+        "sbomSha256"
+      ],
+      "properties": {
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "environment": {
+          "enum": [
+            "DESIGN_ONLY",
+            "STAGING",
+            "TESTNET",
+            "PRODUCTION"
+          ]
+        },
+        "sourceCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40,64}$"
+        },
+        "sourceTreeSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "androidArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "iosArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "backendImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "signerImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "configurationBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assetRegistrySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sbomSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "deploymentId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "runtimeBundleId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "issuedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_]+$"
+      },
+      "maxItems": 32
+    },
+    "transactionAuthorizationGranted": {
+      "const": false
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "profile",
+          "keyId",
+          "role",
+          "principalId",
+          "organization",
+          "signatureBase64"
+        ],
+        "properties": {
+          "profile": {
+            "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+          },
+          "keyId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "role": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+          },
+          "principalId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "organization": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          },
+          "signatureBase64": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 256
+          }
+        }
+      },
+      "maxItems": 16
+    }
+  }
+}

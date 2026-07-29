@@ -1,0 +1,28 @@
+version: release-source-policy-1.0
+default_action_on_missing_or_stale_source: BLOCK_WRITE
+production:
+  registry_signature_required: true
+  two_person_approval_required: true
+  source_content_hash_required: true
+  stale_while_revalidate_allowed_for_reads_only: true
+  writes_require_all_sources_current: true
+  categories:
+    ASSET_REGISTRY:
+      max_age_seconds: 86400
+      conflict_action: BLOCK_ALL_ASSET_WRITES
+    HYPERLIQUID_PROTOCOL:
+      max_age_seconds: 21600
+      conflict_action: BLOCK_AFFECTED_CAPABILITY
+    FEE_ROUTE_CAPABILITY:
+      max_age_seconds: 3600
+      conflict_action: BLOCK_FEE_AUTOMATION
+    JPYC_EX_HANDOFF:
+      max_age_seconds: 86400
+      conflict_action: BLOCK_ISSUANCE_HANDOFF
+    APP_STORE_AND_POLICY:
+      max_age_seconds: 604800
+      conflict_action: BLOCK_PUBLIC_RELEASE
+simulation:
+  signed_registry_required: false
+  production_eligible: false
+  external_values_must_be_marked_as_examples: true

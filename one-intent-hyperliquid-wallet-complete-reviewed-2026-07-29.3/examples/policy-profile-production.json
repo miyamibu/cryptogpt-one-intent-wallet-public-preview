@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "1.0",
+  "policyId": "policy-production-template-001",
+  "userId": "user-demo-001",
+  "version": "2026-07-28.production-template",
+  "environment": "MAINNET",
+  "allowedAssets": [
+    "hyperliquid:perp:BTC",
+    "hyperliquid:perp:ETH",
+    "hyperliquid:spot:HYPE",
+    "hyperliquid:USDC"
+  ],
+  "allowedOperationTypes": [
+    "PERP_ORDER",
+    "PERP_CANCEL",
+    "PERP_MODIFY",
+    "PERP_CLOSE",
+    "SPOT_ORDER",
+    "INTERNAL_USD_SEND",
+    "ARBITRUM_WITHDRAW",
+    "ARBITRUM_BRIDGE_DEPOSIT",
+    "HLP_DEPOSIT",
+    "HLP_WITHDRAW",
+    "CANCEL_ALL_ORDERS",
+    "EMERGENCY_CLOSE"
+  ],
+  "limits": {
+    "tradeNotional": {
+      "maxPerAction": "100",
+      "maxDaily": "500",
+      "highRiskThreshold": "100"
+    },
+    "transfer": {
+      "maxPerAction": "10",
+      "maxDaily": "20",
+      "highRiskThreshold": "10"
+    },
+    "withdraw": {
+      "maxPerAction": "25",
+      "maxDaily": "50",
+      "highRiskThreshold": "25"
+    },
+    "vault": {
+      "maxPerAction": "25",
+      "maxDaily": "50",
+      "highRiskThreshold": "25"
+    },
+    "totalExposure": "200",
+    "dailyLoss": "20"
+  },
+  "maxLeverage": 3,
+  "maxSlippageBps": 30,
+  "sessionMinutes": 30,
+  "destinationRules": {
+    "newDestinationCooldownSeconds": 86400,
+    "requireTestTransferAbove": "100",
+    "requireAuthPerUseForNew": true
+  },
+  "vaultRules": {
+    "allowHlp": true,
+    "allowUserVaults": false,
+    "allowHyperEvmVaults": false,
+    "allowedVaultIds": [
+      "hyperliquid:hlp"
+    ]
+  },
+  "effectiveAt": "2026-07-28T00:00:00+09:00",
+  "expiresAt": null,
+  "status": "DRAFT"
+}

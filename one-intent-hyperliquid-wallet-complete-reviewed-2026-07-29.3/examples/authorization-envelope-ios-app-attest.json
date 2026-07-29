@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "authorizationId": "auth-ios-withdrawal-001",
+  "planId": "plan-ios-saved-withdrawal-001",
+  "semanticHash": "0xc84e26c0bf1c332b83128242004c3b97bcbb1d3cd2fb3790da5be276195d9aa6",
+  "renderReceiptHash": "0x4c5e15a41d1dbaf32b8f91324e3245d915fc564c405b51f95620202cb968b5b3",
+  "sourceStateHash": "0xe165691721a5d0fe9810758e82534d31367ffd15b0c3ee06095def61ca504967",
+  "promptTextHash": null,
+  "deviceId": "iphone-demo-001",
+  "platform": "IOS",
+  "authorizationAssurance": "AUTHENTICATED_APP_UI_NOT_TRUSTED_DISPLAY",
+  "presentationMode": "IOS_APP_ATTESTED_AUTHENTICATED_UI",
+  "authType": "AUTH_PER_USE",
+  "challenge": "SU9TX0FQUF9BVFRFU1RfQ0hBTExFTkdFX0RFTU9fMDAx",
+  "issuedAt": "2026-07-28T12:20:02+09:00",
+  "expiresAt": "2026-07-28T12:20:30+09:00",
+  "oneTimeUse": true,
+  "integrityToken": null,
+  "evidence": {
+    "kind": "IOS_SECURE_ENCLAVE_APP_ATTEST",
+    "secureEnclaveKeyId": "ios-secure-enclave-auth-key-001",
+    "authorizationSignatureBase64Url": "SU9TX1RFU1RfT05MWV9TRUNVUkVfRU5DTEFWRV9TSUdOQVRVUkVfMDAx",
+    "appAttestKeyId": "ios-app-attest-key-demo-001",
+    "assertionBase64Url": "SU9TX1RFU1RfT05MWV9BUFBfQVRURVNUX0FTU0VSVElPTl8wMDE",
+    "assertionCounter": 1,
+    "biometricPolicy": "BIOMETRY_CURRENT_SET",
+    "appAttestSupported": true,
+    "trustedDisplayClaim": false
+  }
+}

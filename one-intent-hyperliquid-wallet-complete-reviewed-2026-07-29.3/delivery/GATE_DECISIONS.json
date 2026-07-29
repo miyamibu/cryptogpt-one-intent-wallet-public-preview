@@ -1,0 +1,359 @@
+{
+  "schemaVersion": "1.0",
+  "release": "2026-07-29.3",
+  "status": "DESIGN_ONLY_NO_GO",
+  "decisions": [
+    {
+      "gateId": "SCOPE_AND_TRACEABILITY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "SCOPE_LOCKED",
+        "REQUIREMENTS_TRACED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "ANDROID_RELEASE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "ANDROID_BUILD_SIGNED",
+        "ANDROID_DEVICE_MATRIX",
+        "ANDROID_PLATFORM_SECURITY"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "IOS_RELEASE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "IOS_BUILD_SIGNED",
+        "IOS_DEVICE_MATRIX",
+        "IOS_PLATFORM_SECURITY"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "BACKEND_RELEASE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "BACKEND_ARTIFACT_PINNED",
+        "BACKEND_POLICY_ENFORCED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "DETERMINISTIC_CORE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "CROSS_LANGUAGE_VECTORS",
+        "OVERFLOW_ROUNDING_SAFE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "AUTH_SESSION_RECOVERY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "AUTHENTICATION_HARDENED",
+        "RECOVERY_DRILLED",
+        "ACCOUNT_TAKEOVER_RESPONSE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "KEY_CUSTODY_SIGNER",
+      "decision": "NO_GO",
+      "claimIds": [
+        "SIGNER_ARCHITECTURE_AUDITED",
+        "KEY_CEREMONY_COMPLETE",
+        "SIGNER_FAIL_CLOSED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "DEVICE_ATTESTATION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "ATTESTATION_VERIFIED_SERVER_SIDE",
+        "UNSUPPORTED_DEVICE_POLICY"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "TRANSACTION_AUTHORIZATION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "CAPSULE_EXACT_BINDING",
+        "ONE_TIME_REPLAY_PROTECTION",
+        "LIMITED_AUTHORIZATION_SAFE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "ASSET_REGISTRY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "REGISTRY_SIGNED_PINNED",
+        "TOKEN_BEHAVIOR_ALLOWLIST"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "JPYC_INTEGRATION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "JPYC_OFFICIAL_DATA_PINNED",
+        "JPYC_EX_CONTRACTED_TESTED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "HYPERLIQUID_INTEGRATION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "HL_API_VERSION_PINNED",
+        "HL_ORDER_LIFECYCLE_TESTED",
+        "HL_MARGIN_MODEL_VERIFIED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "LIQUIDATION_RISK",
+      "decision": "NO_GO",
+      "claimIds": [
+        "LIQUIDATION_PREVIEW_VALIDATED",
+        "STALE_OR_UNKNOWN_BLOCKED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "FEE_READINESS",
+      "decision": "NO_GO",
+      "claimIds": [
+        "ZERO_GAS_PATH_PROVEN",
+        "FEE_QUOTE_BOUND_CAPPED",
+        "FEE_BUDGET_CONCURRENT_SAFE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "SWAP_AND_CROSS_NETWORK",
+      "decision": "NO_GO",
+      "claimIds": [
+        "ROUTE_ALLOWLIST_AUDITED",
+        "QUOTE_FINALITY_PARTIAL_SAFE",
+        "APPROVALS_MINIMIZED_REVOKABLE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "RECONCILIATION_LEDGER",
+      "decision": "NO_GO",
+      "claimIds": [
+        "DOUBLE_ENTRY_INVARIANTS",
+        "ZERO_UNEXPLAINED_DIFFERENCE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "FAILURE_RECOVERY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "STATE_MACHINE_EXHAUSTIVE",
+        "NO_BLIND_RETRY"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "AI_NATURAL_LANGUAGE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "MATERIAL_AMBIGUITY_BLOCKED",
+        "PROMPT_TOOL_INJECTION_BLOCKED",
+        "MODEL_CHANGE_GATED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "CHATGPT_BOUNDARY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "CHATGPT_READ_ONLY_CONTRACT",
+        "OPENAI_TERMS_RECHECKED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "UX_PLAIN_JAPANESE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "PLAIN_JAPANESE_COMPLETE",
+        "CRITICAL_REVIEW_COMPLETE",
+        "NO_INVENTED_VALUES"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "ACCESSIBILITY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "WCAG_AND_NATIVE_A11Y",
+        "COGNITIVE_COMPREHENSION"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "PRIVACY_DATA_GOVERNANCE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "DATA_MAP_AND_MINIMIZATION",
+        "LOG_REDACTION_VERIFIED",
+        "DSAR_BREACH_PROCESS"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "ADMIN_CHANGE_CONTROL",
+      "decision": "NO_GO",
+      "claimIds": [
+        "TWO_PERSON_HIGH_RISK",
+        "BREAK_GLASS_AUDITED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "SRE_RESILIENCE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "SLO_CAPACITY_DDOS",
+        "BACKUP_RESTORE_RTO_RPO",
+        "VOLATILITY_FAIL_CLOSED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "SUPPLY_CHAIN",
+      "decision": "NO_GO",
+      "claimIds": [
+        "SBOM_PROVENANCE_SIGNED",
+        "DEPENDENCY_VULNERABILITIES_CLEARED",
+        "ANTI_ROLLBACK_UPDATE_SAFE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "SECURITY_ASSESSMENT",
+      "decision": "NO_GO",
+      "claimIds": [
+        "MOBILE_BACKEND_PENTEST",
+        "CRYPTO_SMART_CONTRACT_AUDIT",
+        "NO_OPEN_CRITICAL_HIGH"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "LEGAL_JAPAN",
+      "decision": "NO_GO",
+      "claimIds": [
+        "JP_LEGAL_OPINION",
+        "REGISTRATIONS_PERMISSIONS",
+        "TERMS_DISCLOSURES_TAX"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "APPLE_DISTRIBUTION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "APPLE_ORGANIZATION_ELIGIBLE",
+        "APPLE_REVIEW_APPROVED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "GOOGLE_DISTRIBUTION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "PLAY_DECLARATIONS_COMPLETE",
+        "PLAY_REVIEW_APPROVED"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "PROVIDER_CONTRACTS",
+      "decision": "NO_GO",
+      "claimIds": [
+        "VENDORS_CONTRACTED",
+        "VENDOR_EXIT_AND_OUTAGE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "TESTNET_E2E",
+      "decision": "NO_GO",
+      "claimIds": [
+        "TESTNET_ALL_FLOWS",
+        "TESTNET_NO_UNEXPLAINED_DIFF"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "MAINNET_CANARY",
+      "decision": "NO_GO",
+      "claimIds": [
+        "CANARY_LIMITS_APPROVED",
+        "CANARY_ALL_CRITICAL_PATHS",
+        "CANARY_RECONCILED_ZERO_DIFF"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "INCIDENT_DRILLS",
+      "decision": "NO_GO",
+      "claimIds": [
+        "KILL_SWITCH_DRILLED",
+        "KEY_PROVIDER_DATA_BREACH_DRILLS"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "USER_ACCEPTANCE",
+      "decision": "NO_GO",
+      "claimIds": [
+        "BEGINNER_TASK_SUCCESS",
+        "RISK_COMPREHENSION"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "RELEASE_APPROVAL",
+      "decision": "NO_GO",
+      "claimIds": [
+        "EVIDENCE_BOUND_TO_RELEASE",
+        "INDEPENDENT_GO_APPROVAL"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "RUNTIME_ACTIVATION",
+      "decision": "NO_GO",
+      "claimIds": [
+        "TRUSTED_TIME_AVAILABLE",
+        "RUNTIME_STATE_HEALTHY",
+        "SHORT_LIVED_WRITE_LEASE",
+        "PER_OPERATION_USER_AUTH"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    },
+    {
+      "gateId": "POST_LAUNCH_MONITORING",
+      "decision": "NO_GO",
+      "claimIds": [
+        "REALTIME_RISK_MONITORING",
+        "SOURCE_POLICY_REVALIDATION",
+        "ROLLBACK_AND_USER_NOTICE"
+      ],
+      "reason": "No signed production evidence is present for this design-only package; local reference tests cannot satisfy the gate."
+    }
+  ]
+}

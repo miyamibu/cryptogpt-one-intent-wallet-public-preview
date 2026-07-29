@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "capturedAt": "2026-07-29T13:39:05Z",
+  "environment": "HYPERLIQUID_TESTNET",
+  "endpoint": "https://api.hyperliquid-testnet.xyz/info",
+  "method": "POST",
+  "requestType": "meta",
+  "requestBodySha256": "d63f91d9247d7797d46437144d2a8c59e985e9741fbb815134039034464f7233",
+  "httpStatus": 200,
+  "responseSha256": "5d5ac211381a32407ba71406b83ec3be4fd08148d505b56863a2ab66b7c2ba51",
+  "responseSummary": {
+    "topLevelKeys": ["collateralToken", "marginTables", "universe"],
+    "universeCount": 210,
+    "firstUniverseCoin": "SOL"
+  },
+  "writePerformed": false,
+  "walletConnectionUsed": false,
+  "privateKeyAccessed": false,
+  "testnetAccountUsed": false,
+  "status": "READ_ONLY_SMOKE_PASS_NOT_E2E",
+  "boundary": "This does not prove exchange signing, order lifecycle, Testnet write, JPYC, fee route, reconciliation, or production readiness."
+}

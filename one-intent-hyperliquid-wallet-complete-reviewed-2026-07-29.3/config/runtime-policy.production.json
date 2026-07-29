@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "policyVersion": "PRODUCTION_NOT_PROVISIONED",
+  "enabled": false,
+  "signatureProfile": "ONE_INTENT_ED25519_CANONICAL_JSON_V2",
+  "canonicalization": "ONE_INTENT_CANONICAL_JSON_SUBSET_V1",
+  "requiredOutOfBandEnvironment": {
+    "ONE_INTENT_TRUST_POLICY_SHA256": "Required in production; protected outside the repository.",
+    "ONE_INTENT_RUNTIME_AUTHORIZATION_POLICY_SHA256": "Required in production; protected outside the repository.",
+    "ONE_INTENT_RUNTIME_AUTHORIZER_SHA256": "Required in production; protected outside the repository.",
+    "ONE_INTENT_RELEASE_READINESS_REPORT_SHA256": "Required in production; protected outside the repository.",
+    "ONE_INTENT_RELEASE_SUBJECT_SHA256": "Required in production; protected outside the repository.",
+    "ONE_INTENT_TRUSTED_TIME_ATTESTATION_SHA256": "Required in production; protected outside the repository."
+  },
+  "accountBinding": {
+    "maxLifetimeSeconds": 86400,
+    "signatureThreshold": 2,
+    "requiredRoles": [
+      "ACCOUNT_REGISTRY",
+      "SECURITY_APPROVER"
+    ],
+    "minimumDistinctOrganizations": 2
+  },
+  "runtimeState": {
+    "maxLifetimeSeconds": 120,
+    "signatureThreshold": 3,
+    "requiredRoles": [
+      "CONTROL_PLANE",
+      "SRE_LEAD",
+      "RISK_OWNER"
+    ],
+    "minimumDistinctOrganizations": 2
+  },
+  "lease": {
+    "maxLifetimeSeconds": 300,
+    "signatureThreshold": 2,
+    "requiredRoles": [
+      "CONTROL_PLANE",
+      "SECURITY_APPROVER"
+    ],
+    "minimumDistinctOrganizations": 2,
+    "allowedCapabilities": [
+      "AGENT_ADMIN",
+      "ASSET_SEND",
+      "BRIDGE_DEPOSIT",
+      "BUILDER_FEE_ADMIN",
+      "CANCEL_ORDERS",
+      "EMERGENCY_CLOSE",
+      "INTERNAL_TRANSFER",
+      "PERP_TRADE",
+      "SPOT_TRADE",
+      "VAULT_MANAGE",
+      "WITHDRAWAL"
+    ]
+  },
+  "operation": {
+    "maxLifetimeSeconds": 120,
+    "userRole": "WALLET_USER",
+    "deviceRole": "ATTESTED_DEVICE",
+    "policyEngineRole": "EXECUTION_POLICY_ENGINE",
+    "requireQuoteHash": true,
+    "allowedCapabilities": [
+      "AGENT_ADMIN",
+      "ASSET_SEND",
+      "BRIDGE_DEPOSIT",
+      "BUILDER_FEE_ADMIN",
+      "CANCEL_ORDERS",
+      "EMERGENCY_CLOSE",
+      "INTERNAL_TRANSFER",
+      "PERP_TRADE",
+      "SPOT_TRADE",
+      "VAULT_MANAGE",
+      "WITHDRAWAL"
+    ],
+    "stepTypeCapabilityMap": {
+      "PERP_ORDER": "PERP_TRADE",
+      "PERP_CANCEL": "PERP_TRADE",
+      "PERP_MODIFY": "PERP_TRADE",
+      "PERP_CLOSE": "PERP_TRADE",
+      "SPOT_ORDER": "SPOT_TRADE",
+      "INTERNAL_USD_SEND": "INTERNAL_TRANSFER",
+      "INTERNAL_SPOT_SEND": "INTERNAL_TRANSFER",
+      "ARBITRUM_WITHDRAW": "WITHDRAWAL",
+      "ARBITRUM_BRIDGE_DEPOSIT": "BRIDGE_DEPOSIT",
+      "HLP_DEPOSIT": "VAULT_MANAGE",
+      "HLP_WITHDRAW": "VAULT_MANAGE",
+      "USER_VAULT_DEPOSIT": "VAULT_MANAGE",
+      "USER_VAULT_WITHDRAW": "VAULT_MANAGE",
+      "HYPEREVM_VAULT_DEPOSIT": "VAULT_MANAGE",
+      "HYPEREVM_VAULT_WITHDRAW": "VAULT_MANAGE",
+      "USD_CLASS_TRANSFER": "INTERNAL_TRANSFER",
+      "SEND_ASSET": "ASSET_SEND",
+      "APPROVE_AGENT": "AGENT_ADMIN",
+      "REVOKE_AGENT": "AGENT_ADMIN",
+      "APPROVE_BUILDER_FEE": "BUILDER_FEE_ADMIN",
+      "CANCEL_ALL_ORDERS": "CANCEL_ORDERS",
+      "EMERGENCY_CLOSE": "EMERGENCY_CLOSE"
+    },
+    "requireQuoteValidUntil": true
+  },
+  "notes": [
+    "Canonical production-shaped placeholder for this design package; it is disabled and cannot authorize a transaction.",
+    "A separately controlled, signed runtime policy and trusted-time attestation must exist outside this package before any activation."
+  ],
+  "network": {
+    "networkRegistrySha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "allowedSourceNetworkIds": [],
+    "allowedDestinationNetworkIds": []
+  }
+}

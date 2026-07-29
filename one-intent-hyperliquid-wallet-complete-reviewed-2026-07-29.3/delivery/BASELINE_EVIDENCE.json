@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.0",
+  "baselinePackage": "one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.2",
+  "baselineZip": "/Users/<local-user>/Downloads/cryptogpt-canonical-stage-2026-07-29.3/one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.2.zip",
+  "baselineZipSha256": "e0360b8a64ebc0ce18f67117fca0fd1d5a0f6530cd19853fb05d454c3389377d",
+  "baselineSidecarVerified": true,
+  "manifestSha256": "ca5210ca6251516f63dbabb5a568dee26f495e3164517e4b69e08c635951b299",
+  "sha256SumsSha256": "ed1f3005245e524dfb546faaf862abb469329eee7599f165595b18638e37b189",
+  "cleanExtractTreeSha256": "af56c6190c4de3fd76825eb87397920a7fb777cd0fd05b192cbc7d904e2d3c3d",
+  "sourceCommit": "e89dbd48ef7bc07c5e44c9bf32f07729c66e6551",
+  "environment": {
+    "os": "macOS 26.5.2 (25F84), arm64",
+    "python": "3.14.6",
+    "validationPython": "/private/tmp/cryptogpt-validation.WLQcAJ/bin/python",
+    "validationDependencies": "jsonschema, PyYAML, Playwright available in isolated venv",
+    "externalNetworkUsed": false
+  },
+  "finalCleanExtractRun": {
+    "cleanExtractPath": "/private/tmp/cryptogpt-baseline-clean-final-vgs2hdv2/one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.2",
+    "pythonSourceCompilation": {"status": "PASS", "files": 94},
+    "pythonUnitSuite": {"status": "PASS", "tests": 64},
+    "localSandboxSelfTest": {"status": "PASS"},
+    "validationHarness": {"status": "PASS", "assertions": 36},
+    "fullValidation": {"status": "PASS", "isolatedTreeUnchanged": true, "treeDigest": "af56c6190c4de3fd76825eb87397920a7fb777cd0fd05b192cbc7d904e2d3c3d"},
+    "operationalReadiness": {"status": "PASS_AS_BLOCKED", "decision": "BLOCKED_NOT_OPERATIONAL", "productionWritePermitted": false}
+  },
+  "diagnosticInitialAttempts": [
+    {
+      "status": "ENVIRONMENTAL_FAILURE",
+      "cause": "System Python did not have jsonschema, PyYAML, or Playwright installed; the unit suite reported one ImportError and one readiness report mismatch caused by the missing validator dependency.",
+      "remediation": "Re-ran in the existing isolated validation venv with dependencies and PYTHONDONTWRITEBYTECODE=1 on a fresh clean extract."
+    },
+    {
+      "status": "EXPECTED_VALIDATOR_REJECTION",
+      "cause": "A diagnostic run executed unit tests before run_full_validation without PYTHONDONTWRITEBYTECODE=1, creating shared/__pycache__ in the temporary extract.",
+      "remediation": "Re-ran in a new clean extract with PYTHONDONTWRITEBYTECODE=1; full validation passed and the tree remained unchanged."
+    }
+  ],
+  "dirtyStateAtStart": "Parent Git worktree was already dirty with user/native/evidence changes. No reset, checkout, cleanup, or rollback was performed; .2 was treated as immutable input for .3.",
+  "limitations": [
+    "This baseline evidence proves local design-package integrity only.",
+    "It does not prove production backend, HSM/MPC, Testnet/Mainnet, legal, Store, provider, or independent-audit readiness."
+  ]
+}

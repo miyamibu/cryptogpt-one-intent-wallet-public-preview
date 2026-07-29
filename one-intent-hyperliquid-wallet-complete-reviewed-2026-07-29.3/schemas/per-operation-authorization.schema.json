@@ -1,0 +1,389 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/per-operation-authorization.schema.json",
+  "title": "PerOperationAuthorization",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "authorizationId",
+    "profileId",
+    "releaseSubject",
+    "deploymentId",
+    "runtimeBundleId",
+    "runtimeLeaseId",
+    "accountBindingId",
+    "account",
+    "executionCapsuleHash",
+    "sourceStateHash",
+    "quoteHash",
+    "quoteValidUntil",
+    "nonce",
+    "issuedAt",
+    "expiresAt",
+    "requiredCapabilities",
+    "authorized",
+    "userAuthorization",
+    "deviceAuthorization",
+    "policyAuthorization",
+    "oneTimeUse"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "authorizationId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "releaseSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "releaseId",
+        "environment",
+        "sourceCommit",
+        "sourceTreeSha256",
+        "androidArtifactSha256",
+        "iosArtifactSha256",
+        "backendImageDigest",
+        "signerImageDigest",
+        "configurationBundleSha256",
+        "policyBundleSha256",
+        "assetRegistrySha256",
+        "sbomSha256"
+      ],
+      "properties": {
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "environment": {
+          "enum": [
+            "DESIGN_ONLY",
+            "STAGING",
+            "TESTNET",
+            "PRODUCTION"
+          ]
+        },
+        "sourceCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40,64}$"
+        },
+        "sourceTreeSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "androidArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "iosArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "backendImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "signerImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "configurationBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assetRegistrySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sbomSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "deploymentId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "runtimeLeaseId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "account": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{40}$"
+    },
+    "executionCapsuleHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "sourceStateHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "quoteHash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-f]{64}$"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "issuedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "authorized": {
+      "type": "boolean"
+    },
+    "userAuthorization": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile",
+            "keyId",
+            "role",
+            "principalId",
+            "organization",
+            "signatureBase64"
+          ],
+          "properties": {
+            "profile": {
+              "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+            },
+            "keyId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "role": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "organization": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "signatureBase64": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "deviceAuthorization": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile",
+            "keyId",
+            "role",
+            "principalId",
+            "organization",
+            "signatureBase64"
+          ],
+          "properties": {
+            "profile": {
+              "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+            },
+            "keyId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "role": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "organization": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "signatureBase64": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "oneTimeUse": {
+      "const": true
+    },
+    "runtimeBundleId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "requiredCapabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "AGENT_ADMIN",
+          "ASSET_SEND",
+          "BRIDGE_DEPOSIT",
+          "BUILDER_FEE_ADMIN",
+          "CANCEL_ORDERS",
+          "EMERGENCY_CLOSE",
+          "INTERNAL_TRANSFER",
+          "PERP_TRADE",
+          "SPOT_TRADE",
+          "VAULT_MANAGE",
+          "WITHDRAWAL"
+        ]
+      },
+      "maxItems": 32
+    },
+    "policyAuthorization": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "profile",
+            "keyId",
+            "role",
+            "principalId",
+            "organization",
+            "signatureBase64"
+          ],
+          "properties": {
+            "profile": {
+              "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+            },
+            "keyId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "role": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+            },
+            "principalId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160
+            },
+            "organization": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200
+            },
+            "signatureBase64": {
+              "type": "string",
+              "minLength": 4,
+              "maxLength": 256
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "accountBindingId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "quoteValidUntil": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  }
+}

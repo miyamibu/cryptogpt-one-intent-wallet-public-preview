@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "status": "NOT_PROVISIONED",
+  "environment": "NOT_CONFIGURED",
+  "provider": null,
+  "tenantReferenceSha256": null,
+  "publicKeyIds": [],
+  "attestationSha256": null,
+  "policyId": null,
+  "ceremony": {
+    "required": true,
+    "completed": false,
+    "independentOperators": 0,
+    "reviewerSignatures": 0
+  },
+  "secrets": {
+    "privateMaterialAccessed": false,
+    "privateMaterialPresentInPackage": false,
+    "sharesExported": false
+  },
+  "rotationAndRevocation": {
+    "rotationEvidence": false,
+    "revocationEvidence": false,
+    "breakGlassEvidence": false
+  },
+  "notes": [
+    "This record is a fail-closed public-evidence slot, not a signer configuration.",
+    "No provider, tenant, key, share, credential, or attestation was invented or read."
+  ]
+}

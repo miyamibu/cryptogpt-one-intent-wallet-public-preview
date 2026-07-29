@@ -1,0 +1,5 @@
+# caseId	sourceUtterance	normalizedInterpretation	ambiguities	userConfirmed	expectedReason	expectedAction
+ambiguous-draft	BTCを500 USDC、ペイパチャルで3倍。	候補を表示しています。	方向|ネットワーク	false	BLOCKED_AMBIGUITIES	disabled
+resolved-unconfirmed	BTCを500 USDC。	候補を表示しています。		false	BLOCKED_EXPLICIT_CONFIRMATION_REQUIRED	disabled
+resolved-confirmed	BTCを500 USDC。	候補を表示しています。		true	READY_FOR_LOCAL_FINAL_REVIEW	enabled
+ambiguous-confirmed	BTCを500 USDC。	候補を表示しています。	ネットワーク	true	INVALID_CONTRACT	disabled

@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "2.0",
+  "release": "2026-07-29.3",
+  "generatedAt": "2026-07-29T00:00:00Z",
+  "result": "PASS",
+  "script": "tools/test_prototype.py",
+  "localeExecuted": [
+    "ja-JP"
+  ],
+  "toolchain": {
+    "playwrightPython": "1.57.0",
+    "browser": "143.0.7499.4",
+    "browserSource": "playwright-managed"
+  },
+  "testHarness": {
+    "path": "tools/test_prototype.py",
+    "sha256": "a68eb4141d5a8750bc981f9e1156d1edb38668f5cc13d43f2208aa3971f1670c"
+  },
+  "prototypeFiles": {
+    "prototype/index.html": "3b8c543d8405a569f8cfb581b93fb82dfac279db2ef42a2b09a8d7030a6e2396",
+    "prototype/styles.css": "7c4867d879c77c271f260d5f0929f58d2c2ce4072e7aa50513b9abfdd51f3d4f",
+    "prototype/app.js": "1c6e6af6345365e083e24a1099cc6d9ae8c827d24f98b910ff84b2f2c45f8540"
+  },
+  "viewports": [
+    {
+      "id": "iphone-se-stress",
+      "platform": "IOS",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "id": "iphone-small",
+      "platform": "IOS",
+      "width": 375,
+      "height": 667
+    },
+    {
+      "id": "iphone-faceid",
+      "platform": "IOS",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "iphone-large",
+      "platform": "IOS",
+      "width": 430,
+      "height": 932
+    },
+    {
+      "id": "android-compact",
+      "platform": "ANDROID",
+      "width": 360,
+      "height": 800
+    },
+    {
+      "id": "pixel9a-logical",
+      "platform": "ANDROID",
+      "width": 412,
+      "height": 915
+    }
+  ],
+  "flows": [
+    "perp",
+    "spot",
+    "send",
+    "withdraw",
+    "bridge",
+    "vault",
+    "jpyc",
+    "fee",
+    "setup",
+    "composite",
+    "partial",
+    "manual"
+  ],
+  "textModes": [
+    "DEFAULT",
+    "LARGE_TEXT_STRESS"
+  ],
+  "themes": [
+    "LIGHT",
+    "DARK"
+  ],
+  "geometryAndContrastCases": 288,
+  "overflowingCasesWithReachableReviewEnd": 288,
+  "screenshots": [
+    "prototype/screenshots/iphone-perp-before-confirmation.png",
+    "prototype/screenshots/iphone-perp-after-confirmation.png",
+    "prototype/screenshots/pixel9a-fee-dark.png",
+    "prototype/screenshots/iphone-large-withdraw.png",
+    "prototype/screenshots/pixel9a-manual.png",
+    "prototype/screenshots/iphone-limited-authorization.png",
+    "prototype/screenshots/android-tall-partial-dark.png",
+    "prototype/screenshots/iphone-jpyc-large.png",
+    "prototype/screenshots/iphone-se-composite-top.png",
+    "prototype/screenshots/android-compact-spot-large-dark.png"
+  ],
+  "screenshotReviewStates": {
+    "iphone-perp-before-confirmation.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 814,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "iphone-perp-after-confirmation.png": {
+      "captureMode": "BOTTOM_ACTION",
+      "scrollTop": 720,
+      "maxScroll": 726,
+      "actionVisible": true,
+      "partialTopBlocks": 0,
+      "scrollCue": "bottom"
+    },
+    "pixel9a-fee-dark.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 709,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "iphone-large-withdraw.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 893,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "pixel9a-manual.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 544,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "iphone-limited-authorization.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 779,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "android-tall-partial-dark.png": {
+      "captureMode": "BOTTOM_ACTION",
+      "scrollTop": 123,
+      "maxScroll": 123,
+      "actionVisible": true,
+      "partialTopBlocks": 0,
+      "scrollCue": "bottom"
+    },
+    "iphone-jpyc-large.png": {
+      "captureMode": "BOTTOM_ACTION",
+      "scrollTop": 633,
+      "maxScroll": 634,
+      "actionVisible": true,
+      "partialTopBlocks": 0,
+      "scrollCue": "bottom"
+    },
+    "iphone-se-composite-top.png": {
+      "captureMode": "TOP",
+      "scrollTop": 0,
+      "maxScroll": 793,
+      "actionVisible": false,
+      "partialTopBlocks": 0,
+      "scrollCue": "top"
+    },
+    "android-compact-spot-large-dark.png": {
+      "captureMode": "BOTTOM_ACTION",
+      "scrollTop": 715,
+      "maxScroll": 720,
+      "actionVisible": true,
+      "partialTopBlocks": 0,
+      "scrollCue": "bottom"
+    }
+  },
+  "checks": [
+    "persistent_simulation_marker",
+    "source_request_preserved_in_large_text",
+    "voice_correction_hard_gate",
+    "no_network_or_console_error",
+    "all_light_dark_flow_viewport_combinations",
+    "WCAG_contrast_proxy",
+    "44pt_48dp_logical_target_proxy",
+    "review_end_and_primary_reachability",
+    "scroll_state_cues",
+    "control_overlap_and_center_hit_testing",
+    "address_wrapping",
+    "focus_visibility_proxy",
+    "WCAG_text_spacing_proxy",
+    "no_fixed_manual_POL_amount",
+    "fee_route_disclosure",
+    "limited_authority_disclosure",
+    "evidence_screenshot_boundary_alignment",
+    "invented_value_example_markers"
+  ],
+  "limitations": [
+    "Browser logical-pixel proxy only; native SwiftUI and Jetpack Compose rendering are not proven.",
+    "No real-device safe area, VoiceOver, TalkBack, IME, biometric prompt, secure element, GPU, or OS font renderer is proven.",
+    "One CSS pixel is not one physical millimetre; real-device screenshot comparison remains mandatory.",
+    "Static values are examples; no live price, balance, fee, contract, JPYC EX, or Hyperliquid lookup occurs."
+  ]
+}

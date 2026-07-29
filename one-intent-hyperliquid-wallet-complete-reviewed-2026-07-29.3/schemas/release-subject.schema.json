@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/release-subject.schema.json",
+  "title": "DesignReleaseSubject",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "releaseId",
+    "environment",
+    "sourceCommit",
+    "sourceTreeSha256",
+    "androidArtifactSha256",
+    "iosArtifactSha256",
+    "backendImageDigest",
+    "signerImageDigest",
+    "configurationBundleSha256",
+    "policyBundleSha256",
+    "assetRegistrySha256",
+    "sbomSha256"
+  ],
+  "properties": {
+    "releaseId": { "type": "string", "minLength": 1, "maxLength": 160 },
+    "environment": { "const": "DESIGN_ONLY" },
+    "sourceCommit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40,64}$" },
+    "sourceTreeSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "androidArtifactSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "iosArtifactSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "backendImageDigest": { "type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$" },
+    "signerImageDigest": { "type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$" },
+    "configurationBundleSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "policyBundleSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "assetRegistrySha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" },
+    "sbomSha256": { "type": ["string", "null"], "pattern": "^[0-9a-f]{64}$" }
+  }
+}

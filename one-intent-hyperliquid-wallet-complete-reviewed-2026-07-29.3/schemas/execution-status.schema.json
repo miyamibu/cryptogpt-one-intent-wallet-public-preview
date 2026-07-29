@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/execution-status.schema.json",
+  "title": "ExecutionStatus",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "planId",
+    "overallState",
+    "steps",
+    "assetLocations",
+    "updatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "overallState": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "COMPILED",
+        "SIMULATED",
+        "USER_AUTHORIZED",
+        "EXECUTING",
+        "PARTIAL",
+        "COMPLETE",
+        "FAILED",
+        "RECOVERY_REQUIRED",
+        "CANCELED_BEFORE_EXECUTION"
+      ]
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stepId",
+          "state",
+          "attemptGeneration",
+          "retryable"
+        ],
+        "properties": {
+          "stepId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "READY",
+              "AUTHORIZING",
+              "SIGNED",
+              "SUBMITTED",
+              "OBSERVED",
+              "CONFIRMED",
+              "COMPLETE",
+              "FAILED_RETRYABLE",
+              "FAILED_FINAL",
+              "UNKNOWN",
+              "MANUAL_REVIEW"
+            ]
+          },
+          "attemptGeneration": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "remoteIdentifier": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 256
+          },
+          "errorCode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 128
+          },
+          "retryable": {
+            "type": "boolean"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "assetLocations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "assetId",
+          "location",
+          "amount",
+          "confidence"
+        ],
+        "properties": {
+          "assetId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "amount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+            "description": "Non-negative decimal string; scientific notation prohibited."
+          },
+          "confidence": {
+            "type": "string",
+            "enum": [
+              "CONFIRMED",
+              "INFERRED",
+              "UNKNOWN"
+            ]
+          }
+        }
+      }
+    },
+    "nextSafeActions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "maxItems": 16
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

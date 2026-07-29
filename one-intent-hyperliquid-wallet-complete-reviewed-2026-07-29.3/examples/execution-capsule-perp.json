@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0",
+  "domain": "ONE_INTENT_EXECUTION_CAPSULE_V1",
+  "hashProfile": "ONE_INTENT_HASH_PROFILE_V1",
+  "capsuleId": "capsule-perp-001",
+  "planId": "plan-perp-001",
+  "environment": "TESTNET",
+  "userId": "user-demo-001",
+  "deviceId": "pixel9a-demo-001",
+  "sessionId": "session-demo-001",
+  "account": "0x1111111111111111111111111111111111111111",
+  "accountMode": "UNIFIED",
+  "createdAt": "2026-07-28T12:00:00+09:00",
+  "expiresAt": "2026-07-28T12:00:20+09:00",
+  "policyVersion": "policy-2026-07-28.1",
+  "registryVersions": {
+    "assets": "assets-testnet-001",
+    "contracts": "contracts-testnet-001",
+    "addresses": "addresses-user-001",
+    "sources": "sources-2026-07-28.1"
+  },
+  "steps": [
+    {
+      "stepId": "step-order-001",
+      "type": "PERP_ORDER",
+      "signerRole": "TRADE_AGENT",
+      "account": "0x1111111111111111111111111111111111111111",
+      "assetId": "hyperliquid:perp:BTC",
+      "quoteAssetId": "hyperliquid:USDC",
+      "side": "BUY",
+      "positionEffect": "OPEN",
+      "amountMode": "EXACT_NOTIONAL",
+      "amount": "500",
+      "percent": null,
+      "computedMaximumAmount": null,
+      "leverage": 3,
+      "orderType": "IOC",
+      "limitPrice": "120000",
+      "triggerPrice": null,
+      "triggerKind": null,
+      "reduceOnly": false,
+      "destination": null,
+      "destinationAlias": null,
+      "vaultId": null,
+      "contractAddress": null,
+      "functionSelector": null,
+      "sourceDex": null,
+      "destinationDex": null,
+      "minOutput": null,
+      "maxFee": "1.5",
+      "maxSlippageBps": 30,
+      "expiresAt": "2026-07-28T12:00:20+09:00",
+      "dependsOn": [],
+      "failurePolicy": "STOP",
+      "idempotencyKey": "plan-perp-001:step-order-001:0",
+      "cloid": "0x00112233445566778899aabbccddeeff",
+      "riskTier": "R1",
+      "requiredAuth": "SESSION",
+      "statePreconditions": {
+        "snapshotId": "snapshot-perp-001",
+        "maxAgeMs": 1500,
+        "positionVersion": "pos-v1",
+        "balanceVersion": "bal-v1",
+        "marketVersion": "market-v1"
+      },
+      "dynamicDerivation": null,
+      "maxDelayAfterDependencyMs": null,
+      "failureRecovery": null
+    },
+    {
+      "stepId": "step-sl-001",
+      "type": "PERP_ORDER",
+      "signerRole": "TRADE_AGENT",
+      "account": "0x1111111111111111111111111111111111111111",
+      "assetId": "hyperliquid:perp:BTC",
+      "quoteAssetId": "hyperliquid:USDC",
+      "side": "SELL",
+      "positionEffect": "REDUCE",
+      "amountMode": "PERCENT",
+      "amount": null,
+      "percent": "100",
+      "computedMaximumAmount": null,
+      "leverage": null,
+      "orderType": "TRIGGER_MARKET",
+      "limitPrice": null,
+      "triggerPrice": null,
+      "triggerKind": "SL",
+      "reduceOnly": true,
+      "destination": null,
+      "destinationAlias": null,
+      "vaultId": null,
+      "contractAddress": null,
+      "functionSelector": null,
+      "sourceDex": null,
+      "destinationDex": null,
+      "minOutput": null,
+      "maxFee": "1.5",
+      "maxSlippageBps": 100,
+      "expiresAt": "2026-07-28T12:00:20+09:00",
+      "dependsOn": [
+        "step-order-001"
+      ],
+      "failurePolicy": "EMERGENCY_REDUCE_ONLY_CLOSE",
+      "idempotencyKey": "plan-perp-001:step-sl-001:0",
+      "cloid": "0xffeeddccbbaa99887766554433221100",
+      "riskTier": "R1",
+      "requiredAuth": "SESSION",
+      "statePreconditions": {
+        "snapshotId": "snapshot-perp-001",
+        "maxAgeMs": 1500,
+        "positionVersion": "derived-from-step-order-001",
+        "balanceVersion": "bal-v1",
+        "marketVersion": "market-v1"
+      },
+      "dynamicDerivation": {
+        "quantity": {
+          "type": "FILLED_SIZE_PERCENT_OF_STEP",
+          "stepId": "step-order-001",
+          "percent": "100"
+        },
+        "triggerPrice": {
+          "type": "PERCENT_FROM_WEIGHTED_FILL",
+          "stepId": "step-order-001",
+          "direction": "BELOW",
+          "percent": "2",
+          "rounding": "TOWARD_EARLIER_TRIGGER"
+        }
+      },
+      "maxDelayAfterDependencyMs": 2000,
+      "failureRecovery": {
+        "type": "REDUCE_ONLY_MARKET_CLOSE",
+        "maxSlippageBps": 100,
+        "deadlineMs": 2000
+      }
+    }
+  ],
+  "warnings": [
+    "TESTNET_ONLY",
+    "PROTECTIVE_ORDER_FAILURE_CLOSES_POSITION"
+  ],
+  "semanticHash": "0xdd45f78c86647db4964a15314884c591668daf2f6b64fb4d2d23c64e10ae317a",
+  "renderReceiptHash": "0x32720543251ce1006b2ff77bdcf705b722ce8fe1f8dd088bdab26684efa80a57",
+  "compilerVersion": "compiler-0.1.0",
+  "featureGateVersion": "gates-testnet-001",
+  "sourceStateHash": "0xc6174ab83b3a34adaa40a6c55b38903249b04ba825972955e44d50f504f33ee4",
+  "renderReceipt": {
+    "locale": "ja-JP",
+    "buttonLabel": "BTCを500 USDC、3倍でロング＋損切り2%",
+    "warningIds": [
+      "TESTNET_ONLY",
+      "PROTECTIVE_ORDER_FAILURE_CLOSES_POSITION"
+    ],
+    "renderedAt": "2026-07-28T12:00:01+09:00"
+  },
+  "stateEvidence": {
+    "policy": "SINGLE_SOURCE_R1",
+    "sources": [
+      {
+        "sourceId": "hl-api-testnet-001",
+        "kind": "OFFICIAL_API",
+        "independenceClass": "hyperliquid-public-api",
+        "observedAt": "2026-07-28T12:00:00+09:00",
+        "blockHeight": null,
+        "digest": "0x5151515151515151515151515151515151515151515151515151515151515151"
+      }
+    ],
+    "observedAt": "2026-07-28T12:00:00+09:00",
+    "stateHash": "0x5252525252525252525252525252525252525252525252525252525252525252",
+    "divergenceStatus": "NOT_CHECKED",
+    "maxAgeMs": 2000
+  },
+  "authorizationPresentation": {
+    "mode": "APP_EXECUTION_CARD",
+    "criticalFields": [
+      "OPERATION",
+      "ASSET",
+      "AMOUNT",
+      "SLIPPAGE",
+      "PLAN_FINGERPRINT",
+      "TRIGGER",
+      "RECOVERY_POLICY"
+    ],
+    "promptText": null,
+    "promptTextHash": null,
+    "fallbackPolicy": "DENY",
+    "standingAuthorizationId": null,
+    "destinationRegistrationEvidenceId": null,
+    "assurance": "APP_RENDER_ONLY"
+  },
+  "platform": "ANDROID",
+  "networkContext": {
+    "sourceNetworkId": "hyperliquid:testnet",
+    "destinationNetworkIds": [],
+    "networkRegistrySha256": "1111111111111111111111111111111111111111111111111111111111111111",
+    "chainId": null
+  }
+}

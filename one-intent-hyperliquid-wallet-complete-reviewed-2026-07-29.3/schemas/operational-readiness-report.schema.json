@@ -1,0 +1,314 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/operational-readiness-report.schema.json",
+  "title": "OperationalReadinessReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "evaluatedArtifactVersion",
+    "generatedAt",
+    "validUntil",
+    "decisionInputs",
+    "status",
+    "releaseEligibleForRuntimeActivation",
+    "productionWritePermitted",
+    "releaseSubject",
+    "summary",
+    "gates",
+    "blockingReasons",
+    "disclaimer"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{8,96}$"
+    },
+    "evaluatedArtifactVersion": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}\\.\\d+$"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "status": {
+      "enum": [
+        "BLOCKED_NOT_OPERATIONAL",
+        "PRODUCTION_OPERATIONAL_GO"
+      ]
+    },
+    "productionWritePermitted": {
+      "const": false
+    },
+    "releaseSubject": {
+      "$ref": "#/$defs/releaseSubject"
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mandatoryGates",
+        "passedGates",
+        "blockedGates",
+        "requiredClaims",
+        "acceptedClaims",
+        "missingOrRejectedClaims"
+      ],
+      "properties": {
+        "mandatoryGates": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "passedGates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blockedGates": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "requiredClaims": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "acceptedClaims": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missingOrRejectedClaims": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "gateId",
+          "titleJa",
+          "status",
+          "requiredClaims",
+          "acceptedClaims",
+          "blockingClaims"
+        ],
+        "properties": {
+          "gateId": {
+            "type": "string"
+          },
+          "titleJa": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "PASS",
+              "BLOCKED"
+            ]
+          },
+          "requiredClaims": {
+            "type": "integer"
+          },
+          "acceptedClaims": {
+            "type": "integer"
+          },
+          "blockingClaims": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "blockingReasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "disclaimer": {
+      "type": "string",
+      "minLength": 20
+    },
+    "releaseEligibleForRuntimeActivation": {
+      "type": "boolean"
+    },
+    "validUntil": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "decisionInputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationalTrustPolicySha256",
+        "readinessVerifierBundleSha256",
+        "releaseSubjectSha256",
+        "evidenceIndexSha256",
+        "evidenceIndexSequence",
+        "trustedTimeAttestationSha256",
+        "trustedTimeSequence"
+      ],
+      "properties": {
+        "operationalTrustPolicySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "readinessVerifierBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "releaseSubjectSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evidenceIndexSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evidenceIndexSequence": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "trustedTimeAttestationSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "trustedTimeSequence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$defs": {
+    "releaseSubject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "releaseId",
+        "environment",
+        "sourceCommit",
+        "sourceTreeSha256",
+        "androidArtifactSha256",
+        "iosArtifactSha256",
+        "backendImageDigest",
+        "signerImageDigest",
+        "configurationBundleSha256",
+        "policyBundleSha256",
+        "assetRegistrySha256",
+        "sbomSha256"
+      ],
+      "properties": {
+        "releaseId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "environment": {
+          "enum": [
+            "DESIGN_ONLY",
+            "STAGING",
+            "TESTNET",
+            "PRODUCTION"
+          ]
+        },
+        "sourceCommit": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{40,64}$"
+        },
+        "sourceTreeSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "androidArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "iosArtifactSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "backendImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "signerImageDigest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        },
+        "configurationBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "policyBundleSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "assetRegistrySha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sbomSha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

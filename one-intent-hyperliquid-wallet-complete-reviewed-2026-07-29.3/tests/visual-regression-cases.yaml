@@ -1,0 +1,31 @@
+version: 2026-07-29.3
+evidence: tests/prototype-visual-evidence.json
+matrix:
+  viewports: [iphone-se-stress, iphone-small, iphone-faceid, iphone-large, android-compact, pixel9a-logical]
+  flows: [perp, spot, send, withdraw, bridge, vault, jpyc, fee, setup, composite, partial, manual]
+  text_modes: [default, large_text_stress]
+  themes: [light, dark]
+  locale_executed: [ja-JP]
+  total_cases: 288
+stable_screenshots:
+  - iphone-perp-before-confirmation.png
+  - iphone-perp-after-confirmation.png
+  - pixel9a-fee-dark.png
+  - iphone-large-withdraw.png
+  - pixel9a-manual.png
+  - iphone-limited-authorization.png
+  - android-tall-partial-dark.png
+  - iphone-jpyc-large.png
+  - iphone-se-composite-top.png
+  - android-compact-spot-large-dark.png
+pass:
+  critical_region_diff_percent: 0
+  noncritical_diff_percent_max: 0.1
+  horizontal_overflow_count: 0
+  clipped_critical_text_count: 0
+  overlapping_hit_targets_count: 0
+  unreachable_review_end_count: 0
+  obscured_primary_count: 0
+limitations:
+  - browser_proxy_not_native_golden
+  - physical_mm_not_proven

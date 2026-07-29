@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "package": "one-intent-hyperliquid-wallet-complete-reviewed",
+  "version": "2026-07-29.3",
+  "deterministicBuildTimestamp": "2026-07-29T00:00:00Z",
+  "assuranceScope": "Design, schemas, offline prototype, non-mutating validation, fail-closed operational-readiness evidence contracts, archive verification, and Codex operationalization handoff only.",
+  "nativeBuildsIncluded": false,
+  "liveCredentialsIncluded": false,
+  "mainnetEnabled": false,
+  "productionReadyClaimAllowed": false
+}

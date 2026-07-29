@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "shared-canonical-v1",
+  "status": "EXECUTABLE_CROSS_LANGUAGE_VECTOR",
+  "hashEncoding": "lowercase-hex-without-prefix",
+  "cases": [
+    {
+      "id": "stable-object-with-nfc-text",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"amount\":\"1.50\",\"name\":\"é\"}",
+      "canonicalBytesHex": "7b22616d6f756e74223a22312e3530222c226e616d65223a22c3a9227d",
+      "sha256": "a8cab012fe13637229e7bfc0b0220831064e7fa3aaa20f84025e858f60927e3f",
+      "expectedError": null
+    },
+    {
+      "id": "stable-nested-array-and-object",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"array\":[true,null,\"日本\"],\"number\":7,\"object\":{\"b\":\"x\",\"a\":\"y\"}}",
+      "canonicalBytesHex": "7b226172726179223a5b747275652c6e756c6c2c22e697a5e69cac225d2c226e756d626572223a372c226f626a656374223a7b2261223a2279222c2262223a2278227d7d",
+      "sha256": "1b7686aa961aaa3c78eaae8e8127251a970b17d3d2b411a605542d3809866029",
+      "expectedError": null
+    },
+    {
+      "id": "reject-duplicate-key",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"a\":1,\"a\":2}",
+      "canonicalBytesHex": null,
+      "sha256": null,
+      "expectedError": "REJECT_DUPLICATE_KEY"
+    },
+    {
+      "id": "reject-non-nfc",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"name\":\"e\\u0301\"}",
+      "canonicalBytesHex": null,
+      "sha256": null,
+      "expectedError": "REJECT_NON_NFC"
+    },
+    {
+      "id": "reject-exponent",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"amount\":1e2}",
+      "canonicalBytesHex": null,
+      "sha256": null,
+      "expectedError": "REJECT_EXPONENT"
+    },
+    {
+      "id": "reject-integer-range",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"amount\":9007199254740992}",
+      "canonicalBytesHex": null,
+      "sha256": null,
+      "expectedError": "REJECT_INTEGER_RANGE"
+    },
+    {
+      "id": "reject-negative-zero",
+      "domain": "ONE_INTENT_SHARED_CANONICAL_V1",
+      "input": "{\"amount\":-0}",
+      "canonicalBytesHex": null,
+      "sha256": null,
+      "expectedError": "REJECT_NEGATIVE_ZERO"
+    }
+  ]
+}

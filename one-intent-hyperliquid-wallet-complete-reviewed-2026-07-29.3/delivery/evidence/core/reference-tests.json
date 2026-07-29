@@ -1,0 +1,16 @@
+{
+  "status": "HISTORICAL_NOT_RELEASE_EVIDENCE",
+  "releaseVersion": "2026-07-29.1",
+  "rootBinding": "historical-documents-workspace",
+  "evidenceId": "core-reference-tests-2026-07-29.1",
+  "result": "PASS",
+  "command": "python3 -B -m unittest discover -s tests -p 'test_*.py'",
+  "testCount": 29,
+  "browserLogicalCases": 288,
+  "swiftContractTests": 1,
+  "environment": "macOS 26.5.2 arm64 / Python 3.14.6",
+  "scope": "offline standard-library reference implementation",
+  "limitations": ["No external network, native SDK, physical device, signer key, or production service was used."],
+  "signed": false,
+  "independentReview": false
+}

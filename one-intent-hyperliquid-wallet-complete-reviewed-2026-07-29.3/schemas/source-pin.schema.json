@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/source-pin.schema.json",
+  "title": "SourcePin",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "generatedAt",
+    "sources"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "url",
+          "category",
+          "retrievedAt",
+          "status"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 256
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "OPENAI",
+              "HYPERLIQUID",
+              "ANDROID",
+              "JAPAN_FSA",
+              "GITHUB",
+              "OTHER",
+              "GOOGLE_PLAY",
+              "APPLE",
+              "IOS",
+              "APP_STORE",
+              "ACCESSIBILITY"
+            ]
+          },
+          "retrievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "version": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 256
+          },
+          "commit": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{7,64}$"
+          },
+          "contentHash": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "VERIFIED",
+              "MONITOR",
+              "DEPRECATED",
+              "BLOCKED"
+            ]
+          },
+          "gitBlob": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^[0-9a-f]{40,64}$",
+            "description": "Git object/blob hash when observed. This is not a repository commit unless explicitly stated."
+          }
+        }
+      }
+    }
+  }
+}

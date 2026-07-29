@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "1.0",
+  "locale": "ja-JP",
+  "cases": [
+    {
+      "id": "voice-perp",
+      "input": "BTCをペイパチャルで3倍",
+      "expectedDisplay": "BTCの期限なし先物を3倍で買う",
+      "mustConfirm": false
+    },
+    {
+      "id": "voice-liquidation-typo",
+      "input": "生産価格も見せて",
+      "context": "先物取引",
+      "expectedDisplay": "清算価格も表示する",
+      "mustConfirm": false
+    },
+    {
+      "id": "voice-spot",
+      "input": "スポットでHYPEを買う",
+      "expectedDisplay": "HYPEを現物で買う",
+      "mustConfirm": false
+    },
+    {
+      "id": "voice-bridge",
+      "input": "ブリッジして",
+      "expectedDisplay": "別ネットワークへ資金を移す",
+      "mustConfirm": true
+    },
+    {
+      "id": "voice-vault",
+      "input": "ボルトに300入れて",
+      "expectedDisplay": "運用口座へ300を預ける",
+      "mustConfirm": true
+    },
+    {
+      "id": "all-send-ambiguous",
+      "input": "全部送って",
+      "expectedDisplay": "金額・資産・送金先を確認する",
+      "mustConfirm": true
+    },
+    {
+      "id": "unknown-recipient",
+      "input": "Aに送って",
+      "expectedDisplay": "登録済みの相手を選ぶかアドレスを確認する",
+      "mustConfirm": true
+    },
+    {
+      "id": "jpyc-only-zero-fee",
+      "input": "JPYCしかないけど送って",
+      "expectedDisplay": "送金手数料を払う資産が不足。代理支払いの可否を確認し、使えなければ手順を表示する",
+      "mustConfirm": true
+    }
+  ]
+}

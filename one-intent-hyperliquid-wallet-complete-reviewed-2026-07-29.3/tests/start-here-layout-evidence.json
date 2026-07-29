@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "1.0",
+  "release": "2026-07-29.3",
+  "generatedAt": "2026-07-29T00:00:00Z",
+  "result": "PASS",
+  "localeExecuted": [
+    "ja-JP"
+  ],
+  "source": {
+    "path": "START_HERE.html",
+    "sha256": "e17ec22f5e6103398a39a123767a6493062b8e090ede73d8fade6147e45b9af5"
+  },
+  "testHarness": {
+    "path": "tools/test_start_here.py",
+    "sha256": "004fc13a47055e238b7a229203f89e429a0e86133a2172157522a5b226050915"
+  },
+  "toolchain": {
+    "playwrightPython": "1.57.0",
+    "browser": "143.0.7499.4",
+    "browserSource": "playwright-managed"
+  },
+  "cases": [
+    {
+      "viewport": "mobile-narrow",
+      "width": 320,
+      "height": 800,
+      "theme": "LIGHT",
+      "result": "PASS"
+    },
+    {
+      "viewport": "mobile-narrow",
+      "width": 320,
+      "height": 800,
+      "theme": "DARK",
+      "result": "PASS"
+    },
+    {
+      "viewport": "mobile-standard",
+      "width": 390,
+      "height": 844,
+      "theme": "LIGHT",
+      "result": "PASS"
+    },
+    {
+      "viewport": "mobile-standard",
+      "width": 390,
+      "height": 844,
+      "theme": "DARK",
+      "result": "PASS"
+    },
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "theme": "LIGHT",
+      "result": "PASS"
+    },
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "theme": "DARK",
+      "result": "PASS"
+    }
+  ],
+  "checks": [
+    "entry_page_no_horizontal_overflow",
+    "persistent_simulation_boundary",
+    "44px_entry_actions",
+    "focus_and_center_hit_testing",
+    "light_dark_contrast_proxy",
+    "contained_table_overflow",
+    "prototype_frame_geometry",
+    "no_external_requests_or_console_errors"
+  ],
+  "limitations": [
+    "Browser logical-pixel proxy only; browser and OS font/rendering differences remain.",
+    "The embedded prototype iframe is replaced with about:blank for entry-page isolation; the prototype itself is tested separately."
+  ]
+}

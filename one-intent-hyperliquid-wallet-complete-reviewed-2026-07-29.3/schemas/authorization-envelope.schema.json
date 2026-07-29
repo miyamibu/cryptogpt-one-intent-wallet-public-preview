@@ -1,0 +1,528 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/authorization-envelope.schema.json",
+  "title": "AuthorizationEnvelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "authorizationId",
+    "planId",
+    "semanticHash",
+    "renderReceiptHash",
+    "sourceStateHash",
+    "promptTextHash",
+    "deviceId",
+    "authorizationAssurance",
+    "platform",
+    "presentationMode",
+    "authType",
+    "challenge",
+    "issuedAt",
+    "expiresAt",
+    "oneTimeUse",
+    "evidence"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "authorizationId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "semanticHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "renderReceiptHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "sourceStateHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "promptTextHash": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "deviceId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "presentationMode": {
+      "type": "string",
+      "enum": [
+        "APP_EXECUTION_CARD",
+        "ANDROID_PROTECTED_CONFIRMATION",
+        "IOS_APP_ATTESTED_AUTHENTICATED_UI",
+        "EXTERNAL_WALLET_TRUSTED_DISPLAY",
+        "HARDWARE_WALLET"
+      ]
+    },
+    "authType": {
+      "type": "string",
+      "enum": [
+        "SESSION",
+        "AUTH_PER_USE",
+        "PASSKEY_PLUS_AUTH",
+        "RECOVERY_CEREMONY"
+      ]
+    },
+    "challenge": {
+      "type": "string",
+      "minLength": 43,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "issuedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "oneTimeUse": {
+      "const": true
+    },
+    "integrityToken": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 16384
+    },
+    "evidence": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/deviceSignatureEvidence"
+        },
+        {
+          "$ref": "#/$defs/protectedConfirmationEvidence"
+        },
+        {
+          "$ref": "#/$defs/iosAppAttestedEvidence"
+        },
+        {
+          "$ref": "#/$defs/externalWalletEvidence"
+        },
+        {
+          "$ref": "#/$defs/hardwareWalletEvidence"
+        }
+      ]
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "ANDROID",
+        "IOS",
+        "WEB_REVIEW_ONLY"
+      ]
+    },
+    "authorizationAssurance": {
+      "type": "string",
+      "enum": [
+        "APP_RENDER_ONLY",
+        "AUTHENTICATED_APP_UI_NOT_TRUSTED_DISPLAY",
+        "TRUSTED_CONFIRMATION",
+        "EXTERNAL_TRUSTED_DISPLAY",
+        "HARDWARE_TRUSTED_DISPLAY"
+      ]
+    }
+  },
+  "$defs": {
+    "deviceSignatureEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "keyId",
+        "signatureBase64Url"
+      ],
+      "properties": {
+        "kind": {
+          "const": "DEVICE_SIGNATURE"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256
+        },
+        "signatureBase64Url": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 4096,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        }
+      }
+    },
+    "protectedConfirmationEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "confirmationKeyId",
+        "confirmationTokenBase64Url",
+        "attestationChainDigest"
+      ],
+      "properties": {
+        "kind": {
+          "const": "ANDROID_PROTECTED_CONFIRMATION"
+        },
+        "confirmationKeyId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256
+        },
+        "confirmationTokenBase64Url": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 16384,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "attestationChainDigest": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{64}$"
+        }
+      }
+    },
+    "externalWalletEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "walletAddress",
+        "signature",
+        "displayCapabilityEvidenceId"
+      ],
+      "properties": {
+        "kind": {
+          "const": "EXTERNAL_WALLET"
+        },
+        "walletAddress": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{40}$"
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 4096
+        },
+        "displayCapabilityEvidenceId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256
+        }
+      }
+    },
+    "hardwareWalletEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "walletAddress",
+        "signature",
+        "deviceModel",
+        "firmwareVersion",
+        "displayCapabilityEvidenceId"
+      ],
+      "properties": {
+        "kind": {
+          "const": "HARDWARE_WALLET"
+        },
+        "walletAddress": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{40}$"
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 64,
+          "maxLength": 4096
+        },
+        "deviceModel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "firmwareVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "displayCapabilityEvidenceId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256
+        }
+      }
+    },
+    "iosAppAttestedEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "secureEnclaveKeyId",
+        "authorizationSignatureBase64Url",
+        "appAttestKeyId",
+        "assertionBase64Url",
+        "assertionCounter",
+        "biometricPolicy"
+      ],
+      "properties": {
+        "kind": {
+          "const": "IOS_SECURE_ENCLAVE_APP_ATTEST"
+        },
+        "secureEnclaveKeyId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256
+        },
+        "authorizationSignatureBase64Url": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 4096,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "appAttestKeyId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 512
+        },
+        "assertionBase64Url": {
+          "type": "string",
+          "minLength": 32,
+          "maxLength": 32768,
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "assertionCounter": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "biometricPolicy": {
+          "type": "string",
+          "enum": [
+            "BIOMETRY_CURRENT_SET",
+            "DEVICE_OWNER_AUTHENTICATION"
+          ]
+        },
+        "appAttestSupported": {
+          "const": true
+        },
+        "trustedDisplayClaim": {
+          "const": false
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "APP_EXECUTION_CARD"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "promptTextHash": {
+            "type": "null"
+          },
+          "evidence": {
+            "$ref": "#/$defs/deviceSignatureEvidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "ANDROID_PROTECTED_CONFIRMATION"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "promptTextHash": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "evidence": {
+            "$ref": "#/$defs/protectedConfirmationEvidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "EXTERNAL_WALLET_TRUSTED_DISPLAY"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "$ref": "#/$defs/externalWalletEvidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "HARDWARE_WALLET"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "$ref": "#/$defs/hardwareWalletEvidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "IOS_APP_ATTESTED_AUTHENTICATED_UI"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "platform": {
+            "const": "IOS"
+          },
+          "authorizationAssurance": {
+            "const": "AUTHENTICATED_APP_UI_NOT_TRUSTED_DISPLAY"
+          },
+          "promptTextHash": {
+            "type": "null"
+          },
+          "evidence": {
+            "$ref": "#/$defs/iosAppAttestedEvidence"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "ANDROID_PROTECTED_CONFIRMATION"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "platform": {
+            "const": "ANDROID"
+          },
+          "authorizationAssurance": {
+            "const": "TRUSTED_CONFIRMATION"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "APP_EXECUTION_CARD"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authorizationAssurance": {
+            "const": "APP_RENDER_ONLY"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "EXTERNAL_WALLET_TRUSTED_DISPLAY"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authorizationAssurance": {
+            "const": "EXTERNAL_TRUSTED_DISPLAY"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "presentationMode": {
+            "const": "HARDWARE_WALLET"
+          }
+        },
+        "required": [
+          "presentationMode"
+        ]
+      },
+      "then": {
+        "properties": {
+          "authorizationAssurance": {
+            "const": "HARDWARE_TRUSTED_DISPLAY"
+          }
+        }
+      }
+    }
+  ]
+}

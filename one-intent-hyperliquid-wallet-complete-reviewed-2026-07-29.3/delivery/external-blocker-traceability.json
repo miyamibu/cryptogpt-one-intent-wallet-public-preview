@@ -1,0 +1,1843 @@
+{
+  "schemaVersion": "1.0",
+  "release": "2026-07-29.3",
+  "status": "CANONICAL_TRACEABILITY",
+  "blockers": [
+    {
+      "id": "EXT-001",
+      "legacyAliases": [
+        "C003",
+        "C062",
+        "C063",
+        "C064",
+        "C065",
+        "G01",
+        "G22",
+        "G23",
+        "G29"
+      ],
+      "claimIds": [
+        "SCOPE_LOCKED",
+        "REQUIREMENTS_TRACED",
+        "SBOM_PROVENANCE_SIGNED",
+        "EVIDENCE_BOUND_TO_RELEASE"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "SCOPE_AND_TRACEABILITY",
+        "SUPPLY_CHAIN",
+        "RELEASE_APPROVAL"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "RELEASE_OWNER",
+      "reviewerRole": "INDEPENDENT_RELEASE_REVIEWER",
+      "portal": "INTERNAL_RELEASE_CONTROL_AND_PROTECTED_CI",
+      "evidencePath": "delivery/evidence/artifacts/release-assurance/",
+      "verificationCommand": "tools/check_release_contract.py plus protected CI artifact verification",
+      "successCriteria": "The exact release subject, signed SBOM, signed provenance, protected branch controls, and two-person approval are independently verified.",
+      "requiredMaterials": [
+        "exact release subject",
+        "signed SBOM",
+        "signed provenance",
+        "branch protection and CODEOWNERS evidence",
+        "independent approval record"
+      ],
+      "secretsPolicy": "NO_SECRETS_IN_REPOSITORY_OR_CHAT",
+      "featureFlags": [
+        "PRODUCTION_WRITE_DISABLED_UNTIL_RELEASE_APPROVAL"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_RELEASE",
+      "escalationContact": "NOT_REGISTERED_EXTERNAL_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-002",
+      "legacyAliases": [
+        "C045",
+        "C049",
+        "C050",
+        "C051",
+        "C076",
+        "G15",
+        "G17",
+        "G29"
+      ],
+      "claimIds": [
+        "ANDROID_BUILD_SIGNED",
+        "ANDROID_DEVICE_MATRIX",
+        "ANDROID_PLATFORM_SECURITY",
+        "ATTESTATION_VERIFIED_SERVER_SIDE",
+        "UNSUPPORTED_DEVICE_POLICY",
+        "WCAG_AND_NATIVE_A11Y",
+        "COGNITIVE_COMPREHENSION"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "ANDROID_RELEASE",
+        "DEVICE_ATTESTATION",
+        "ACCESSIBILITY"
+      ],
+      "dependentGateIds": [
+        "USER_ACCEPTANCE"
+      ],
+      "ownerRole": "ANDROID_RELEASE_OWNER",
+      "reviewerRole": "MOBILE_SECURITY_REVIEWER",
+      "portal": "GOOGLE_PLAY_CONSOLE_AND_PROTECTED_DEVICE_LAB",
+      "evidencePath": "delivery/evidence/artifacts/android/",
+      "verificationCommand": "Gradle wrapper assembleRelease plus signed APK/AAB and physical-device matrix",
+      "successCriteria": "A reproducible signed Android artifact passes the declared device, attestation, accessibility, and user-comprehension cases.",
+      "requiredMaterials": [
+        "Gradle wrapper and locked dependencies",
+        "signed APK or AAB",
+        "physical-device matrix",
+        "server-side attestation evidence",
+        "TalkBack and accessibility report"
+      ],
+      "secretsPolicy": "SIGNING_KEYS_STAY_IN_PROTECTED_KEYSTORE_AND_ARE_NOT_EXPORTED",
+      "featureFlags": [
+        "ANDROID_PRODUCTION_WRITE_DISABLED"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_RELEASE",
+      "escalationContact": "NOT_REGISTERED_GOOGLE_PLAY_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-003",
+      "legacyAliases": [
+        "C048",
+        "C049",
+        "C050",
+        "C051",
+        "C077",
+        "G16",
+        "G17",
+        "G28",
+        "G29"
+      ],
+      "claimIds": [
+        "IOS_BUILD_SIGNED",
+        "IOS_DEVICE_MATRIX",
+        "IOS_PLATFORM_SECURITY",
+        "ATTESTATION_VERIFIED_SERVER_SIDE",
+        "UNSUPPORTED_DEVICE_POLICY",
+        "WCAG_AND_NATIVE_A11Y",
+        "COGNITIVE_COMPREHENSION",
+        "APPLE_ORGANIZATION_ELIGIBLE",
+        "APPLE_REVIEW_APPROVED"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "IOS_RELEASE",
+        "DEVICE_ATTESTATION",
+        "ACCESSIBILITY",
+        "APPLE_DISTRIBUTION"
+      ],
+      "dependentGateIds": [
+        "USER_ACCEPTANCE"
+      ],
+      "ownerRole": "IOS_RELEASE_OWNER",
+      "reviewerRole": "MOBILE_SECURITY_REVIEWER",
+      "portal": "APPLE_DEVELOPER_ACCOUNT_APP_STORE_CONNECT_AND_PROTECTED_DEVICE_LAB",
+      "evidencePath": "delivery/evidence/artifacts/ios/",
+      "verificationCommand": "xcodebuild archive exportArchive plus signed IPA and physical-device matrix",
+      "successCriteria": "A reproducible signed iOS app target passes the declared device, attestation, accessibility, and user-comprehension cases.",
+      "requiredMaterials": [
+        "Xcode project and locked dependencies",
+        "signed IPA",
+        "physical-device matrix",
+        "App Attest server verification evidence",
+        "VoiceOver and accessibility report"
+      ],
+      "secretsPolicy": "CERTIFICATES_AND_PROFILES_STAY_IN_PROTECTED_APPLE_ACCOUNT_WORKFLOWS",
+      "featureFlags": [
+        "IOS_PRODUCTION_WRITE_DISABLED"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_RELEASE",
+      "escalationContact": "NOT_REGISTERED_APPLE_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-004",
+      "legacyAliases": [
+        "C034",
+        "C035",
+        "C036",
+        "C037",
+        "C038",
+        "C039",
+        "G12",
+        "G13",
+        "G21",
+        "G30"
+      ],
+      "claimIds": [
+        "HL_API_VERSION_PINNED",
+        "HL_ORDER_LIFECYCLE_TESTED",
+        "HL_MARGIN_MODEL_VERIFIED",
+        "LIQUIDATION_PREVIEW_VALIDATED",
+        "STALE_OR_UNKNOWN_BLOCKED",
+        "TESTNET_ALL_FLOWS",
+        "TESTNET_NO_UNEXPLAINED_DIFF",
+        "ZERO_UNEXPLAINED_DIFFERENCE"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "HYPERLIQUID_INTEGRATION",
+        "LIQUIDATION_RISK",
+        "TESTNET_E2E",
+        "RECONCILIATION_LEDGER"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "PROTOCOL_INTEGRATION_OWNER",
+      "reviewerRole": "INDEPENDENT_PROTOCOL_AUDITOR",
+      "portal": "HYPERLIQUID_TESTNET_AND_PROVIDER_CONTRACT_REVIEW",
+      "evidencePath": "delivery/evidence/artifacts/protocol/",
+      "verificationCommand": "Pinned official protocol vectors plus read-only staging, Testnet end-to-end, and reconciliation replay",
+      "successCriteria": "Every supported Hyperliquid lifecycle and liquidation-preview path is tested against a hash-pinned official source and reconciles with zero unexplained difference.",
+      "requiredMaterials": [
+        "official source pin",
+        "SDK lock",
+        "read-only staging transcript",
+        "Testnet transaction evidence",
+        "reconciliation ledger"
+      ],
+      "secretsPolicy": "TESTNET_CREDENTIALS_STAY_OUTSIDE_THE_PACKAGE_AND_MAINNET_WRITES_REMAIN_DISABLED",
+      "featureFlags": [
+        "TESTNET_ONLY",
+        "MAINNET_WRITE_DISABLED"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_EXTERNAL_CHANGE",
+      "escalationContact": "NOT_REGISTERED_PROTOCOL_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-005",
+      "legacyAliases": [
+        "C027",
+        "C082",
+        "G09",
+        "G11",
+        "G32"
+      ],
+      "claimIds": [
+        "JPYC_OFFICIAL_DATA_PINNED",
+        "JPYC_EX_CONTRACTED_TESTED",
+        "REGISTRY_SIGNED_PINNED",
+        "TOKEN_BEHAVIOR_ALLOWLIST",
+        "VENDORS_CONTRACTED",
+        "JP_LEGAL_OPINION"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "JPYC_INTEGRATION",
+        "ASSET_REGISTRY",
+        "PROVIDER_CONTRACTS",
+        "LEGAL_JAPAN"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "ASSET_REGISTRY_OWNER",
+      "reviewerRole": "INDEPENDENT_LEGAL_AND_PROTOCOL_REVIEWER",
+      "portal": "JPYC_OFFICIAL_REGISTRY_AND_JAPAN_COMPLIANCE_REVIEW",
+      "evidencePath": "delivery/evidence/artifacts/assets/",
+      "verificationCommand": "Official JPYC registry pin plus contract-behavior vectors and legal sign-off",
+      "successCriteria": "JPYC contract identity, behavior allowlist, provider contracts, and Japan legal classification are independently verified.",
+      "requiredMaterials": [
+        "official registry pin",
+        "contract address and chain identity",
+        "contract-behavior test vectors",
+        "provider contract",
+        "legal opinion"
+      ],
+      "secretsPolicy": "NO_PROVIDER_CREDENTIALS_OR_PRIVATE_KEYS_IN_REPOSITORY",
+      "featureFlags": [
+        "JPYC_INTEGRATION_DISABLED_UNTIL_REGISTRY_PINNED"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_EXTERNAL_CHANGE",
+      "escalationContact": "NOT_REGISTERED_JPYC_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-006",
+      "legacyAliases": [
+        "C083",
+        "C084",
+        "C085",
+        "G10",
+        "G31",
+        "G32",
+        "G33"
+      ],
+      "claimIds": [
+        "ZERO_GAS_PATH_PROVEN",
+        "FEE_QUOTE_BOUND_CAPPED",
+        "FEE_BUDGET_CONCURRENT_SAFE",
+        "VENDORS_CONTRACTED",
+        "VENDOR_EXIT_AND_OUTAGE",
+        "ZERO_UNEXPLAINED_DIFFERENCE",
+        "NO_BLIND_RETRY"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "FEE_READINESS",
+        "PROVIDER_CONTRACTS",
+        "RECONCILIATION_LEDGER",
+        "FAILURE_RECOVERY"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "FEE_AND_RECOVERY_OWNER",
+      "reviewerRole": "INDEPENDENT_RECONCILIATION_REVIEWER",
+      "portal": "FEE_PROVIDER_CONTRACT_AND_LEDGER_REVIEW",
+      "evidencePath": "delivery/evidence/artifacts/fees/",
+      "verificationCommand": "Fee quote cap tests, concurrent budget tests, provider outage drill, and ledger reconciliation",
+      "successCriteria": "The zero-gas path or bounded fee route is proven, concurrent reservations are safe, provider outage is recoverable, and ledger differences are zero.",
+      "requiredMaterials": [
+        "fee-route contract",
+        "quote hash and expiry evidence",
+        "concurrency test report",
+        "outage and recovery drill",
+        "double-entry reconciliation report"
+      ],
+      "secretsPolicy": "FEE_PROVIDER_SECRETS_STAY_IN_PROTECTED_RUNTIME_CONFIGURATION",
+      "featureFlags": [
+        "FEE_ROUTE_DISABLED_UNTIL_CONTRACTED"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_EXTERNAL_CHANGE",
+      "escalationContact": "NOT_REGISTERED_FEE_PROVIDER_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-007",
+      "legacyAliases": [
+        "C061",
+        "C078",
+        "C079",
+        "G21",
+        "G30",
+        "G33"
+      ],
+      "claimIds": [
+        "MOBILE_BACKEND_PENTEST",
+        "CRYPTO_SMART_CONTRACT_AUDIT",
+        "NO_OPEN_CRITICAL_HIGH",
+        "SIGNER_ARCHITECTURE_AUDITED"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "SECURITY_ASSESSMENT",
+        "KEY_CUSTODY_SIGNER"
+      ],
+      "dependentGateIds": [
+        "SUPPLY_CHAIN"
+      ],
+      "ownerRole": "SECURITY_ASSURANCE_OWNER",
+      "reviewerRole": "INDEPENDENT_SECURITY_AUDITOR",
+      "portal": "INDEPENDENT_SECURITY_AUDIT_AND_PENETRATION_TEST_PROVIDER",
+      "evidencePath": "delivery/evidence/artifacts/security/",
+      "verificationCommand": "Independent mobile/backend/protocol penetration test and signed remediation closure",
+      "successCriteria": "No open critical or high findings remain, signer architecture is audited, and all remediation evidence is tied to this exact release subject.",
+      "requiredMaterials": [
+        "signed audit report",
+        "penetration-test scope",
+        "finding register",
+        "remediation retest",
+        "protocol audit report"
+      ],
+      "secretsPolicy": "TEST_TARGET_CREDENTIALS_ARE_CONTROLLED_BY_THE_AUDITOR_AND_NOT_STORED_IN_PACKAGE",
+      "featureFlags": [
+        "PRODUCTION_WRITE_DISABLED_DURING_AUDIT"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_RELEASE",
+      "escalationContact": "NOT_REGISTERED_SECURITY_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-008",
+      "legacyAliases": [
+        "C072",
+        "C073",
+        "C074",
+        "C075",
+        "C087",
+        "G27",
+        "G28",
+        "G34",
+        "G37"
+      ],
+      "claimIds": [
+        "JP_LEGAL_OPINION",
+        "REGISTRATIONS_PERMISSIONS",
+        "TERMS_DISCLOSURES_TAX",
+        "DATA_MAP_AND_MINIMIZATION",
+        "DSAR_BREACH_PROCESS",
+        "APPLE_ORGANIZATION_ELIGIBLE",
+        "APPLE_REVIEW_APPROVED",
+        "PLAY_DECLARATIONS_COMPLETE",
+        "PLAY_REVIEW_APPROVED",
+        "VENDORS_CONTRACTED"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "LEGAL_JAPAN",
+        "PRIVACY_DATA_GOVERNANCE",
+        "APPLE_DISTRIBUTION",
+        "GOOGLE_DISTRIBUTION",
+        "PROVIDER_CONTRACTS"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "LEGAL_AND_DISTRIBUTION_OWNER",
+      "reviewerRole": "INDEPENDENT_PRIVACY_AND_PLATFORM_REVIEWER",
+      "portal": "JAPAN_LEGAL_PRIVACY_APPLE_AND_GOOGLE_REVIEW_WORKFLOWS",
+      "evidencePath": "delivery/evidence/artifacts/legal-and-distribution/",
+      "verificationCommand": "Legal/privacy review plus Apple and Google declarations, contracts, and review decisions",
+      "successCriteria": "Legal classification, privacy/data governance, provider contracts, platform declarations, and store approvals are current and release-bound.",
+      "requiredMaterials": [
+        "legal opinion",
+        "privacy data map",
+        "terms and disclosures",
+        "provider contracts",
+        "Apple declarations",
+        "Google declarations",
+        "store decisions"
+      ],
+      "secretsPolicy": "ACCOUNT_CREDENTIALS_AND_TAX_DOCUMENTS_STAY_IN_OFFICIAL_PORTALS",
+      "featureFlags": [
+        "PUBLIC_RELEASE_DISABLED_UNTIL_PLATFORM_APPROVAL"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_EXTERNAL_CHANGE",
+      "escalationContact": "NOT_REGISTERED_PLATFORM_AND_LEGAL_ESCALATION_CONTACT"
+    },
+    {
+      "id": "EXT-009",
+      "legacyAliases": [
+        "C066",
+        "C067",
+        "C068",
+        "C069",
+        "C070",
+        "C071",
+        "C088",
+        "C089",
+        "C090",
+        "C091",
+        "G07",
+        "G08",
+        "G24",
+        "G25",
+        "G26",
+        "G35",
+        "G36"
+      ],
+      "claimIds": [
+        "SIGNER_ARCHITECTURE_AUDITED",
+        "KEY_CEREMONY_COMPLETE",
+        "SIGNER_FAIL_CLOSED",
+        "CAPSULE_EXACT_BINDING",
+        "ONE_TIME_REPLAY_PROTECTION",
+        "TWO_PERSON_HIGH_RISK",
+        "BREAK_GLASS_AUDITED",
+        "SBOM_PROVENANCE_SIGNED",
+        "EVIDENCE_BOUND_TO_RELEASE",
+        "INDEPENDENT_GO_APPROVAL",
+        "TRUSTED_TIME_AVAILABLE",
+        "RUNTIME_STATE_HEALTHY",
+        "SHORT_LIVED_WRITE_LEASE",
+        "PER_OPERATION_USER_AUTH"
+      ],
+      "status": "BLOCKED_EXTERNAL",
+      "directGateIds": [
+        "KEY_CUSTODY_SIGNER",
+        "TRANSACTION_AUTHORIZATION",
+        "ADMIN_CHANGE_CONTROL",
+        "SUPPLY_CHAIN",
+        "RELEASE_APPROVAL",
+        "RUNTIME_ACTIVATION"
+      ],
+      "dependentGateIds": [],
+      "ownerRole": "KEY_CUSTODY_AND_RUNTIME_OWNER",
+      "reviewerRole": "TWO_PERSON_SECURITY_AND_SRE_APPROVERS",
+      "portal": "HSM_OR_MPC_KEY_CEREMONY_PROTECTED_RUNTIME_AND_INCIDENT_CONTROL",
+      "evidencePath": "delivery/evidence/artifacts/runtime-and-custody/",
+      "verificationCommand": "HSM or MPC ceremony, rotation and revocation drill, runtime authorization, canary, and post-canary reconciliation",
+      "successCriteria": "Signer custody, exact capsule binding, replay prevention, two-person approvals, break-glass audit, trusted time, short lease, and canary reconciliation are all independently verified.",
+      "requiredMaterials": [
+        "HSM or MPC ceremony record",
+        "key rotation and revocation evidence",
+        "runtime health bundle",
+        "signed authorization records",
+        "canary ledger and reconciliation report",
+        "incident drill"
+      ],
+      "secretsPolicy": "PRIVATE_KEYS_NEVER_ENTER_REPOSITORY_CHAT_LOGS_OR_ARTIFACTS",
+      "featureFlags": [
+        "MAINNET_WRITE_DISABLED",
+        "CANARY_AUTHORIZED_REQUIRED",
+        "BREAK_GLASS_DISABLED_BY_DEFAULT"
+      ],
+      "revalidateBy": "REVALIDATE_ON_EVERY_RELEASE",
+      "escalationContact": "NOT_REGISTERED_HSM_MPC_AND_SRE_ESCALATION_CONTACT"
+    }
+  ],
+  "coverage": {
+    "coverageVersion": "1.0",
+    "walletDependencyVersion": "1.0",
+    "personalWalletRequired": false,
+    "gateCount": 37,
+    "claimCount": 93,
+    "gates": [
+      {
+        "gateId": "SCOPE_AND_TRACEABILITY",
+        "claimIds": [
+          "SCOPE_LOCKED",
+          "REQUIREMENTS_TRACED"
+        ],
+        "blockerIds": [
+          "EXT-001"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "ANDROID_RELEASE",
+        "claimIds": [
+          "ANDROID_BUILD_SIGNED",
+          "ANDROID_DEVICE_MATRIX",
+          "ANDROID_PLATFORM_SECURITY"
+        ],
+        "blockerIds": [
+          "EXT-002"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "IOS_RELEASE",
+        "claimIds": [
+          "IOS_BUILD_SIGNED",
+          "IOS_DEVICE_MATRIX",
+          "IOS_PLATFORM_SECURITY"
+        ],
+        "blockerIds": [
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "BACKEND_RELEASE",
+        "claimIds": [
+          "BACKEND_ARTIFACT_PINNED",
+          "BACKEND_POLICY_ENFORCED"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "DETERMINISTIC_CORE",
+        "claimIds": [
+          "CROSS_LANGUAGE_VECTORS",
+          "OVERFLOW_ROUNDING_SAFE"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "AUTH_SESSION_RECOVERY",
+        "claimIds": [
+          "AUTHENTICATION_HARDENED",
+          "RECOVERY_DRILLED",
+          "ACCOUNT_TAKEOVER_RESPONSE"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "KEY_CUSTODY_SIGNER",
+        "claimIds": [
+          "SIGNER_ARCHITECTURE_AUDITED",
+          "KEY_CEREMONY_COMPLETE",
+          "SIGNER_FAIL_CLOSED"
+        ],
+        "blockerIds": [
+          "EXT-007",
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "DEVICE_ATTESTATION",
+        "claimIds": [
+          "ATTESTATION_VERIFIED_SERVER_SIDE",
+          "UNSUPPORTED_DEVICE_POLICY"
+        ],
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "TRANSACTION_AUTHORIZATION",
+        "claimIds": [
+          "CAPSULE_EXACT_BINDING",
+          "ONE_TIME_REPLAY_PROTECTION",
+          "LIMITED_AUTHORIZATION_SAFE"
+        ],
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "MIXED",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "ASSET_REGISTRY",
+        "claimIds": [
+          "REGISTRY_SIGNED_PINNED",
+          "TOKEN_BEHAVIOR_ALLOWLIST"
+        ],
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "JPYC_INTEGRATION",
+        "claimIds": [
+          "JPYC_OFFICIAL_DATA_PINNED",
+          "JPYC_EX_CONTRACTED_TESTED"
+        ],
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "HYPERLIQUID_INTEGRATION",
+        "claimIds": [
+          "HL_API_VERSION_PINNED",
+          "HL_ORDER_LIFECYCLE_TESTED",
+          "HL_MARGIN_MODEL_VERIFIED"
+        ],
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "LIQUIDATION_RISK",
+        "claimIds": [
+          "LIQUIDATION_PREVIEW_VALIDATED",
+          "STALE_OR_UNKNOWN_BLOCKED"
+        ],
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "FEE_READINESS",
+        "claimIds": [
+          "ZERO_GAS_PATH_PROVEN",
+          "FEE_QUOTE_BOUND_CAPPED",
+          "FEE_BUDGET_CONCURRENT_SAFE"
+        ],
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "SWAP_AND_CROSS_NETWORK",
+        "claimIds": [
+          "ROUTE_ALLOWLIST_AUDITED",
+          "QUOTE_FINALITY_PARTIAL_SAFE",
+          "APPROVALS_MINIMIZED_REVOKABLE"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "RECONCILIATION_LEDGER",
+        "claimIds": [
+          "DOUBLE_ENTRY_INVARIANTS",
+          "ZERO_UNEXPLAINED_DIFFERENCE"
+        ],
+        "blockerIds": [
+          "EXT-004",
+          "EXT-006"
+        ],
+        "classification": "MIXED",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "FAILURE_RECOVERY",
+        "claimIds": [
+          "STATE_MACHINE_EXHAUSTIVE",
+          "NO_BLIND_RETRY"
+        ],
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "MIXED",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "AI_NATURAL_LANGUAGE",
+        "claimIds": [
+          "MATERIAL_AMBIGUITY_BLOCKED",
+          "PROMPT_TOOL_INJECTION_BLOCKED",
+          "MODEL_CHANGE_GATED"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "CHATGPT_BOUNDARY",
+        "claimIds": [
+          "CHATGPT_READ_ONLY_CONTRACT",
+          "OPENAI_TERMS_RECHECKED"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "UX_PLAIN_JAPANESE",
+        "claimIds": [
+          "PLAIN_JAPANESE_COMPLETE",
+          "CRITICAL_REVIEW_COMPLETE",
+          "NO_INVENTED_VALUES"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "ACCESSIBILITY",
+        "claimIds": [
+          "WCAG_AND_NATIVE_A11Y",
+          "COGNITIVE_COMPREHENSION"
+        ],
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "PRIVACY_DATA_GOVERNANCE",
+        "claimIds": [
+          "DATA_MAP_AND_MINIMIZATION",
+          "LOG_REDACTION_VERIFIED",
+          "DSAR_BREACH_PROCESS"
+        ],
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "MIXED",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "ADMIN_CHANGE_CONTROL",
+        "claimIds": [
+          "TWO_PERSON_HIGH_RISK",
+          "BREAK_GLASS_AUDITED"
+        ],
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "SRE_RESILIENCE",
+        "claimIds": [
+          "SLO_CAPACITY_DDOS",
+          "BACKUP_RESTORE_RTO_RPO",
+          "VOLATILITY_FAIL_CLOSED"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "SUPPLY_CHAIN",
+        "claimIds": [
+          "SBOM_PROVENANCE_SIGNED",
+          "DEPENDENCY_VULNERABILITIES_CLEARED",
+          "ANTI_ROLLBACK_UPDATE_SAFE"
+        ],
+        "blockerIds": [
+          "EXT-001",
+          "EXT-007",
+          "EXT-009"
+        ],
+        "classification": "MIXED",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "SECURITY_ASSESSMENT",
+        "claimIds": [
+          "MOBILE_BACKEND_PENTEST",
+          "CRYPTO_SMART_CONTRACT_AUDIT",
+          "NO_OPEN_CRITICAL_HIGH"
+        ],
+        "blockerIds": [
+          "EXT-007"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "LEGAL_JAPAN",
+        "claimIds": [
+          "JP_LEGAL_OPINION",
+          "REGISTRATIONS_PERMISSIONS",
+          "TERMS_DISCLOSURES_TAX"
+        ],
+        "blockerIds": [
+          "EXT-005",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "APPLE_DISTRIBUTION",
+        "claimIds": [
+          "APPLE_ORGANIZATION_ELIGIBLE",
+          "APPLE_REVIEW_APPROVED"
+        ],
+        "blockerIds": [
+          "EXT-003",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "GOOGLE_DISTRIBUTION",
+        "claimIds": [
+          "PLAY_DECLARATIONS_COMPLETE",
+          "PLAY_REVIEW_APPROVED"
+        ],
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "PROVIDER_CONTRACTS",
+        "claimIds": [
+          "VENDORS_CONTRACTED",
+          "VENDOR_EXIT_AND_OUTAGE"
+        ],
+        "blockerIds": [
+          "EXT-005",
+          "EXT-006",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "TESTNET_E2E",
+        "claimIds": [
+          "TESTNET_ALL_FLOWS",
+          "TESTNET_NO_UNEXPLAINED_DIFF"
+        ],
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "MAINNET_CANARY",
+        "claimIds": [
+          "CANARY_LIMITS_APPROVED",
+          "CANARY_ALL_CRITICAL_PATHS",
+          "CANARY_RECONCILED_ZERO_DIFF"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "INCIDENT_DRILLS",
+        "claimIds": [
+          "KILL_SWITCH_DRILLED",
+          "KEY_PROVIDER_DATA_BREACH_DRILLS"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "USER_ACCEPTANCE",
+        "claimIds": [
+          "BEGINNER_TASK_SUCCESS",
+          "RISK_COMPREHENSION"
+        ],
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "RELEASE_APPROVAL",
+        "claimIds": [
+          "EVIDENCE_BOUND_TO_RELEASE",
+          "INDEPENDENT_GO_APPROVAL"
+        ],
+        "blockerIds": [
+          "EXT-001",
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "RUNTIME_ACTIVATION",
+        "claimIds": [
+          "TRUSTED_TIME_AVAILABLE",
+          "RUNTIME_STATE_HEALTHY",
+          "SHORT_LIVED_WRITE_LEASE",
+          "PER_OPERATION_USER_AUTH"
+        ],
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "gateId": "POST_LAUNCH_MONITORING",
+        "claimIds": [
+          "REALTIME_RISK_MONITORING",
+          "SOURCE_POLICY_REVALIDATION",
+          "ROLLBACK_AND_USER_NOTICE"
+        ],
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      }
+    ],
+    "claims": [
+      {
+        "claimId": "SCOPE_LOCKED",
+        "gateId": "SCOPE_AND_TRACEABILITY",
+        "blockerIds": [
+          "EXT-001"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "REQUIREMENTS_TRACED",
+        "gateId": "SCOPE_AND_TRACEABILITY",
+        "blockerIds": [
+          "EXT-001"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ANDROID_BUILD_SIGNED",
+        "gateId": "ANDROID_RELEASE",
+        "blockerIds": [
+          "EXT-002"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ANDROID_DEVICE_MATRIX",
+        "gateId": "ANDROID_RELEASE",
+        "blockerIds": [
+          "EXT-002"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ANDROID_PLATFORM_SECURITY",
+        "gateId": "ANDROID_RELEASE",
+        "blockerIds": [
+          "EXT-002"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "IOS_BUILD_SIGNED",
+        "gateId": "IOS_RELEASE",
+        "blockerIds": [
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "IOS_DEVICE_MATRIX",
+        "gateId": "IOS_RELEASE",
+        "blockerIds": [
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "IOS_PLATFORM_SECURITY",
+        "gateId": "IOS_RELEASE",
+        "blockerIds": [
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "BACKEND_ARTIFACT_PINNED",
+        "gateId": "BACKEND_RELEASE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "BACKEND_POLICY_ENFORCED",
+        "gateId": "BACKEND_RELEASE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CROSS_LANGUAGE_VECTORS",
+        "gateId": "DETERMINISTIC_CORE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "OVERFLOW_ROUNDING_SAFE",
+        "gateId": "DETERMINISTIC_CORE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "AUTHENTICATION_HARDENED",
+        "gateId": "AUTH_SESSION_RECOVERY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "RECOVERY_DRILLED",
+        "gateId": "AUTH_SESSION_RECOVERY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ACCOUNT_TAKEOVER_RESPONSE",
+        "gateId": "AUTH_SESSION_RECOVERY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SIGNER_ARCHITECTURE_AUDITED",
+        "gateId": "KEY_CUSTODY_SIGNER",
+        "blockerIds": [
+          "EXT-007",
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "KEY_CEREMONY_COMPLETE",
+        "gateId": "KEY_CUSTODY_SIGNER",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SIGNER_FAIL_CLOSED",
+        "gateId": "KEY_CUSTODY_SIGNER",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ATTESTATION_VERIFIED_SERVER_SIDE",
+        "gateId": "DEVICE_ATTESTATION",
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "UNSUPPORTED_DEVICE_POLICY",
+        "gateId": "DEVICE_ATTESTATION",
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CAPSULE_EXACT_BINDING",
+        "gateId": "TRANSACTION_AUTHORIZATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ONE_TIME_REPLAY_PROTECTION",
+        "gateId": "TRANSACTION_AUTHORIZATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "LIMITED_AUTHORIZATION_SAFE",
+        "gateId": "TRANSACTION_AUTHORIZATION",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "REGISTRY_SIGNED_PINNED",
+        "gateId": "ASSET_REGISTRY",
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TOKEN_BEHAVIOR_ALLOWLIST",
+        "gateId": "ASSET_REGISTRY",
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "JPYC_OFFICIAL_DATA_PINNED",
+        "gateId": "JPYC_INTEGRATION",
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "JPYC_EX_CONTRACTED_TESTED",
+        "gateId": "JPYC_INTEGRATION",
+        "blockerIds": [
+          "EXT-005"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "HL_API_VERSION_PINNED",
+        "gateId": "HYPERLIQUID_INTEGRATION",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "HL_ORDER_LIFECYCLE_TESTED",
+        "gateId": "HYPERLIQUID_INTEGRATION",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "HL_MARGIN_MODEL_VERIFIED",
+        "gateId": "HYPERLIQUID_INTEGRATION",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "LIQUIDATION_PREVIEW_VALIDATED",
+        "gateId": "LIQUIDATION_RISK",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "STALE_OR_UNKNOWN_BLOCKED",
+        "gateId": "LIQUIDATION_RISK",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ZERO_GAS_PATH_PROVEN",
+        "gateId": "FEE_READINESS",
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "FEE_QUOTE_BOUND_CAPPED",
+        "gateId": "FEE_READINESS",
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "FEE_BUDGET_CONCURRENT_SAFE",
+        "gateId": "FEE_READINESS",
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ROUTE_ALLOWLIST_AUDITED",
+        "gateId": "SWAP_AND_CROSS_NETWORK",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "QUOTE_FINALITY_PARTIAL_SAFE",
+        "gateId": "SWAP_AND_CROSS_NETWORK",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "APPROVALS_MINIMIZED_REVOKABLE",
+        "gateId": "SWAP_AND_CROSS_NETWORK",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "DOUBLE_ENTRY_INVARIANTS",
+        "gateId": "RECONCILIATION_LEDGER",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ZERO_UNEXPLAINED_DIFFERENCE",
+        "gateId": "RECONCILIATION_LEDGER",
+        "blockerIds": [
+          "EXT-004",
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "STATE_MACHINE_EXHAUSTIVE",
+        "gateId": "FAILURE_RECOVERY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "NO_BLIND_RETRY",
+        "gateId": "FAILURE_RECOVERY",
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "MATERIAL_AMBIGUITY_BLOCKED",
+        "gateId": "AI_NATURAL_LANGUAGE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "PROMPT_TOOL_INJECTION_BLOCKED",
+        "gateId": "AI_NATURAL_LANGUAGE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "MODEL_CHANGE_GATED",
+        "gateId": "AI_NATURAL_LANGUAGE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CHATGPT_READ_ONLY_CONTRACT",
+        "gateId": "CHATGPT_BOUNDARY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "OPENAI_TERMS_RECHECKED",
+        "gateId": "CHATGPT_BOUNDARY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "PLAIN_JAPANESE_COMPLETE",
+        "gateId": "UX_PLAIN_JAPANESE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CRITICAL_REVIEW_COMPLETE",
+        "gateId": "UX_PLAIN_JAPANESE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "NO_INVENTED_VALUES",
+        "gateId": "UX_PLAIN_JAPANESE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "WCAG_AND_NATIVE_A11Y",
+        "gateId": "ACCESSIBILITY",
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "COGNITIVE_COMPREHENSION",
+        "gateId": "ACCESSIBILITY",
+        "blockerIds": [
+          "EXT-002",
+          "EXT-003"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "DATA_MAP_AND_MINIMIZATION",
+        "gateId": "PRIVACY_DATA_GOVERNANCE",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "LOG_REDACTION_VERIFIED",
+        "gateId": "PRIVACY_DATA_GOVERNANCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "DSAR_BREACH_PROCESS",
+        "gateId": "PRIVACY_DATA_GOVERNANCE",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TWO_PERSON_HIGH_RISK",
+        "gateId": "ADMIN_CHANGE_CONTROL",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "BREAK_GLASS_AUDITED",
+        "gateId": "ADMIN_CHANGE_CONTROL",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SLO_CAPACITY_DDOS",
+        "gateId": "SRE_RESILIENCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "BACKUP_RESTORE_RTO_RPO",
+        "gateId": "SRE_RESILIENCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "VOLATILITY_FAIL_CLOSED",
+        "gateId": "SRE_RESILIENCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SBOM_PROVENANCE_SIGNED",
+        "gateId": "SUPPLY_CHAIN",
+        "blockerIds": [
+          "EXT-001",
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "DEPENDENCY_VULNERABILITIES_CLEARED",
+        "gateId": "SUPPLY_CHAIN",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ANTI_ROLLBACK_UPDATE_SAFE",
+        "gateId": "SUPPLY_CHAIN",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "MOBILE_BACKEND_PENTEST",
+        "gateId": "SECURITY_ASSESSMENT",
+        "blockerIds": [
+          "EXT-007"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CRYPTO_SMART_CONTRACT_AUDIT",
+        "gateId": "SECURITY_ASSESSMENT",
+        "blockerIds": [
+          "EXT-007"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "NO_OPEN_CRITICAL_HIGH",
+        "gateId": "SECURITY_ASSESSMENT",
+        "blockerIds": [
+          "EXT-007"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "JP_LEGAL_OPINION",
+        "gateId": "LEGAL_JAPAN",
+        "blockerIds": [
+          "EXT-005",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "REGISTRATIONS_PERMISSIONS",
+        "gateId": "LEGAL_JAPAN",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TERMS_DISCLOSURES_TAX",
+        "gateId": "LEGAL_JAPAN",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "APPLE_ORGANIZATION_ELIGIBLE",
+        "gateId": "APPLE_DISTRIBUTION",
+        "blockerIds": [
+          "EXT-003",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "APPLE_REVIEW_APPROVED",
+        "gateId": "APPLE_DISTRIBUTION",
+        "blockerIds": [
+          "EXT-003",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "PLAY_DECLARATIONS_COMPLETE",
+        "gateId": "GOOGLE_DISTRIBUTION",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "PLAY_REVIEW_APPROVED",
+        "gateId": "GOOGLE_DISTRIBUTION",
+        "blockerIds": [
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "VENDORS_CONTRACTED",
+        "gateId": "PROVIDER_CONTRACTS",
+        "blockerIds": [
+          "EXT-005",
+          "EXT-006",
+          "EXT-008"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "VENDOR_EXIT_AND_OUTAGE",
+        "gateId": "PROVIDER_CONTRACTS",
+        "blockerIds": [
+          "EXT-006"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TESTNET_ALL_FLOWS",
+        "gateId": "TESTNET_E2E",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TESTNET_NO_UNEXPLAINED_DIFF",
+        "gateId": "TESTNET_E2E",
+        "blockerIds": [
+          "EXT-004"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "CONTROLLED_TESTNET_OR_PROVIDER_IDENTITY",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CANARY_LIMITS_APPROVED",
+        "gateId": "MAINNET_CANARY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CANARY_ALL_CRITICAL_PATHS",
+        "gateId": "MAINNET_CANARY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "CANARY_RECONCILED_ZERO_DIFF",
+        "gateId": "MAINNET_CANARY",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "KILL_SWITCH_DRILLED",
+        "gateId": "INCIDENT_DRILLS",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "KEY_PROVIDER_DATA_BREACH_DRILLS",
+        "gateId": "INCIDENT_DRILLS",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "BEGINNER_TASK_SUCCESS",
+        "gateId": "USER_ACCEPTANCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "RISK_COMPREHENSION",
+        "gateId": "USER_ACCEPTANCE",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "EVIDENCE_BOUND_TO_RELEASE",
+        "gateId": "RELEASE_APPROVAL",
+        "blockerIds": [
+          "EXT-001",
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "INDEPENDENT_GO_APPROVAL",
+        "gateId": "RELEASE_APPROVAL",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "TRUSTED_TIME_AVAILABLE",
+        "gateId": "RUNTIME_ACTIVATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "RUNTIME_STATE_HEALTHY",
+        "gateId": "RUNTIME_ACTIVATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SHORT_LIVED_WRITE_LEASE",
+        "gateId": "RUNTIME_ACTIVATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "PER_OPERATION_USER_AUTH",
+        "gateId": "RUNTIME_ACTIVATION",
+        "blockerIds": [
+          "EXT-009"
+        ],
+        "classification": "EXTERNAL_BLOCKER",
+        "walletDependency": "PRODUCTION_SIGNER_MAINNET_OR_PROTECTED_RUNTIME",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "REALTIME_RISK_MONITORING",
+        "gateId": "POST_LAUNCH_MONITORING",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "SOURCE_POLICY_REVALIDATION",
+        "gateId": "POST_LAUNCH_MONITORING",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      },
+      {
+        "claimId": "ROLLBACK_AND_USER_NOTICE",
+        "gateId": "POST_LAUNCH_MONITORING",
+        "blockerIds": [],
+        "classification": "INTERNAL_IMPLEMENTATION",
+        "walletDependency": "NONE",
+        "personalWalletRequired": false
+      }
+    ]
+  }
+}

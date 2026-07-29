@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/runtime-activation-report.schema.json",
+  "title": "RuntimeActivationReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "runtimeLease",
+    "leaseMaxLifetimeSeconds",
+    "leaseAuthorizesTransaction",
+    "releaseEligibleForRuntimeActivation",
+    "productionWritePermitted",
+    "runtimeDeployment",
+    "writeGate",
+    "killSwitch",
+    "killSwitchOperationallyVerified",
+    "reason"
+  ],
+  "properties": {
+    "status": { "const": "BLOCKED_NOT_OPERATIONAL" },
+    "runtimeLease": { "type": "null" },
+    "leaseMaxLifetimeSeconds": { "const": 300 },
+    "leaseAuthorizesTransaction": { "const": false },
+    "releaseEligibleForRuntimeActivation": { "const": false },
+    "productionWritePermitted": { "const": false },
+    "runtimeDeployment": { "const": "NOT_DEPLOYED" },
+    "writeGate": { "const": "STATICALLY_DISABLED" },
+    "killSwitch": { "const": "STATIC_FAIL_CLOSED_ONLY" },
+    "killSwitchOperationallyVerified": { "const": false },
+    "reason": { "type": "string", "minLength": 20 }
+  }
+}

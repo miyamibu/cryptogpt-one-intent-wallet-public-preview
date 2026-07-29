@@ -1,0 +1,76 @@
+version: 2026-07-29.3
+android:
+- device: Pixel 9a
+  priority: P0
+  status: UNTESTED
+  checks:
+  - biometric
+  - keystore
+  - protected_confirmation_capability
+  - font_scale_200
+  - gesture_navigation
+  - screen_capture
+  - background_resume
+ios:
+- device: iPhone 12
+  logical_viewport: 390x844
+  priority: P0
+  status: UNTESTED
+  checks:
+  - Face ID
+  - Secure Enclave
+  - App Attest
+  - Keychain ThisDeviceOnly
+  - Dynamic Type_200_percent
+  - VoiceOver
+  - home_indicator
+  - screen_capture
+  - reinstall_recovery
+  - low_power_mode
+- device: smallest_supported_iPhone
+  priority: P0
+  status: UNTESTED
+  checks:
+  - Face ID_or_Touch ID
+  - Secure Enclave
+  - App Attest
+  - Dynamic Type_xxxLarge
+  - VoiceOver
+  - home_indicator
+  - screen_capture
+  - reinstall_recovery
+- device: recent_Face_ID_iPhone
+  priority: P0
+  status: UNTESTED
+  checks:
+  - same_as_above
+  - camera_cutout_safe_area
+  - low_power_mode
+- device: iPad_optional
+  priority: P2
+  status: UNTESTED
+  checks:
+  - split_view
+  - pointer
+  - window_resize
+web_review_only:
+- viewport: 320x568
+  id: iphone-se-stress
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE_LIGHT_DARK_DEFAULT_LARGE
+- viewport: 375x667
+  id: iphone-small
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE
+- viewport: 390x844
+  id: iphone-faceid
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE
+- viewport: 430x932
+  id: iphone-large
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE
+- viewport: 412x915
+  id: pixel9a-logical
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE
+- viewport: 360x800
+  id: android-compact
+  status: PROTOTYPE_TESTED_JA_LIGHT_DARK_DEFAULT_LARGE
+prototype_evidence: tests/prototype-visual-evidence.json
+native_device_status: UNTESTED

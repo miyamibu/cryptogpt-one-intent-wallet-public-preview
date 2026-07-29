@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "policyVersion": "TEMPLATE-NOT-ACTIVE",
+  "enabled": false,
+  "signatureProfile": "ONE_INTENT_ED25519_CANONICAL_JSON_V2",
+  "canonicalization": "ONE_INTENT_CANONICAL_JSON_SUBSET_V1",
+  "trustedKeys": [],
+  "revokedKeyIds": [],
+  "requiredOutOfBandEnvironment": {
+    "ONE_INTENT_TRUST_POLICY_SHA256": "64 lowercase hex pinned in protected CI/runtime configuration",
+    "ONE_INTENT_READINESS_CHECKER_SHA256": "64 lowercase hex of the deterministic readiness verifier bundle, pinned independently of repository",
+    "ONE_INTENT_RELEASE_SUBJECT_SHA256": "64 lowercase hex approved for this immutable release",
+    "ONE_INTENT_TRUSTED_TIME_ATTESTATION_SHA256": "64 lowercase hex for the exact short-lived signed time statement",
+    "ONE_INTENT_EVIDENCE_INDEX_SHA256": "Required in production; protected outside the repository."
+  },
+  "roleSeparation": {
+    "issuerMustDifferFromEveryReviewer": true,
+    "indexSignerMustDifferFromClaimIssuersAndReviewers": true,
+    "trustedTimeSignerMustHaveDedicatedRole": true,
+    "oneKeyCannotSatisfyTwoApprovalSlots": true
+  },
+  "notes": [
+    "This template intentionally cannot authorize production.",
+    "Codex and human release owners must create a separately controlled, signed production trust policy and pin its hash out of band.",
+    "Adding a public key inside the repository is not sufficient because a repository attacker could replace both evidence and keys."
+  ]
+}

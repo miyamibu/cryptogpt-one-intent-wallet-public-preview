@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "1.0",
+  "leaseId": "EXAMPLE-NO-WRITE",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "releaseSubject": {
+    "sourceCommit": null,
+    "sourceTreeSha256": null,
+    "androidArtifactSha256": null,
+    "iosArtifactSha256": null,
+    "backendImageDigest": null,
+    "signerImageDigest": null,
+    "configurationBundleSha256": null,
+    "policyBundleSha256": null,
+    "assetRegistrySha256": null,
+    "sbomSha256": null,
+    "releaseId": "2026-07-29.3-design-package",
+    "environment": "DESIGN_ONLY"
+  },
+  "deploymentId": "EXAMPLE-NOT-DEPLOYED",
+  "runtimeBundleId": "EXAMPLE-RUNTIME-STOPPED",
+  "sequence": 0,
+  "issuedAt": "2026-07-28T11:10:00Z",
+  "expiresAt": "2026-07-28T11:10:30Z",
+  "capabilities": [],
+  "transactionAuthorizationGranted": false,
+  "signatures": []
+}

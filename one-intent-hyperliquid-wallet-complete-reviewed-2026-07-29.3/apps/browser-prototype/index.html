@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>オフライン確認プロトタイプ</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    body { margin: 0; padding: 24px; background: #f7f7f2; color: #202020; }
+    main { max-width: 720px; margin: auto; background: white; padding: 24px; border-radius: 16px; }
+    .example { color: #6b4f00; background: #fff5cf; padding: 12px; border-radius: 8px; }
+    .danger { color: #9b1c1c; }
+    button { min-height: 48px; padding: 12px 18px; }
+    button[disabled] { opacity: .5; }
+  </style>
+</head>
+<body>
+  <main aria-labelledby="title">
+    <p class="example">画面例・ライブ送信ではありません</p>
+    <h1 id="title">内容を確認してください</h1>
+    <h2>元の音声認識</h2>
+    <p id="sourceUtterance">BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。</p>
+    <h2>解釈候補</h2>
+    <p id="normalizedInterpretation">ペイパチャル → 先物取引（期限なし）</p>
+    <p>生産価格 → 清算価格</p>
+    <p class="danger" id="ambiguity">方向とネットワークが未確認です。確認するまで実行できません。</p>
+    <p>ストップロス: 設定なし</p>
+    <button id="primaryAction" type="button" disabled>送信内容を確認</button>
+    <button id="stopAction" type="button">停止</button>
+  </main>
+  <script>
+    // The prototype has no write endpoint or executable link.
+    document.getElementById('stopAction').addEventListener('click', () => {
+      document.getElementById('ambiguity').textContent = '停止しました。';
+      document.getElementById('primaryAction').disabled = true;
+    });
+  </script>
+</body>
+</html>

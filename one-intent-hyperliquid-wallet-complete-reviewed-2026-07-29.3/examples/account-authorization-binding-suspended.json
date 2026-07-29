@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "1.0",
+  "bindingId": "EXAMPLE-ACCOUNT-BINDING",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "releaseSubject": {
+    "sourceCommit": null,
+    "sourceTreeSha256": null,
+    "androidArtifactSha256": null,
+    "iosArtifactSha256": null,
+    "backendImageDigest": null,
+    "signerImageDigest": null,
+    "configurationBundleSha256": null,
+    "policyBundleSha256": null,
+    "assetRegistrySha256": null,
+    "sbomSha256": null,
+    "releaseId": "2026-07-29.3-design-package",
+    "environment": "DESIGN_ONLY"
+  },
+  "deploymentId": "EXAMPLE-NOT-DEPLOYED",
+  "sequence": 0,
+  "registrySha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "account": "0x0000000000000000000000000000000000000000",
+  "userKey": {
+    "keyId": "EXAMPLE-NO-USER-KEY",
+    "principalId": "EXAMPLE-NO-USER",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nEXAMPLE-NOT-A-KEY\n-----END PUBLIC KEY-----\n",
+    "organization": "EXAMPLE-NO-ORGANIZATION"
+  },
+  "deviceKey": {
+    "keyId": "EXAMPLE-NO-DEVICE-KEY",
+    "principalId": "EXAMPLE-NO-DEVICE",
+    "publicKeyPem": "-----BEGIN PUBLIC KEY-----\nEXAMPLE-NOT-A-KEY\n-----END PUBLIC KEY-----\n",
+    "organization": "EXAMPLE-NO-ORGANIZATION"
+  },
+  "deviceAttestationSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "issuedAt": "2026-07-28T11:10:00Z",
+  "expiresAt": "2026-07-28T11:10:00Z",
+  "status": "SUSPENDED",
+  "signatures": []
+}

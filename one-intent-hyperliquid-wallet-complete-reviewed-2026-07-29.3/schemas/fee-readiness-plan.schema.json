@@ -1,0 +1,380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/fee-readiness-plan.schema.json",
+  "title": "Fee Readiness Plan v2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "planId",
+    "environment",
+    "generatedAt",
+    "expiresAt",
+    "networkId",
+    "assetRegistryId",
+    "registryEntryHash",
+    "account",
+    "feeAsset",
+    "jpycAssetRef",
+    "balances",
+    "actionFeeEstimate",
+    "targetReserve",
+    "status",
+    "strategy",
+    "routeCapabilityId",
+    "capabilityProofState",
+    "bootstrappingMethod",
+    "quote",
+    "monthlyJpycCap",
+    "manualFallbackId",
+    "userMessageJa",
+    "safetyChecks",
+    "exampleOnly",
+    "provider"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "2.1"
+    },
+    "planId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{8,80}$"
+    },
+    "environment": {
+      "enum": [
+        "SIMULATION",
+        "STAGING",
+        "PRODUCTION"
+      ]
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "networkId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+:[A-Za-z0-9._-]+$"
+    },
+    "assetRegistryId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 120
+    },
+    "registryEntryHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "account": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "address",
+        "executionModel"
+      ],
+      "properties": {
+        "address": {
+          "type": "string",
+          "pattern": "^0x[0-9A-Fa-f]{40}$"
+        },
+        "executionModel": {
+          "enum": [
+            "EOA",
+            "SMART_ACCOUNT_ERC4337",
+            "PROTOCOL_NATIVE",
+            "RELAYER"
+          ]
+        }
+      }
+    },
+    "feeAsset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symbol",
+        "decimals"
+      ],
+      "properties": {
+        "symbol": {
+          "type": "string",
+          "pattern": "^[A-Z0-9._-]{1,20}$"
+        },
+        "decimals": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 36
+        }
+      }
+    },
+    "jpycAssetRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "symbol",
+        "contract",
+        "decimals"
+      ],
+      "properties": {
+        "symbol": {
+          "const": "JPYC"
+        },
+        "contract": {
+          "type": "string",
+          "pattern": "^0x[0-9A-Fa-f]{40}$"
+        },
+        "decimals": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 36
+        }
+      }
+    },
+    "balances": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "native",
+        "jpyc"
+      ],
+      "properties": {
+        "native": {
+          "$ref": "#/$defs/decimal"
+        },
+        "jpyc": {
+          "$ref": "#/$defs/decimal"
+        }
+      }
+    },
+    "actionFeeEstimate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "source",
+        "generatedAt",
+        "expiresAt"
+      ],
+      "properties": {
+        "amount": {
+          "$ref": "#/$defs/decimal"
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "targetReserve": {
+      "$ref": "#/$defs/decimal"
+    },
+    "status": {
+      "enum": [
+        "SUFFICIENT",
+        "LOW_SWAP_POSSIBLE",
+        "LOW_ZERO_ROUTE_VERIFIED",
+        "MANUAL_REQUIRED",
+        "BLOCKED"
+      ]
+    },
+    "strategy": {
+      "enum": [
+        "NONE",
+        "SWAP_JPYC",
+        "VERIFIED_ZERO_NATIVE_ROUTE",
+        "EXTERNAL_TOPUP"
+      ]
+    },
+    "routeCapabilityId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 120
+    },
+    "capabilityProofState": {
+      "enum": [
+        "NOT_APPLICABLE",
+        "VERIFIED",
+        "UNVERIFIED",
+        "EXPIRED",
+        "REVOKED"
+      ]
+    },
+    "bootstrappingMethod": {
+      "enum": [
+        "NONE",
+        "PAYMASTER",
+        "RELAYER",
+        "PROTOCOL_NATIVE_SPONSOR",
+        "EXTERNAL_TOPUP"
+      ]
+    },
+    "quote": {
+      "$ref": "#/$defs/quote"
+    },
+    "monthlyJpycCap": {
+      "$ref": "#/$defs/decimal"
+    },
+    "manualFallbackId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 80
+    },
+    "userMessageJa": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "safetyChecks": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 40,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 180
+      }
+    },
+    "exampleOnly": {
+      "type": "boolean"
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "providerId",
+        "legalNameJa",
+        "contact",
+        "termsVersion",
+        "termsSha256"
+      ],
+      "properties": {
+        "providerId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._-]{4,120}$"
+        },
+        "legalNameJa": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "contact": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 300
+        },
+        "termsVersion": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "termsSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "decimal": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "quote": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quoteId",
+        "providerId",
+        "providerSettlementTarget",
+        "nonce",
+        "operationDigest",
+        "feeAssetCost",
+        "jpycCostExpected",
+        "maxJpycCost",
+        "chargeIfActionFails",
+        "boundFields",
+        "generatedAt",
+        "expiresAt",
+        "signatureState"
+      ],
+      "properties": {
+        "quoteId": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 160
+        },
+        "providerId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 120
+        },
+        "providerSettlementTarget": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "nonce": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "operationDigest": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{64}$"
+        },
+        "feeAssetCost": {
+          "$ref": "#/$defs/decimal"
+        },
+        "jpycCostExpected": {
+          "$ref": "#/$defs/decimal"
+        },
+        "maxJpycCost": {
+          "$ref": "#/$defs/decimal"
+        },
+        "chargeIfActionFails": {
+          "$ref": "#/$defs/decimal"
+        },
+        "boundFields": {
+          "type": "array",
+          "minItems": 8,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80
+          }
+        },
+        "generatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "signatureState": {
+          "enum": [
+            "SIMULATION_ONLY",
+            "VERIFIED"
+          ]
+        }
+      }
+    }
+  }
+}

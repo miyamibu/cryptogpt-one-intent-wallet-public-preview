@@ -1,0 +1,2121 @@
+{
+  "schemaVersion": "1.0",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "target": {
+    "jurisdiction": "JP",
+    "distribution": [
+      "APPLE_APP_STORE",
+      "GOOGLE_PLAY"
+    ],
+    "clientPlatforms": [
+      "IOS",
+      "ANDROID"
+    ],
+    "executionSurface": "STANDALONE_WALLET_ONLY",
+    "capabilities": [
+      "JPYC_HANDOFF",
+      "SEND",
+      "SPOT",
+      "PERPETUAL",
+      "CROSS_NETWORK_TRANSFER",
+      "FEE_READINESS"
+    ],
+    "chatgptBoundary": "READ_ONLY_STATUS_GLOSSARY_GENERIC_SAFETY_AND_NEUTRAL_HANDOFF"
+  },
+  "releaseSubjectRequiredFields": [
+    "sourceCommit",
+    "sourceTreeSha256",
+    "androidArtifactSha256",
+    "iosArtifactSha256",
+    "backendImageDigest",
+    "signerImageDigest",
+    "configurationBundleSha256",
+    "policyBundleSha256",
+    "assetRegistrySha256",
+    "sbomSha256"
+  ],
+  "globalRules": {
+    "currentPackageExpectedStatus": "BLOCKED_NOT_OPERATIONAL",
+    "productionGoStatus": "PRODUCTION_OPERATIONAL_GO",
+    "requireOutOfBandTrustPolicyHash": true,
+    "requireOutOfBandCheckerHash": true,
+    "requireOutOfBandReleaseSubjectHash": true,
+    "requireTrustedTimeAttestation": true,
+    "requireExactReleaseSubjectBinding": true,
+    "requireIssuerReviewerSeparation": true,
+    "requireEvidenceIndexSignature": true,
+    "maxRuntimeLeaseSeconds": 300,
+    "maxOperationAuthorizationSeconds": 120,
+    "unknownOrConflictingEvidence": "BLOCK",
+    "runtimeLeaseNeverAuthorizesTransaction": true,
+    "maxTrustedTimeAttestationSeconds": 300,
+    "maxEvidenceIndexAgeSeconds": 3600
+  },
+  "gates": [
+    {
+      "gateId": "SCOPE_AND_TRACEABILITY",
+      "category": "PRODUCT",
+      "titleJa": "提供範囲と要求追跡",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "SCOPE_LOCKED",
+          "titleJa": "対象機能・対象地域・対象利用者・対象外を版固定",
+          "issuerRoles": [
+            "PRODUCT_OWNER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "SIGNED_REQUIREMENTS",
+            "TRACEABILITY_MATRIX"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "REQUIREMENTS_TRACED",
+          "titleJa": "全要求を実装・試験・証拠へ追跡",
+          "issuerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "reviewerRoles": [
+            "PRODUCT_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "TRACEABILITY_MATRIX",
+            "TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "ANDROID_RELEASE",
+      "category": "MOBILE",
+      "titleJa": "Android本番版",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "ANDROID_BUILD_SIGNED",
+          "titleJa": "再現可能なrelease AAB/APKと署名・provenance",
+          "issuerRoles": [
+            "ANDROID_RELEASE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SUPPLY_CHAIN_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "BINARY",
+            "BUILD_ATTESTATION",
+            "SIGNING_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ANDROID_DEVICE_MATRIX",
+          "titleJa": "対象実機・OS・大文字・TalkBack・IME・生体認証",
+          "issuerRoles": [
+            "MOBILE_QA"
+          ],
+          "reviewerRoles": [
+            "ACCESSIBILITY_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "REAL_DEVICE_TEST_REPORT",
+            "VIDEO_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ANDROID_PLATFORM_SECURITY",
+          "titleJa": "Keystore・端末完全性・overlay/root/debug対策",
+          "issuerRoles": [
+            "ANDROID_SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "SECURITY_TEST_REPORT",
+            "CONFIG_EXPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "IOS_RELEASE",
+      "category": "MOBILE",
+      "titleJa": "iPhone本番版",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "IOS_BUILD_SIGNED",
+          "titleJa": "再現可能なarchive/IPAと署名・provenance",
+          "issuerRoles": [
+            "IOS_RELEASE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SUPPLY_CHAIN_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "BINARY",
+            "BUILD_ATTESTATION",
+            "SIGNING_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "IOS_DEVICE_MATRIX",
+          "titleJa": "対象実機・OS・大文字・VoiceOver・IME・生体認証",
+          "issuerRoles": [
+            "MOBILE_QA"
+          ],
+          "reviewerRoles": [
+            "ACCESSIBILITY_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "REAL_DEVICE_TEST_REPORT",
+            "VIDEO_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "IOS_PLATFORM_SECURITY",
+          "titleJa": "Keychain/Secure Enclave・App Attest・jailbreak/debug対策",
+          "issuerRoles": [
+            "IOS_SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "SECURITY_TEST_REPORT",
+            "CONFIG_EXPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "BACKEND_RELEASE",
+      "category": "BACKEND",
+      "titleJa": "本番backend・取引Intent Parser・非取引Support Gateway",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "BACKEND_ARTIFACT_PINNED",
+          "titleJa": "immutable image digest・migration・config版固定",
+          "issuerRoles": [
+            "BACKEND_RELEASE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SUPPLY_CHAIN_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "OCI_DIGEST",
+            "DEPLOYMENT_MANIFEST",
+            "MIGRATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "BACKEND_POLICY_ENFORCED",
+          "titleJa": "認証・rate/budget・schema・egress・取引Parser／非取引Support境界",
+          "issuerRoles": [
+            "BACKEND_SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "INTEGRATION_TEST_REPORT",
+            "POLICY_EXPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "DETERMINISTIC_CORE",
+      "category": "CORE",
+      "titleJa": "決定論的共通処理",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "CROSS_LANGUAGE_VECTORS",
+          "titleJa": "Kotlin/Swift/serverが同じ正規化・十進数・hash・policy結果",
+          "issuerRoles": [
+            "CORE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "CONFORMANCE_REPORT",
+            "GOLDEN_VECTORS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "OVERFLOW_ROUNDING_SAFE",
+          "titleJa": "桁溢れ・負のゼロ・丸め・小数桁・locale差を拒否",
+          "issuerRoles": [
+            "CORE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "PROPERTY_TEST_REPORT",
+            "FUZZ_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "AUTH_SESSION_RECOVERY",
+      "category": "IDENTITY",
+      "titleJa": "認証・セッション・復旧",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "AUTHENTICATION_HARDENED",
+          "titleJa": "phishing-resistant認証・短期session・再認証・端末binding",
+          "issuerRoles": [
+            "IDENTITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "THREAT_TEST_REPORT",
+            "CONFIG_EXPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "RECOVERY_DRILLED",
+          "titleJa": "紛失・機種変更・生体変更・vendor停止・旧端末失効",
+          "issuerRoles": [
+            "CUSTODY_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "RECOVERY_DRILL_REPORT",
+            "VIDEO_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ACCOUNT_TAKEOVER_RESPONSE",
+          "titleJa": "乗っ取り検知・freeze・本人確認・異議申立て",
+          "issuerRoles": [
+            "FRAUD_LEAD"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "RUNBOOK_TEST_REPORT",
+            "CASE_SIMULATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "KEY_CUSTODY_SIGNER",
+      "category": "CUSTODY",
+      "titleJa": "鍵管理と署名基盤",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "SIGNER_ARCHITECTURE_AUDITED",
+          "titleJa": "MPC/HSM/端末鍵・権限分離・秘密復元禁止",
+          "issuerRoles": [
+            "CUSTODY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "CRYPTOGRAPHY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "ARCHITECTURE_AUDIT",
+            "CEREMONY_RECORD"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "KEY_CEREMONY_COMPLETE",
+          "titleJa": "生成・backup・rotation・revoke・destructionを立会い",
+          "issuerRoles": [
+            "CUSTODY_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 2,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "KEY_CEREMONY_RECORD",
+            "HSM_ATTESTATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "SIGNER_FAIL_CLOSED",
+          "titleJa": "policy不一致・nonce/replay・障害時に署名しない",
+          "issuerRoles": [
+            "CUSTODY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "NEGATIVE_TEST_REPORT",
+            "CHAOS_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "DEVICE_ATTESTATION",
+      "category": "IDENTITY",
+      "titleJa": "端末・アプリ完全性",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "ATTESTATION_VERIFIED_SERVER_SIDE",
+          "titleJa": "App Attest/Play Integrity等をchallengeとrequest hashへ結合",
+          "issuerRoles": [
+            "MOBILE_SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "INTEGRATION_TEST_REPORT",
+            "PROTOCOL_CAPTURE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "UNSUPPORTED_DEVICE_POLICY",
+          "titleJa": "非対応・unknown・root/jailbreak時のread-only/停止規則",
+          "issuerRoles": [
+            "RISK_OWNER"
+          ],
+          "reviewerRoles": [
+            "MOBILE_SECURITY_ENGINEER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "POLICY_EXPORT",
+            "REAL_DEVICE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "TRANSACTION_AUTHORIZATION",
+      "category": "EXECUTION",
+      "titleJa": "操作ごとの承認",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "CAPSULE_EXACT_BINDING",
+          "titleJa": "宛先・network・asset・amount・fee・quote・期限・source stateへ結合",
+          "issuerRoles": [
+            "EXECUTION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "PROTOCOL_TEST_REPORT",
+            "GOLDEN_VECTORS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ONE_TIME_REPLAY_PROTECTION",
+          "titleJa": "nonce・idempotency・one-time receipt・同時実行を検証",
+          "issuerRoles": [
+            "EXECUTION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "CONCURRENCY_TEST_REPORT",
+            "NEGATIVE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "LIMITED_AUTHORIZATION_SAFE",
+          "titleJa": "期限・合計・宛先・資産・倍率・価格差のscopeと即時失効",
+          "issuerRoles": [
+            "POLICY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "POLICY_TEST_REPORT",
+            "REVOCATION_DRILL"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "ASSET_REGISTRY",
+      "category": "ASSET",
+      "titleJa": "資産・network登録簿",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "REGISTRY_SIGNED_PINNED",
+          "titleJa": "正式contract・decimals・codehash・proxy・upgrade権限を署名",
+          "issuerRoles": [
+            "ASSET_REGISTRY_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "SIGNED_REGISTRY",
+            "ONCHAIN_VERIFICATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "TOKEN_BEHAVIOR_ALLOWLIST",
+          "titleJa": "fee-on-transfer/rebase/blacklist/pause/proxy等を検査・非対応拒否",
+          "issuerRoles": [
+            "SMART_CONTRACT_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "TOKEN_BEHAVIOR_REPORT",
+            "SIMULATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "JPYC_INTEGRATION",
+      "category": "JPYC",
+      "titleJa": "JPYCとJPYC EX",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "JPYC_OFFICIAL_DATA_PINNED",
+          "titleJa": "正式network・contract・codehash・発行主体情報を公式sourceで固定",
+          "issuerRoles": [
+            "ASSET_REGISTRY_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "SIGNED_REGISTRY",
+            "SOURCE_SNAPSHOT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "JPYC_EX_CONTRACTED_TESTED",
+          "titleJa": "本番契約・資格情報・本人確認境界・発行/償還handoff",
+          "issuerRoles": [
+            "JPYC_INTEGRATION_OWNER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "PROVIDER_APPROVAL",
+            "E2E_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "HYPERLIQUID_INTEGRATION",
+      "category": "HYPERLIQUID",
+      "titleJa": "Hyperliquid接続",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "HL_API_VERSION_PINNED",
+          "titleJa": "SDK/API/asset ID/signing/nonce仕様をcommitまたは内容hash固定",
+          "issuerRoles": [
+            "PROTOCOL_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SUPPLY_CHAIN_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "SOURCE_SNAPSHOT",
+            "COMPATIBILITY_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "HL_ORDER_LIFECYCLE_TESTED",
+          "titleJa": "partial fill・cancel・WebSocket gap・reconnect・duplicate・agent revoke",
+          "issuerRoles": [
+            "PROTOCOL_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "TESTNET_E2E_REPORT",
+            "FAULT_INJECTION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "HL_MARGIN_MODEL_VERIFIED",
+          "titleJa": "cross/isolated・funding・担保・清算・subaccountを実口座で照合",
+          "issuerRoles": [
+            "RISK_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_RISK_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "RISK_MODEL_REPORT",
+            "TESTNET_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "LIQUIDATION_RISK",
+      "category": "RISK",
+      "titleJa": "清算価格と先物リスク",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "LIQUIDATION_PREVIEW_VALIDATED",
+          "titleJa": "注文前見積もりと成立後liquidationPxを条件別比較",
+          "issuerRoles": [
+            "RISK_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_RISK_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "MODEL_VALIDATION_REPORT",
+            "TESTNET_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "STALE_OR_UNKNOWN_BLOCKED",
+          "titleJa": "古い・欠損・不一致・口座方式不明時に取引停止",
+          "issuerRoles": [
+            "EXECUTION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "NEGATIVE_TEST_REPORT",
+            "CHAOS_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "FEE_READINESS",
+      "category": "FEES",
+      "titleJa": "JPYCだけの場合の手数料準備",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "ZERO_GAS_PATH_PROVEN",
+          "titleJa": "native 0から開始可能なsponsor/paymaster/relayer経路を実証",
+          "issuerRoles": [
+            "FEE_ROUTE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "MAINNET_CANARY_REPORT",
+            "PROVIDER_ATTESTATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "FEE_QUOTE_BOUND_CAPPED",
+          "titleJa": "provider/規約/精算先/operation/nonce/期限/最大JPYCへ署名結合",
+          "issuerRoles": [
+            "FEE_ROUTE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "PROTOCOL_TEST_REPORT",
+            "SIGNED_QUOTE_SAMPLES"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "FEE_BUDGET_CONCURRENT_SAFE",
+          "titleJa": "1回/月間上限・atomic counter・失敗時二重回収なし",
+          "issuerRoles": [
+            "BACKEND_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "FINANCE_RECONCILIATION_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "CONCURRENCY_TEST_REPORT",
+            "LEDGER_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "SWAP_AND_CROSS_NETWORK",
+      "category": "EXECUTION",
+      "titleJa": "交換と別networkへの資金移動",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "ROUTE_ALLOWLIST_AUDITED",
+          "titleJa": "DEX/aggregator/bridge/canonical route・contract・upgradeを許可一覧化",
+          "issuerRoles": [
+            "ROUTE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SMART_CONTRACT_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "ROUTE_AUDIT",
+            "SIGNED_REGISTRY"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "QUOTE_FINALITY_PARTIAL_SAFE",
+          "titleJa": "最低受取・期限・reorg/finality・partial/timeout・返金を処理",
+          "issuerRoles": [
+            "ROUTE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "TESTNET_E2E_REPORT",
+            "FAULT_INJECTION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "APPROVALS_MINIMIZED_REVOKABLE",
+          "titleJa": "allowance/permitを最小化・zero-first・revoke・spender pin",
+          "issuerRoles": [
+            "SMART_CONTRACT_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "SMART_CONTRACT_TEST_REPORT",
+            "REVOCATION_DRILL"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "RECONCILIATION_LEDGER",
+      "category": "FINANCE",
+      "titleJa": "台帳と照合",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "DOUBLE_ENTRY_INVARIANTS",
+          "titleJa": "全状態遷移を二重記帳・残高保存則・migrationで検証",
+          "issuerRoles": [
+            "LEDGER_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "FINANCE_RECONCILIATION_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "LEDGER_INVARIANT_REPORT",
+            "MIGRATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ZERO_UNEXPLAINED_DIFFERENCE",
+          "titleJa": "onchain/Hyperliquid/provider/内部台帳の差異ゼロまたは承認済み",
+          "issuerRoles": [
+            "FINANCE_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "DAILY_RECONCILIATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "FAILURE_RECOVERY",
+      "category": "RELIABILITY",
+      "titleJa": "障害・部分成功・復旧",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "STATE_MACHINE_EXHAUSTIVE",
+          "titleJa": "受付/署名/broadcast/確定/partial/reorg/recoveryを網羅",
+          "issuerRoles": [
+            "EXECUTION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "MODEL_CHECK_REPORT",
+            "FAULT_INJECTION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "NO_BLIND_RETRY",
+          "titleJa": "完了済みを再実行せず最新状態から残りだけ再構築",
+          "issuerRoles": [
+            "EXECUTION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "FINANCE_RECONCILIATION_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "IDEMPOTENCY_TEST_REPORT",
+            "INCIDENT_SIMULATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "AI_NATURAL_LANGUAGE",
+      "category": "AI",
+      "titleJa": "自然言語・音声の安全境界",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "MATERIAL_AMBIGUITY_BLOCKED",
+          "titleJa": "金額/方向/宛先/network/倍率/清算等の曖昧さを本人確認まで停止",
+          "issuerRoles": [
+            "AI_SAFETY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "HUMAN_FACTORS_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "EVALUATION_REPORT",
+            "RED_TEAM_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "PROMPT_TOOL_INJECTION_BLOCKED",
+          "titleJa": "Web/RAG/tool出力を非信頼として実行parserと分離",
+          "issuerRoles": [
+            "AI_SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "RED_TEAM_REPORT",
+            "ARCHITECTURE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "MODEL_CHANGE_GATED",
+          "titleJa": "model/prompt/parser更新をsnapshot・eval・canary・rollbackへ結合",
+          "issuerRoles": [
+            "AI_RELEASE_OWNER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "MODEL_CARD",
+            "EVALUATION_REPORT",
+            "CANARY_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "CHATGPT_BOUNDARY",
+      "category": "AI",
+      "titleJa": "ChatGPT連携の非取引境界",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "CHATGPT_READ_ONLY_CONTRACT",
+          "titleJa": "抽象状態/固定用語・エラー/一般安全/中立handoffだけ。取引固有手順・writeなし",
+          "issuerRoles": [
+            "INTEGRATION_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "OPENAPI_DIFF_REPORT",
+            "CONTRACT_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "OPENAI_TERMS_RECHECKED",
+          "titleJa": "公開直前に最新OpenAI条件を公式sourceで再確認",
+          "issuerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "reviewerRoles": [
+            "COMPLIANCE_OFFICER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "LEGAL_MEMO",
+            "SOURCE_SNAPSHOT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "UX_PLAIN_JAPANESE",
+      "category": "UX",
+      "titleJa": "やさしい日本語と誤操作防止",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "PLAIN_JAPANESE_COMPLETE",
+          "titleJa": "主要画面に難語単独表示なし、詳説だけ技術語併記",
+          "issuerRoles": [
+            "CONTENT_DESIGNER"
+          ],
+          "reviewerRoles": [
+            "HUMAN_FACTORS_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "COPY_AUDIT",
+            "USER_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "CRITICAL_REVIEW_COMPLETE",
+          "titleJa": "原文→理解→不明点→内容→費用→最悪条件→承認→実行",
+          "issuerRoles": [
+            "PRODUCT_DESIGNER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "DESIGN_AUDIT",
+            "REAL_DEVICE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "NO_INVENTED_VALUES",
+          "titleJa": "未指定の損切り/経路/上限/固定手数料を勝手に追加しない",
+          "issuerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "reviewerRoles": [
+            "HUMAN_FACTORS_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "COPY_TEST_REPORT",
+            "ADVERSARIAL_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "ACCESSIBILITY",
+      "category": "UX",
+      "titleJa": "アクセシビリティ",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "WCAG_AND_NATIVE_A11Y",
+          "titleJa": "WCAG 2.2 AA相当＋VoiceOver/TalkBack/keyboard/contrast/dynamic type",
+          "issuerRoles": [
+            "ACCESSIBILITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_ACCESSIBILITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "ACCESSIBILITY_AUDIT",
+            "REAL_DEVICE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "COGNITIVE_COMPREHENSION",
+          "titleJa": "初心者・高齢者・金融経験差の理解度/誤操作率基準",
+          "issuerRoles": [
+            "UX_RESEARCHER"
+          ],
+          "reviewerRoles": [
+            "HUMAN_FACTORS_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "USABILITY_STUDY",
+            "COMPREHENSION_METRICS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "PRIVACY_DATA_GOVERNANCE",
+      "category": "PRIVACY",
+      "titleJa": "個人情報・会話・住所・残高",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "DATA_MAP_AND_MINIMIZATION",
+          "titleJa": "目的/法的根拠/保存期間/地域/processor/削除を確定",
+          "issuerRoles": [
+            "PRIVACY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "PRIVACY_OFFICER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "DPIA",
+            "DATA_FLOW_MAP",
+            "RETENTION_POLICY"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "LOG_REDACTION_VERIFIED",
+          "titleJa": "秘密/署名/住所/残高/会話をallowlist外へ出さない",
+          "issuerRoles": [
+            "OBSERVABILITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "LOG_CANARY_REPORT",
+            "CONFIG_EXPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "DSAR_BREACH_PROCESS",
+          "titleJa": "開示/削除/訂正/漏えい通知・processor契約を訓練",
+          "issuerRoles": [
+            "PRIVACY_OFFICER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 180,
+          "evidenceTypes": [
+            "RUNBOOK_DRILL",
+            "PROCESSOR_AGREEMENTS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "ADMIN_CHANGE_CONTROL",
+      "category": "OPERATIONS",
+      "titleJa": "管理者・変更管理",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "TWO_PERSON_HIGH_RISK",
+          "titleJa": "gate/registry/key/provider/limit変更を二人承認・期限付き",
+          "issuerRoles": [
+            "PLATFORM_ADMIN"
+          ],
+          "reviewerRoles": [
+            "SECURITY_APPROVER"
+          ],
+          "approvalThreshold": 2,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "IAM_EXPORT",
+            "CHANGE_LOG_SAMPLES"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "BREAK_GLASS_AUDITED",
+          "titleJa": "緊急権限に時間制限・通知・事後審査・read-only保持",
+          "issuerRoles": [
+            "SRE_LEAD"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "BREAK_GLASS_DRILL",
+            "AUDIT_LOG"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "SRE_RESILIENCE",
+      "category": "OPERATIONS",
+      "titleJa": "可用性と障害対応",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "SLO_CAPACITY_DDOS",
+          "titleJa": "SLO/SLI・容量・rate limit・DDoS・provider障害",
+          "issuerRoles": [
+            "SRE_LEAD"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "LOAD_TEST_REPORT",
+            "RESILIENCE_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "BACKUP_RESTORE_RTO_RPO",
+          "titleJa": "暗号化backup・restore・RTO/RPO・災害切替",
+          "issuerRoles": [
+            "SRE_LEAD"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "RESTORE_DRILL",
+            "DISASTER_RECOVERY_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "VOLATILITY_FAIL_CLOSED",
+          "titleJa": "価格急変/市場停止/流動性枯渇時に新規実行を停止",
+          "issuerRoles": [
+            "MARKET_RISK_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "CHAOS_REPORT",
+            "POLICY_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "SUPPLY_CHAIN",
+      "category": "SUPPLY_CHAIN",
+      "titleJa": "供給網と再現可能性",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "SBOM_PROVENANCE_SIGNED",
+          "titleJa": "SBOM・SLSA provenance・依存lock・artifact署名",
+          "issuerRoles": [
+            "SUPPLY_CHAIN_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "SBOM",
+            "PROVENANCE",
+            "SIGNATURE_BUNDLE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "DEPENDENCY_VULNERABILITIES_CLEARED",
+          "titleJa": "critical/high脆弱性とmalicious packageを期限内処理",
+          "issuerRoles": [
+            "SECURITY_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "VULNERABILITY_REPORT",
+            "EXCEPTION_REGISTER"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ANTI_ROLLBACK_UPDATE_SAFE",
+          "titleJa": "minimum version・署名更新・rollback防止・緊急read path",
+          "issuerRoles": [
+            "RELEASE_ENGINEER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_AUDITOR"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "UPDATE_TEST_REPORT",
+            "ROLLBACK_DRILL"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "SECURITY_ASSESSMENT",
+      "category": "SECURITY",
+      "titleJa": "独立セキュリティ評価",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "MOBILE_BACKEND_PENTEST",
+          "titleJa": "mobile/API/backend/adminを独立penetration test",
+          "issuerRoles": [
+            "INDEPENDENT_PENTESTER"
+          ],
+          "reviewerRoles": [
+            "SECURITY_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "PENTEST_REPORT",
+            "RETEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "CRYPTO_SMART_CONTRACT_AUDIT",
+          "titleJa": "custody/署名/contract/routeを専門監査",
+          "issuerRoles": [
+            "CRYPTOGRAPHY_AUDITOR"
+          ],
+          "reviewerRoles": [
+            "SECURITY_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 180,
+          "evidenceTypes": [
+            "CRYPTO_AUDIT",
+            "SMART_CONTRACT_AUDIT",
+            "RETEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "NO_OPEN_CRITICAL_HIGH",
+          "titleJa": "未解決critical=0、高リスク例外は期限・補償control・承認",
+          "issuerRoles": [
+            "SECURITY_OWNER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "FINDING_REGISTER",
+            "RISK_ACCEPTANCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "LEGAL_JAPAN",
+      "category": "LEGAL",
+      "titleJa": "日本での法務・規制",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "JP_LEGAL_OPINION",
+          "titleJa": "機能別の資金移動/暗号資産/電子決済手段/先物/媒介/カストディ該当性",
+          "issuerRoles": [
+            "EXTERNAL_JP_COUNSEL"
+          ],
+          "reviewerRoles": [
+            "COMPLIANCE_OFFICER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "SIGNED_LEGAL_OPINION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "REGISTRATIONS_PERMISSIONS",
+          "titleJa": "必要登録・提携・地域制限・勧誘/表示/苦情/AML制裁対応",
+          "issuerRoles": [
+            "COMPLIANCE_OFFICER"
+          ],
+          "reviewerRoles": [
+            "EXTERNAL_JP_COUNSEL"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "REGULATORY_APPROVAL",
+            "COMPLIANCE_PROGRAM"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "TERMS_DISCLOSURES_TAX",
+          "titleJa": "利用規約・risk disclosure・privacy・手数料・税務表示",
+          "issuerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "reviewerRoles": [
+            "PRODUCT_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "SIGNED_POLICY_SET",
+            "COPY_REVIEW"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "APPLE_DISTRIBUTION",
+      "category": "STORE",
+      "titleJa": "Apple App Store",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "APPLE_ORGANIZATION_ELIGIBLE",
+          "titleJa": "組織developer・金融/crypto機能の提供資格を確認",
+          "issuerRoles": [
+            "STORE_RELEASE_OWNER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "ACCOUNT_EVIDENCE",
+            "LEGAL_MEMO"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "APPLE_REVIEW_APPROVED",
+          "titleJa": "対象build/version/地域が審査承認され公開可能",
+          "issuerRoles": [
+            "STORE_RELEASE_OWNER"
+          ],
+          "reviewerRoles": [
+            "RELEASE_MANAGER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "STORE_APPROVAL",
+            "BUILD_LINKAGE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "GOOGLE_DISTRIBUTION",
+      "category": "STORE",
+      "titleJa": "Google Play",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "PLAY_DECLARATIONS_COMPLETE",
+          "titleJa": "Financial features/crypto申告・組織/地域資格を完了",
+          "issuerRoles": [
+            "STORE_RELEASE_OWNER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 30,
+          "evidenceTypes": [
+            "DECLARATION_EXPORT",
+            "LEGAL_MEMO"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "PLAY_REVIEW_APPROVED",
+          "titleJa": "対象AAB/version/地域が審査承認され公開可能",
+          "issuerRoles": [
+            "STORE_RELEASE_OWNER"
+          ],
+          "reviewerRoles": [
+            "RELEASE_MANAGER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "STORE_APPROVAL",
+            "BUILD_LINKAGE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "PROVIDER_CONTRACTS",
+      "category": "VENDOR",
+      "titleJa": "外部提供者",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "VENDORS_CONTRACTED",
+          "titleJa": "JPYC/fee/price/RPC/MPC/HSM/AI/monitoringの契約・SLA・責任",
+          "issuerRoles": [
+            "VENDOR_MANAGER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "SIGNED_CONTRACT_SUMMARY",
+            "SLA"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "VENDOR_EXIT_AND_OUTAGE",
+          "titleJa": "停止・倒産・資格喪失・鍵export・代替経路を訓練",
+          "issuerRoles": [
+            "VENDOR_MANAGER"
+          ],
+          "reviewerRoles": [
+            "SRE_LEAD"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 180,
+          "evidenceTypes": [
+            "EXIT_DRILL",
+            "OUTAGE_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "TESTNET_E2E",
+      "category": "TESTING",
+      "titleJa": "Testnet端から端",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "TESTNET_ALL_FLOWS",
+          "titleJa": "全12 flow・失敗・partial・reorg・reconnect・recovery",
+          "issuerRoles": [
+            "QUALITY_LEAD"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "TESTNET_E2E_REPORT",
+            "TRANSACTION_RECEIPTS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "TESTNET_NO_UNEXPLAINED_DIFF",
+          "titleJa": "Testnet台帳・残高・receiptの差異ゼロ",
+          "issuerRoles": [
+            "FINANCE_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "FINANCE_RECONCILIATION_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 14,
+          "evidenceTypes": [
+            "RECONCILIATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "MAINNET_CANARY",
+      "category": "TESTING",
+      "titleJa": "実資金の限定本番試験",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "CANARY_LIMITS_APPROVED",
+          "titleJa": "専用口座・極小上限・allowlist・監視・即時停止・損失予算",
+          "issuerRoles": [
+            "RISK_OWNER"
+          ],
+          "reviewerRoles": [
+            "EXECUTIVE_ACCOUNTABLE_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "CANARY_PLAN",
+            "RISK_ACCEPTANCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "CANARY_ALL_CRITICAL_PATHS",
+          "titleJa": "送金/現物/先物/手数料準備/資金移動を極小額で実証",
+          "issuerRoles": [
+            "RELEASE_MANAGER"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "MAINNET_CANARY_REPORT",
+            "TRANSACTION_RECEIPTS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "CANARY_RECONCILED_ZERO_DIFF",
+          "titleJa": "全取引・費用・残高・provider精算を差異ゼロで照合",
+          "issuerRoles": [
+            "FINANCE_OPERATOR"
+          ],
+          "reviewerRoles": [
+            "FINANCE_RECONCILIATION_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "RECONCILIATION_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "INCIDENT_DRILLS",
+      "category": "OPERATIONS",
+      "titleJa": "インシデント・停止・復旧訓練",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "KILL_SWITCH_DRILLED",
+          "titleJa": "全write停止、read-only維持、standing auth失効を実地確認",
+          "issuerRoles": [
+            "SRE_LEAD"
+          ],
+          "reviewerRoles": [
+            "INDEPENDENT_OBSERVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "INCIDENT_DRILL_REPORT",
+            "VIDEO_EVIDENCE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "KEY_PROVIDER_DATA_BREACH_DRILLS",
+          "titleJa": "鍵侵害・provider改ざん・漏えい・chain障害を訓練",
+          "issuerRoles": [
+            "SECURITY_OWNER"
+          ],
+          "reviewerRoles": [
+            "EXECUTIVE_ACCOUNTABLE_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 180,
+          "evidenceTypes": [
+            "TABLETOP_REPORT",
+            "TECHNICAL_DRILL_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "USER_ACCEPTANCE",
+      "category": "UX",
+      "titleJa": "利用者受入れ",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "BEGINNER_TASK_SUCCESS",
+          "titleJa": "初心者が説明なしで主要操作・中止・復旧を基準以上達成",
+          "issuerRoles": [
+            "UX_RESEARCHER"
+          ],
+          "reviewerRoles": [
+            "HUMAN_FACTORS_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "USABILITY_STUDY",
+            "TASK_METRICS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "RISK_COMPREHENSION",
+          "titleJa": "清算・価格ずれ・手数料・不可逆性・承認範囲を理解",
+          "issuerRoles": [
+            "UX_RESEARCHER"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "COMPREHENSION_STUDY",
+            "QUESTIONNAIRE_RESULTS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "RELEASE_APPROVAL",
+      "category": "GOVERNANCE",
+      "titleJa": "独立した最終リリース承認",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "EVIDENCE_BOUND_TO_RELEASE",
+          "titleJa": "全証拠が同じcommit/tree/mobile/server/config/policy digestへ結合",
+          "issuerRoles": [
+            "RELEASE_EVIDENCE_CUSTODIAN"
+          ],
+          "reviewerRoles": [
+            "SUPPLY_CHAIN_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "SIGNED_EVIDENCE_INDEX",
+            "RELEASE_SUBJECT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "INDEPENDENT_GO_APPROVAL",
+          "titleJa": "product/risk/security/legal/operationsが独立署名し反対なし",
+          "issuerRoles": [
+            "RELEASE_MANAGER"
+          ],
+          "reviewerRoles": [
+            "EXECUTIVE_ACCOUNTABLE_OWNER",
+            "SECURITY_OWNER",
+            "COMPLIANCE_OFFICER",
+            "SRE_LEAD"
+          ],
+          "approvalThreshold": 4,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "SIGNED_GO_APPROVALS"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "RUNTIME_ACTIVATION",
+      "category": "RUNTIME",
+      "titleJa": "稼働時の書込み有効化",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "TRUSTED_TIME_AVAILABLE",
+          "titleJa": "署名済みtrusted timeと単調sequenceで期限・rollbackを検証",
+          "issuerRoles": [
+            "TRUSTED_TIME_AUTHORITY"
+          ],
+          "reviewerRoles": [
+            "SECURITY_APPROVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "TRUSTED_TIME_ATTESTATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "RUNTIME_STATE_HEALTHY",
+          "titleJa": "incident/kill switch/provider/source/policy/reconciliationが正常",
+          "issuerRoles": [
+            "CONTROL_PLANE"
+          ],
+          "reviewerRoles": [
+            "SRE_LEAD",
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 2,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "SIGNED_RUNTIME_STATE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "SHORT_LIVED_WRITE_LEASE",
+          "titleJa": "対象deployment/capabilityへ5分以下の署名lease、単独で取引許可しない",
+          "issuerRoles": [
+            "CONTROL_PLANE"
+          ],
+          "reviewerRoles": [
+            "SECURITY_APPROVER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "SIGNED_RUNTIME_LEASE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "PER_OPERATION_USER_AUTH",
+          "titleJa": "各操作にfresh user/device authorizationとone-time nonce",
+          "issuerRoles": [
+            "WALLET_RUNTIME"
+          ],
+          "reviewerRoles": [
+            "EXECUTION_POLICY_ENGINE"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 1,
+          "evidenceTypes": [
+            "SIGNED_OPERATION_AUTHORIZATION"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    },
+    {
+      "gateId": "POST_LAUNCH_MONITORING",
+      "category": "OPERATIONS",
+      "titleJa": "公開後監視と継続判定",
+      "mandatory": true,
+      "claims": [
+        {
+          "claimId": "REALTIME_RISK_MONITORING",
+          "titleJa": "失敗率・差異・価格/手数料異常・不正・provider/chain状態を監視",
+          "issuerRoles": [
+            "SRE_LEAD"
+          ],
+          "reviewerRoles": [
+            "RISK_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "DASHBOARD_EXPORT",
+            "ALERT_TEST_REPORT"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "SOURCE_POLICY_REVALIDATION",
+          "titleJa": "OpenAI/Apple/Google/JPYC/Hyperliquid/法令を期限付き再確認",
+          "issuerRoles": [
+            "CHANGE_MONITOR_OWNER"
+          ],
+          "reviewerRoles": [
+            "LEGAL_REVIEWER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 7,
+          "evidenceTypes": [
+            "SOURCE_MONITOR_REPORT",
+            "CHANGE_LOG"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        },
+        {
+          "claimId": "ROLLBACK_AND_USER_NOTICE",
+          "titleJa": "異常時の停止・rollback・利用者通知・補償判断",
+          "issuerRoles": [
+            "INCIDENT_COMMANDER"
+          ],
+          "reviewerRoles": [
+            "EXECUTIVE_ACCOUNTABLE_OWNER"
+          ],
+          "approvalThreshold": 1,
+          "maxAgeDays": 90,
+          "evidenceTypes": [
+            "RUNBOOK_DRILL",
+            "COMMUNICATION_TEMPLATE"
+          ],
+          "environments": [
+            "PRODUCTION"
+          ]
+        }
+      ]
+    }
+  ]
+}

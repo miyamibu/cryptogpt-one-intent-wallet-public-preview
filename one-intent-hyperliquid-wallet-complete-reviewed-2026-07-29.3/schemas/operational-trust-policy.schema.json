@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/operational-trust-policy.schema.json",
+  "title": "OperationalTrustPolicy",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "policyVersion",
+    "enabled",
+    "signatureProfile",
+    "canonicalization",
+    "trustedKeys",
+    "revokedKeyIds",
+    "requiredOutOfBandEnvironment",
+    "roleSeparation",
+    "notes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "profileId": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{8,96}$"
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 96
+    },
+    "enabled": {
+      "type": "boolean"
+    },
+    "signatureProfile": {
+      "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+    },
+    "canonicalization": {
+      "const": "ONE_INTENT_CANONICAL_JSON_SUBSET_V1"
+    },
+    "trustedKeys": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "keyId",
+          "principalId",
+          "organization",
+          "roles",
+          "publicKeyPem",
+          "validFrom",
+          "validUntil"
+        ],
+        "properties": {
+          "keyId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "roles": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+            },
+            "maxItems": 32
+          },
+          "publicKeyPem": {
+            "type": "string",
+            "pattern": "^-----BEGIN PUBLIC KEY-----"
+          },
+          "validFrom": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "validUntil": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "principalId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 160
+          },
+          "organization": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200
+          }
+        }
+      },
+      "maxItems": 256
+    },
+    "revokedKeyIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    },
+    "requiredOutOfBandEnvironment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ONE_INTENT_TRUST_POLICY_SHA256",
+        "ONE_INTENT_READINESS_CHECKER_SHA256",
+        "ONE_INTENT_RELEASE_SUBJECT_SHA256",
+        "ONE_INTENT_TRUSTED_TIME_ATTESTATION_SHA256",
+        "ONE_INTENT_EVIDENCE_INDEX_SHA256"
+      ],
+      "properties": {
+        "ONE_INTENT_TRUST_POLICY_SHA256": {
+          "type": "string",
+          "minLength": 16
+        },
+        "ONE_INTENT_READINESS_CHECKER_SHA256": {
+          "type": "string",
+          "minLength": 16
+        },
+        "ONE_INTENT_RELEASE_SUBJECT_SHA256": {
+          "type": "string",
+          "minLength": 16
+        },
+        "ONE_INTENT_TRUSTED_TIME_ATTESTATION_SHA256": {
+          "type": "string",
+          "minLength": 16
+        },
+        "ONE_INTENT_EVIDENCE_INDEX_SHA256": {
+          "type": "string",
+          "minLength": 16
+        }
+      }
+    },
+    "roleSeparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issuerMustDifferFromEveryReviewer",
+        "indexSignerMustDifferFromClaimIssuersAndReviewers",
+        "trustedTimeSignerMustHaveDedicatedRole",
+        "oneKeyCannotSatisfyTwoApprovalSlots"
+      ],
+      "properties": {
+        "issuerMustDifferFromEveryReviewer": {
+          "const": true
+        },
+        "indexSignerMustDifferFromClaimIssuersAndReviewers": {
+          "const": true
+        },
+        "trustedTimeSignerMustHaveDedicatedRole": {
+          "const": true
+        },
+        "oneKeyCannotSatisfyTwoApprovalSlots": {
+          "const": true
+        }
+      }
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

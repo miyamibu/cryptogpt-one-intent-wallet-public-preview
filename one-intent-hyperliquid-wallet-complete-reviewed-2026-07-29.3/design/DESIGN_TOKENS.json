@@ -1,0 +1,54 @@
+{
+  "version": "2026-07-28.1",
+  "principles": [
+    "critical meaning is never encoded by color alone",
+    "critical values never ellipsize",
+    "safe area and system text scaling are first-class",
+    "one primary financial action per viewport"
+  ],
+  "spacing": {
+    "base": 4,
+    "screenHorizontal": 16,
+    "screenTop": 12,
+    "sectionGap": 20,
+    "cardPadding": 16,
+    "cardGap": 12,
+    "fieldGap": 8,
+    "compactGap": 4
+  },
+  "radii": {
+    "small": 8,
+    "medium": 12,
+    "card": 16,
+    "pill": 999
+  },
+  "touchTargets": {
+    "androidMinDp": 48,
+    "iosMinPt": 44,
+    "criticalActionMinHeight": 52,
+    "emergencyActionMinHeight": 56
+  },
+  "typography": {
+    "iosBodyPt": 17,
+    "iosAbsoluteMinimumPt": 11,
+    "androidBodySp": 16,
+    "criticalAmountMin": 20,
+    "supports200PercentText": true,
+    "tabularNumerals": true
+  },
+  "borders": {
+    "standardLogicalPx": 1,
+    "focusLogicalPx": 2
+  },
+  "animation": {
+    "standardMs": 180,
+    "stateChangeMaxMs": 250,
+    "respectReduceMotion": true
+  },
+  "visualRegression": {
+    "maxCriticalRegionPixelDifferencePercent": "0",
+    "maxNonCriticalRegionPixelDifferencePercent": "0.1",
+    "maxBaselineShiftLogicalPx": 1,
+    "maxEdgeShiftLogicalPx": 1
+  }
+}

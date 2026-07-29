@@ -1,0 +1,32 @@
+flowchart TD
+    U[User / Pixel 9a] --> UI[Android Chat + Execution Card]
+    UI --> AI[AI Intent Service<br/>Draft only]
+    AI --> C[Deterministic Compiler]
+    UI --> C
+    C --> P[Policy Engine]
+    P --> X[Execution Capsule]
+    X --> A[User Gesture + Device Authorization]
+    A --> O[Saga Orchestrator]
+    O --> TS[Trade Signer]
+    O --> RS[Root Signer / Wallet Adapter]
+    TS --> HL[Hyperliquid HyperCore API]
+    RS --> HL
+    RS --> ARB[Arbitrum Bridge2]
+    RS --> HEVM[HyperEVM Allowlisted Contracts]
+    HL --> R[Reconciler]
+    ARB --> R
+    HEVM --> R
+    R --> UI
+
+    WEB[External Web / News / X] --> READ[Read-only Analysis Context]
+    READ --> AI
+    READ -. no execution path .-> X
+
+    subgraph Trust
+      AI
+      C
+      P
+      X
+      TS
+      RS
+    end

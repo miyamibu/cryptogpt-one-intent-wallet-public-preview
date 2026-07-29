@@ -1,0 +1,131 @@
+package: one-intent-hyperliquid-wallet-complete-reviewed
+version: 2026-07-29.3
+as_of: "2026-07-29 20:17:18+09:00"
+classification: operationalization_design_evidence_contract_offline_prototype_and_codex_handoff
+operational_readiness: BLOCKED_NOT_OPERATIONAL
+local_sandbox_readiness: LOCAL_SANDBOX_OPERATIONAL_GO
+production_write_permitted: false
+production_go_status_name: PRODUCTION_OPERATIONAL_GO
+release_stage_decisions:
+  design: DESIGN_GO
+  offline_prototype: OFFLINE_PROTOTYPE_GO
+  local_sandbox: LOCAL_SANDBOX_OPERATIONAL_GO
+  codex_implementation: CODEX_IMPLEMENTATION_GO
+  android_build: ANDROID_BUILD_NO_GO
+  ios_build: IOS_BUILD_NO_GO
+  ios_device_proof: IOS_IPHONE12_LOCAL_PROOF_GO
+  testnet_write: TESTNET_WRITE_NO_GO
+  personal_small_mainnet: PERSONAL_SMALL_MAINNET_NO_GO
+  closed_alpha: CLOSED_ALPHA_NO_GO
+  public_android_store: PUBLIC_ANDROID_STORE_NO_GO
+  public_ios_app_store: PUBLIC_IOS_APP_STORE_NO_GO
+assurance_scope:
+  included:
+  - design_and_architecture
+  - strict_schemas_and_examples
+  - api_contracts
+  - offline_prototype
+  - loopback_only_nontransactional_local_sandbox
+  - non_mutating_validation
+  - adversarial_review
+  - operational_readiness_evidence_contract
+  - runtime_activation_contract
+  - codex_master_prompt
+  - codex_external_operationalization_prompt
+  - hardened_deterministic_input_and_http_boundaries
+  - local_ios_signed_debug_device_proof
+  excluded:
+  - native_android_release_binary
+  - native_ios_release_binary
+  - live_backend_and_signer
+  - production_trust_anchors
+  - signed_production_evidence
+  - full_physical_device_matrix_and_release_evidence
+  - testnet_write_evidence
+  - mainnet_canary_evidence
+  - legal_or_store_approval
+usable_now:
+  START_HERE_offline_review: true
+  documentation: true
+  schema_validation: true
+  offline_prototype: true
+  local_sandbox_server: true
+  local_draft_parser: true
+  fixed_catalog_read_only_support_api: true
+  codex_master_prompt: true
+  codex_external_operationalization_prompt: true
+  deterministic_zip_tooling: true
+  non_mutating_full_validation: true
+  blocked_readiness_evaluation: true
+not_available:
+  android_signed_release_apk_or_aab: true
+  android_unsigned_release_apk_or_aab: false
+  ios_archive_or_ipa: true
+  live_backend: true
+  live_signer: true
+  production_trust_policy: true
+  production_evidence_bundle: true
+  hyperliquid_testnet_writes: true
+  hyperliquid_mainnet_writes: true
+  jpyc_ex_production_integration: true
+  fee_sponsor_production_route: true
+  public_app_store_release: true
+  public_google_play_release: true
+operational_profile:
+  profile_id: JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1
+  mandatory_gates: 37
+  required_claims: 93
+  passed_gates: 0
+  accepted_claims: 0
+  unknown_or_conflicting_evidence: BLOCK
+  max_runtime_lease_seconds: 300
+  max_operation_authorization_seconds: 120
+  runtime_lease_authorizes_transaction: false
+trust_model:
+  out_of_band_trust_policy_hash_required: true
+  out_of_band_checker_hash_required: true
+  out_of_band_release_subject_hash_required: true
+  trusted_time_attestation_required: true
+  issuer_reviewer_separation_required: true
+  evidence_index_signature_required: true
+validation:
+  static_package: PASS_AFTER_PIPELINE
+  python_source_files_compiled: 103
+  python_unit_tests: 86
+  swift_contract_tests: 5
+  current_local_evidence: delivery/evidence/core/reference-tests-current.json
+  operationalization_evidence_binding: delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json
+  local_sandbox_http_self_test: PASS_AFTER_PIPELINE
+  non_mutating_tree_check: REQUIRED
+  adversarial_audit: PASS_AFTER_PIPELINE
+  archive_safety: PASS_AFTER_PIPELINE
+  security_hygiene: PASS_AFTER_PIPELINE
+  local_links: PASS_AFTER_PIPELINE
+  prototype_geometry_and_contrast: PASS_AFTER_PIPELINE
+  prototype_geometry_and_contrast_cases: 288
+  prototype_viewports: 6
+  prototype_flows: 12
+  prototype_text_modes: 2
+  prototype_themes: 2
+  prototype_screenshots: 10
+  start_here_layout_cases: 6
+  known_loopholes_registered: 436
+  security_invariants: 268
+  loophole_regression_cases: 97
+  validator_self_test_assertions: 36
+  operational_readiness_negative_assertions: 34
+  runtime_authorization_negative_assertions: 50
+  current_readiness_report: delivery/OPERATIONAL_READINESS_REPORT.json
+  operational_readiness_result: BLOCKED_NOT_OPERATIONAL
+  native_android: LOCAL_UNSIGNED_DEBUG_AND_PIXEL9A_PROOF_ONLY
+  native_ios: LOCAL_SIGNED_DEBUG_IPHONE12_PROOF_ONLY
+  ios_physical_screenshot_sha256: 8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea
+  testnet_write: UNTESTED_BLOCKED
+  mainnet_write: DISABLED_BLOCKED
+confidence:
+  package_internal_consistency: high_after_non_mutating_and_clean_extract_validation
+  offline_browser_matrix: high_within_recorded_logical_pixel_scope
+  production_operation: blocked_and_unverified
+  legal_eligibility: unverified
+  app_store_eligibility: unverified
+  iphone12_local_device_proof: high_within_recorded_appium_wda_capture

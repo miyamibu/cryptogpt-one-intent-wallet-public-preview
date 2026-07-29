@@ -1,0 +1,1053 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/execution-capsule.schema.json",
+  "title": "ExecutionCapsule",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "domain",
+    "hashProfile",
+    "capsuleId",
+    "planId",
+    "environment",
+    "userId",
+    "deviceId",
+    "platform",
+    "sessionId",
+    "networkContext",
+    "account",
+    "accountMode",
+    "createdAt",
+    "expiresAt",
+    "policyVersion",
+    "registryVersions",
+    "steps",
+    "warnings",
+    "semanticHash",
+    "renderReceiptHash",
+    "compilerVersion",
+    "featureGateVersion",
+    "stateEvidence",
+    "authorizationPresentation",
+    "sourceStateHash",
+    "renderReceipt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "domain": {
+      "const": "ONE_INTENT_EXECUTION_CAPSULE_V1"
+    },
+    "capsuleId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "SIMULATOR",
+        "TESTNET",
+        "MAINNET"
+      ]
+    },
+    "userId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "deviceId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "sessionId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "account": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{40}$"
+    },
+    "accountMode": {
+      "type": "string",
+      "enum": [
+        "STANDARD",
+        "UNIFIED",
+        "PORTFOLIO_MARGIN",
+        "UNKNOWN"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "policyVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "registryVersions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assets",
+        "contracts",
+        "addresses",
+        "sources"
+      ],
+      "properties": {
+        "assets": {
+          "type": "string",
+          "minLength": 1
+        },
+        "contracts": {
+          "type": "string",
+          "minLength": 1
+        },
+        "addresses": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sources": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stepId",
+          "type",
+          "signerRole",
+          "account",
+          "assetId",
+          "amountMode",
+          "dependsOn",
+          "failurePolicy",
+          "idempotencyKey",
+          "riskTier",
+          "requiredAuth"
+        ],
+        "properties": {
+          "stepId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PERP_ORDER",
+              "PERP_CANCEL",
+              "PERP_MODIFY",
+              "PERP_CLOSE",
+              "SPOT_ORDER",
+              "INTERNAL_USD_SEND",
+              "INTERNAL_SPOT_SEND",
+              "ARBITRUM_WITHDRAW",
+              "ARBITRUM_BRIDGE_DEPOSIT",
+              "HLP_DEPOSIT",
+              "HLP_WITHDRAW",
+              "USER_VAULT_DEPOSIT",
+              "USER_VAULT_WITHDRAW",
+              "HYPEREVM_VAULT_DEPOSIT",
+              "HYPEREVM_VAULT_WITHDRAW",
+              "USD_CLASS_TRANSFER",
+              "SEND_ASSET",
+              "APPROVE_AGENT",
+              "REVOKE_AGENT",
+              "APPROVE_BUILDER_FEE",
+              "CANCEL_ALL_ORDERS",
+              "EMERGENCY_CLOSE"
+            ]
+          },
+          "signerRole": {
+            "type": "string",
+            "enum": [
+              "TRADE_AGENT",
+              "ROOT_SIGNER",
+              "EXTERNAL_WALLET"
+            ]
+          },
+          "account": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{40}$"
+          },
+          "assetId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 256
+          },
+          "quoteAssetId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 256
+          },
+          "side": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "BUY",
+              "SELL",
+              null
+            ]
+          },
+          "positionEffect": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "OPEN",
+              "INCREASE",
+              "REDUCE",
+              "CLOSE",
+              null
+            ]
+          },
+          "amountMode": {
+            "type": "string",
+            "enum": [
+              "EXACT_NOTIONAL",
+              "EXACT_SIZE",
+              "SAFE_ALL",
+              "PERCENT",
+              "REMAINDER",
+              "NOT_APPLICABLE"
+            ]
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "percent": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "computedMaximumAmount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "leverage": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 100
+          },
+          "orderType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "GTC",
+              "IOC",
+              "ALO",
+              "TRIGGER_MARKET",
+              "TRIGGER_LIMIT",
+              null
+            ]
+          },
+          "limitPrice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "triggerPrice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "triggerKind": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "TP",
+              "SL",
+              null
+            ]
+          },
+          "reduceOnly": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "destination": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{40}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "destinationAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 128
+          },
+          "vaultId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 256
+          },
+          "contractAddress": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{40}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "functionSelector": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^0x[0-9a-fA-F]{8}$"
+          },
+          "sourceDex": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 64
+          },
+          "destinationDex": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 64
+          },
+          "minOutput": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "maxFee": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "maxSlippageBps": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "expiresAt": {
+            "oneOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9._:-]+$"
+            },
+            "uniqueItems": true,
+            "maxItems": 32
+          },
+          "failurePolicy": {
+            "type": "string",
+            "enum": [
+              "STOP",
+              "CONTINUE_SAFE",
+              "REPLAN_REQUIRES_USER",
+              "MANUAL_RECOVERY",
+              "EMERGENCY_REDUCE_ONLY_CLOSE"
+            ]
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 16,
+            "maxLength": 256
+          },
+          "cloid": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "pattern": "^0x[0-9a-fA-F]{32}$"
+          },
+          "riskTier": {
+            "type": "string",
+            "enum": [
+              "R0",
+              "R1",
+              "R2",
+              "R3",
+              "R4",
+              "R5"
+            ]
+          },
+          "requiredAuth": {
+            "type": "string",
+            "enum": [
+              "NONE",
+              "SESSION",
+              "AUTH_PER_USE",
+              "PASSKEY_PLUS_AUTH",
+              "TWO_PERSON_ADMIN"
+            ]
+          },
+          "statePreconditions": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "snapshotId",
+              "maxAgeMs"
+            ],
+            "properties": {
+              "snapshotId": {
+                "type": "string",
+                "minLength": 8,
+                "maxLength": 128,
+                "pattern": "^[A-Za-z0-9._:-]+$"
+              },
+              "maxAgeMs": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 300000
+              },
+              "positionVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 256
+              },
+              "balanceVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 256
+              },
+              "marketVersion": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "maxLength": 256
+              }
+            }
+          },
+          "dynamicDerivation": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "quantity",
+                  "triggerPrice"
+                ],
+                "properties": {
+                  "quantity": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "type",
+                      "stepId",
+                      "percent"
+                    ],
+                    "properties": {
+                      "type": {
+                        "const": "FILLED_SIZE_PERCENT_OF_STEP"
+                      },
+                      "stepId": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 128,
+                        "pattern": "^[A-Za-z0-9._:-]+$"
+                      },
+                      "percent": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      }
+                    }
+                  },
+                  "triggerPrice": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "type",
+                      "stepId",
+                      "direction",
+                      "percent",
+                      "rounding"
+                    ],
+                    "properties": {
+                      "type": {
+                        "const": "PERCENT_FROM_WEIGHTED_FILL"
+                      },
+                      "stepId": {
+                        "type": "string",
+                        "minLength": 8,
+                        "maxLength": 128,
+                        "pattern": "^[A-Za-z0-9._:-]+$"
+                      },
+                      "direction": {
+                        "type": "string",
+                        "enum": [
+                          "BELOW",
+                          "ABOVE"
+                        ]
+                      },
+                      "percent": {
+                        "type": "string",
+                        "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+                      },
+                      "rounding": {
+                        "const": "TOWARD_EARLIER_TRIGGER"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "maxDelayAfterDependencyMs": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 100,
+            "maximum": 60000
+          },
+          "failureRecovery": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "maxSlippageBps",
+                  "deadlineMs"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "REDUCE_ONLY_MARKET_CLOSE"
+                  },
+                  "maxSlippageBps": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10000
+                  },
+                  "deadlineMs": {
+                    "type": "integer",
+                    "minimum": 100,
+                    "maximum": 60000
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "maxItems": 64
+    },
+    "semanticHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "renderReceiptHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "compilerVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "featureGateVersion": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "sourceStateHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "renderReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "locale",
+        "buttonLabel",
+        "warningIds",
+        "renderedAt"
+      ],
+      "properties": {
+        "locale": {
+          "type": "string",
+          "enum": [
+            "ja-JP",
+            "en-US"
+          ]
+        },
+        "buttonLabel": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "warningIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "uniqueItems": true
+        },
+        "renderedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "stateEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy",
+        "sources",
+        "observedAt",
+        "stateHash",
+        "divergenceStatus",
+        "maxAgeMs"
+      ],
+      "properties": {
+        "policy": {
+          "type": "string",
+          "enum": [
+            "SINGLE_SOURCE_R1",
+            "DUAL_SOURCE_R2_PLUS",
+            "LOCAL_NODE_PLUS_API",
+            "CHAIN_EVIDENCE"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sourceId",
+              "kind",
+              "independenceClass",
+              "observedAt",
+              "digest"
+            ],
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "OFFICIAL_API",
+                  "INDEPENDENT_API",
+                  "LOCAL_NODE",
+                  "CHAIN_RPC",
+                  "CONTRACT_RECEIPT"
+                ]
+              },
+              "independenceClass": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "observedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "blockHeight": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "digest": {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{64}$"
+              }
+            }
+          }
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stateHash": {
+          "type": "string",
+          "pattern": "^0x[0-9a-fA-F]{64}$"
+        },
+        "divergenceStatus": {
+          "type": "string",
+          "enum": [
+            "NOT_CHECKED",
+            "CONSISTENT",
+            "WITHIN_TOLERANCE",
+            "DIVERGENT"
+          ]
+        },
+        "maxAgeMs": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600000
+        }
+      }
+    },
+    "authorizationPresentation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "criticalFields",
+        "promptText",
+        "promptTextHash",
+        "fallbackPolicy",
+        "assurance",
+        "standingAuthorizationId",
+        "destinationRegistrationEvidenceId"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "APP_EXECUTION_CARD",
+            "ANDROID_PROTECTED_CONFIRMATION",
+            "IOS_APP_ATTESTED_AUTHENTICATED_UI",
+            "EXTERNAL_WALLET_TRUSTED_DISPLAY",
+            "HARDWARE_WALLET",
+            "BLOCKED_UNAVAILABLE"
+          ]
+        },
+        "criticalFields": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "OPERATION",
+              "NETWORK",
+              "ASSET",
+              "AMOUNT",
+              "MAX_AMOUNT",
+              "DESTINATION",
+              "MAX_FEE",
+              "MIN_OUTPUT",
+              "SLIPPAGE",
+              "VAULT",
+              "PLAN_FINGERPRINT",
+              "TRIGGER",
+              "RECOVERY_POLICY"
+            ]
+          }
+        },
+        "promptText": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 1024
+        },
+        "promptTextHash": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^0x[0-9a-fA-F]{64}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fallbackPolicy": {
+          "type": "string",
+          "enum": [
+            "DENY",
+            "EXTERNAL_WALLET",
+            "HARDWARE_WALLET",
+            "LOW_CAP_EXPLICIT_APPROVAL"
+          ]
+        },
+        "assurance": {
+          "type": "string",
+          "enum": [
+            "APP_RENDER_ONLY",
+            "AUTHENTICATED_APP_UI_NOT_TRUSTED_DISPLAY",
+            "TRUSTED_CONFIRMATION",
+            "EXTERNAL_TRUSTED_DISPLAY",
+            "HARDWARE_TRUSTED_DISPLAY",
+            "BLOCKED"
+          ]
+        },
+        "standingAuthorizationId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 8,
+          "maxLength": 256
+        },
+        "destinationRegistrationEvidenceId": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 8,
+          "maxLength": 256
+        }
+      }
+    },
+    "hashProfile": {
+      "const": "ONE_INTENT_HASH_PROFILE_V1"
+    },
+    "platform": {
+      "type": "string",
+      "enum": [
+        "ANDROID",
+        "IOS",
+        "WEB_REVIEW_ONLY"
+      ]
+    },
+    "networkContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceNetworkId",
+        "destinationNetworkIds",
+        "networkRegistrySha256",
+        "chainId"
+      ],
+      "properties": {
+        "sourceNetworkId": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 128,
+          "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+        },
+        "destinationNetworkIds": {
+          "type": "array",
+          "uniqueItems": true,
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 128,
+            "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+          }
+        },
+        "networkRegistrySha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "chainId": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[0-9]{1,20}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "authorizationPresentation": {
+            "properties": {
+              "mode": {
+                "const": "APP_EXECUTION_CARD"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "authorizationPresentation": {
+            "properties": {
+              "promptText": {
+                "type": "null"
+              },
+              "promptTextHash": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "authorizationPresentation": {
+            "properties": {
+              "mode": {
+                "const": "ANDROID_PROTECTED_CONFIRMATION"
+              }
+            },
+            "required": [
+              "mode"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "authorizationPresentation": {
+            "properties": {
+              "promptText": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1024
+              },
+              "promptTextHash": {
+                "type": "string",
+                "pattern": "^0x[0-9a-fA-F]{64}$"
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

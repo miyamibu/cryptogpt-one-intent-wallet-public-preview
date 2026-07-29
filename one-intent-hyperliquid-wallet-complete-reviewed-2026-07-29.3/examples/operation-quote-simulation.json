@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0",
+  "domain": "ONE_INTENT_OPERATION_QUOTE_V1",
+  "quoteId": "QUOTE-SIMULATION-PERP-001",
+  "environment": "SIMULATION",
+  "provider": {
+    "providerId": "SIMULATED_HYPERLIQUID_QUOTE",
+    "routeId": "SIMULATED_PERP_BTC_MAINNET",
+    "authenticationState": "SIMULATION_ONLY",
+    "signerKeyId": null
+  },
+  "account": "0x1111111111111111111111111111111111111111",
+  "deploymentId": "SIMULATION-NOT-DEPLOYED",
+  "executionCapsuleHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+  "sourceStateHash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+  "network": {
+    "sourceNetworkId": "hyperliquid:mainnet",
+    "sourceChainId": null,
+    "destinationNetworkIds": [],
+    "destinationChainIds": [],
+    "networkRegistrySha256": "3333333333333333333333333333333333333333333333333333333333333333"
+  },
+  "assetRegistrySha256": "4444444444444444444444444444444444444444444444444444444444444444",
+  "actions": [
+    {
+      "stepId": "step-order-001",
+      "type": "PERP_ORDER",
+      "assetId": "hyperliquid:perp:BTC",
+      "quoteAssetId": "hyperliquid:USDC",
+      "side": "BUY",
+      "positionEffect": "OPEN",
+      "amount": "500",
+      "percent": null,
+      "leverage": 3,
+      "recipient": null,
+      "contractAddress": null,
+      "limitPrice": "120000",
+      "triggerPrice": null,
+      "minimumOutput": null,
+      "maximumFee": "1.5",
+      "maximumSlippageBps": 30,
+      "wirePayloadCommitment": null
+    }
+  ],
+  "expectedResult": {
+    "outputAssetId": "hyperliquid:perp:BTC",
+    "expectedOutput": null,
+    "minimumOutput": null,
+    "totalFeeExpected": "0.5",
+    "maximumTotalFee": "1.5",
+    "feeAssetId": "hyperliquid:USDC"
+  },
+  "generatedAt": "2026-07-29T00:00:00Z",
+  "validUntil": "2026-07-29T00:00:20Z",
+  "quoteNonce": "SIMULATION-QUOTE-NONCE-0001",
+  "finalPayloadCommitmentProfile": "ONE_INTENT_FINAL_PAYLOAD_COMMITMENT_V1",
+  "finalPayloadCommitment": null,
+  "signatureState": "SIMULATION_ONLY",
+  "signature": null
+}

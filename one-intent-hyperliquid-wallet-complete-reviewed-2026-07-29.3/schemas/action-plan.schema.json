@@ -1,0 +1,407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/action-plan.schema.json",
+  "title": "ActionPlanDraft",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "draftId",
+    "classification",
+    "operations",
+    "missingFields",
+    "warnings",
+    "sourceTextHashProfile",
+    "sourceTextHash"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "draftId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "QUESTION",
+        "EDUCATION",
+        "ANALYSIS",
+        "EXPLICIT_ACTION",
+        "AMBIGUOUS_ACTION",
+        "CONDITIONAL_ACTION",
+        "CANCEL_ACTION",
+        "EMERGENCY_ACTION",
+        "POLICY_CHANGE",
+        "UNSUPPORTED",
+        "MALICIOUS_INJECTION"
+      ]
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "operationId",
+          "type"
+        ],
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PERP_ORDER",
+              "PERP_CANCEL",
+              "PERP_MODIFY",
+              "PERP_CLOSE",
+              "SPOT_ORDER",
+              "INTERNAL_USD_SEND",
+              "INTERNAL_SPOT_SEND",
+              "ARBITRUM_WITHDRAW",
+              "ARBITRUM_BRIDGE_DEPOSIT",
+              "HLP_DEPOSIT",
+              "HLP_WITHDRAW",
+              "USER_VAULT_DEPOSIT",
+              "USER_VAULT_WITHDRAW",
+              "HYPEREVM_VAULT_DEPOSIT",
+              "HYPEREVM_VAULT_WITHDRAW",
+              "USD_CLASS_TRANSFER",
+              "SEND_ASSET",
+              "APPROVE_AGENT",
+              "REVOKE_AGENT",
+              "APPROVE_BUILDER_FEE",
+              "CANCEL_ALL_ORDERS",
+              "EMERGENCY_CLOSE"
+            ]
+          },
+          "assetAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "quoteAssetAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "side": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "BUY",
+              "SELL",
+              null
+            ]
+          },
+          "positionEffect": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "OPEN",
+              "INCREASE",
+              "REDUCE",
+              "CLOSE",
+              null
+            ]
+          },
+          "amountMode": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "EXACT_NOTIONAL",
+              "EXACT_SIZE",
+              "SAFE_ALL",
+              "PERCENT",
+              "REMAINDER",
+              null
+            ]
+          },
+          "amount": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "percent": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "leverage": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 100
+          },
+          "orderType": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "GTC",
+              "IOC",
+              "ALO",
+              "TRIGGER_MARKET",
+              "TRIGGER_LIMIT",
+              null
+            ]
+          },
+          "limitPrice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "triggerPrice": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "triggerKind": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "TP",
+              "SL",
+              null
+            ]
+          },
+          "reduceOnly": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "destinationAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "vaultAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "sourceDexAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "destinationDexAlias": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "maxSlippageBpsRequested": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0,
+            "maximum": 10000
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128,
+              "pattern": "^[A-Za-z0-9._:-]+$"
+            },
+            "uniqueItems": true,
+            "maxItems": 32
+          },
+          "userTextFragment": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "maxLength": 512
+          },
+          "triggerOffsetPercent": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+                "description": "Non-negative decimal string; scientific notation prohibited."
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "triggerReference": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "ENTRY_FILL_PRICE",
+              "CURRENT_MARK_PRICE",
+              "EXPLICIT_PRICE",
+              null
+            ]
+          },
+          "quantityReferenceOperationId": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "minLength": 8,
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$"
+          }
+        }
+      },
+      "maxItems": 32
+    },
+    "missingFields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 128
+      },
+      "uniqueItems": true,
+      "maxItems": 64
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "maxLength": 256
+      },
+      "maxItems": 32
+    },
+    "modelConfidence": {
+      "oneOf": [
+        {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+          "description": "Non-negative decimal string; scientific notation prohibited."
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "userLanguage": {
+      "type": "string",
+      "enum": [
+        "ja",
+        "en",
+        "mixed"
+      ]
+    },
+    "sourceTextHash": {
+      "type": "string",
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    },
+    "sourceTextHashProfile": {
+      "const": "ONE_INTENT_SOURCE_TEXT_HASH_V1"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "classification": {
+            "const": "EXPLICIT_ACTION"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "operations": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "classification": {
+            "enum": [
+              "QUESTION",
+              "EDUCATION",
+              "ANALYSIS",
+              "UNSUPPORTED",
+              "MALICIOUS_INJECTION"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "operations": {
+            "maxItems": 0
+          }
+        }
+      }
+    }
+  ]
+}

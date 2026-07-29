@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/trusted-time-attestation.schema.json",
+  "title": "TrustedTimeAttestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "attestationId",
+    "profileId",
+    "sequence",
+    "observedAt",
+    "validUntil",
+    "trusted",
+    "authority",
+    "signature"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "attestationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "observedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "validUntil": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$"
+    },
+    "trusted": {
+      "type": "boolean"
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "keyId",
+        "role",
+        "principalId",
+        "organization"
+      ],
+      "properties": {
+        "keyId": {
+          "type": "string"
+        },
+        "role": {
+          "const": "TRUSTED_TIME_AUTHORITY"
+        },
+        "principalId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160
+        },
+        "organization": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      }
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "keyId",
+        "signatureBase64"
+      ],
+      "properties": {
+        "profile": {
+          "const": "ONE_INTENT_ED25519_CANONICAL_JSON_V2"
+        },
+        "keyId": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128
+        },
+        "signatureBase64": {
+          "type": "string",
+          "minLength": 4,
+          "maxLength": 256
+        }
+      }
+    }
+  }
+}

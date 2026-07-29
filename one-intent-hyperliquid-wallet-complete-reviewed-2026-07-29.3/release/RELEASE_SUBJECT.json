@@ -1,0 +1,14 @@
+{
+  "releaseId": "2026-07-29.3-design-package",
+  "environment": "DESIGN_ONLY",
+  "sourceCommit": null,
+  "sourceTreeSha256": null,
+  "androidArtifactSha256": null,
+  "iosArtifactSha256": null,
+  "backendImageDigest": null,
+  "signerImageDigest": null,
+  "configurationBundleSha256": null,
+  "policyBundleSha256": null,
+  "assetRegistrySha256": null,
+  "sbomSha256": null
+}

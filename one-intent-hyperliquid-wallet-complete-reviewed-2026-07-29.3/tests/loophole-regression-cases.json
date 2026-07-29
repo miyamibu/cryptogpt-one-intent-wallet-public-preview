@@ -1,0 +1,588 @@
+{
+  "schemaVersion": "1.0",
+  "release": "2026-07-29.3",
+  "cases": [
+    {
+      "id": "LR-001",
+      "risk": "音声誤変換を確認せず実行",
+      "fixture": "perp voice typo",
+      "expected": "primary disabled until explicit correction confirmation"
+    },
+    {
+      "id": "LR-002",
+      "risk": "大きな文字で依頼原文が消える",
+      "fixture": "all flows at large text",
+      "expected": "source request remains visible and reachable"
+    },
+    {
+      "id": "LR-003",
+      "risk": "固定CTAが明細を隠す",
+      "fixture": "320x568 and 375x667",
+      "expected": "primary is last review block and is reachable without overlap"
+    },
+    {
+      "id": "LR-004",
+      "risk": "zero-gasで通常swapを開始できると誤認",
+      "fixture": "JPYC only and native balance zero",
+      "expected": "verified capability proof or manual fallback; no silent route change"
+    },
+    {
+      "id": "LR-005",
+      "risk": "固定のPOL量を案内",
+      "fixture": "manual fallback",
+      "expected": "amount null until operation-bound live estimate"
+    },
+    {
+      "id": "LR-006",
+      "risk": "偽JPYCコントラクトを本番値と誤認",
+      "fixture": "simulation registry",
+      "expected": "dummy address, SIMULATION_ONLY, productionEligible false"
+    },
+    {
+      "id": "LR-007",
+      "risk": "部分成功後に二重実行",
+      "fixture": "composite partial status",
+      "expected": "completed steps immutable; only remaining steps rebuilt"
+    },
+    {
+      "id": "LR-008",
+      "risk": "見積もり差替えまたは再利用",
+      "fixture": "fee quote",
+      "expected": "account, network, asset, operation, amount, nonce, expiry and caps bound"
+    },
+    {
+      "id": "LR-009",
+      "risk": "ChatGPT経由で実取引を迂回",
+      "fixture": "tool boundary",
+      "expected": "no transaction payload, signer request, executable deep link, or write tool"
+    },
+    {
+      "id": "LR-010",
+      "risk": "テスト証跡が時刻で毎回変わる",
+      "fixture": "manifest and visual evidence",
+      "expected": "deterministic timestamp from build metadata"
+    },
+    {
+      "id": "LR-011",
+      "risk": "ZIP path traversal or Unicode collision",
+      "fixture": "archive verifier",
+      "expected": "reject absolute paths, dot-dot, symlinks, NFC or casefold collisions"
+    },
+    {
+      "id": "LR-012",
+      "risk": "Mainnet gateを証拠なしで有効化",
+      "fixture": "feature gates",
+      "expected": "all mainnet writes false and two-person evidence required"
+    },
+    {
+      "id": "LR-013",
+      "risk": "scrollで完全に切り取られた操作部品と本当の遮蔽を混同する",
+      "fixture": "all painted controls at top and review end with overflow clipping",
+      "expected": "painted rectangles are clipped by all overflow ancestors; their center hit must resolve to the control or its descendant"
+    },
+    {
+      "id": "LR-014",
+      "risk": "入口ページだけ狭幅・暗色で崩れる",
+      "fixture": "START_HERE at 320x800, 390x844 and 1440x1000 in both themes",
+      "expected": "no body horizontal overflow, persistent boundary, usable links, contained table and zero external requests"
+    },
+    {
+      "id": "LR-015",
+      "risk": "任意の承認上限やアドレスが既定値・本番値に見える",
+      "fixture": "limited authorization, fee, spot, destination and fingerprint examples",
+      "expected": "invented values are explicitly example-only/not defaults and addresses are marked dummy"
+    },
+    {
+      "id": "LR-016",
+      "risk": "証拠画像の上端で明細blockが途中から切れる",
+      "fixture": "all required stable review screenshots",
+      "expected": "content begins on a block boundary below sticky summary and primary action remains visible where required"
+    },
+    {
+      "id": "LR-017",
+      "risk": "build metadataとmanifestのpackage名・version・timestampがずれる",
+      "fixture": "metadata and generated manifest identity",
+      "expected": "one metadata source; exact package/version/rootName/generatedAt equality"
+    },
+    {
+      "id": "LR-018",
+      "risk": "Schemaファイルはあるが対応例が実際には検証されない",
+      "fixture": "all schemas and mapped JSON/YAML examples",
+      "expected": "every schema is meta-validated and every schema has at least one mapped valid example"
+    },
+    {
+      "id": "LR-019",
+      "risk": "YAML重複keyやaliasで検証値を上書き・膨張させる",
+      "fixture": "strict YAML negative fixtures",
+      "expected": "duplicate mapping keys and aliases are rejected"
+    },
+    {
+      "id": "LR-020",
+      "risk": "full validationをskipして古い証拠のままZIPを作る、または検証後にtreeが変わる",
+      "fixture": "release orchestrator and immutable tree digest",
+      "expected": "no bypass flag; validation always runs; tree digest is identical across both builds and verification"
+    },
+    {
+      "id": "LR-021",
+      "risk": "authorize・execute・resume・緊急操作がcapsule、device、receipt、idempotencyに十分束縛されない",
+      "fixture": "first-party OpenAPI write operations",
+      "expected": "sender-constrained proof and operation-specific binding headers are required"
+    },
+    {
+      "id": "LR-022",
+      "risk": "ChatGPT向けinterfaceへwrite操作や実行payloadが後から混入する",
+      "fixture": "machine-checkable ChatGPT read-only OpenAPI",
+      "expected": "fixed operation allowlist, read-only scope, no execution schema/ref, executable=false"
+    },
+    {
+      "id": "LR-023",
+      "risk": "ZIPの順序・permission・extra field・ADS・bidi制御文字を利用して展開結果を変える",
+      "fixture": "deterministic ZIP member policy",
+      "expected": "sorted members, exact metadata/mode/flags, no extra fields, portable safe paths only"
+    },
+    {
+      "id": "LR-024",
+      "risk": "source pinのJSONとYAMLが別内容になり、未固定の外部情報を固定済みと誤認する",
+      "fixture": "source pin semantic equality and status",
+      "expected": "JSON/YAML are identical; null content hash remains MONITOR and cannot satisfy production release"
+    },
+    {
+      "id": "LR-025",
+      "risk": "JSONの負のゼロや言語間で精度が一致しない巨大整数を正規値として受理する",
+      "fixture": "strict JSON integer negative fixtures",
+      "expected": "-0 and integers outside the interoperable safe range are rejected before canonicalization"
+    },
+    {
+      "id": "LR-026",
+      "risk": "full validationのvisual工程だけをskipしてFULL VALIDATION PASSと表示する",
+      "fixture": "canonical full-validation entry point",
+      "expected": "no visual-skip or other bypass option exists; every release-grade run executes all visual tests"
+    },
+    {
+      "id": "LR-027",
+      "risk": "host側で継承されたdirectory setgidを秘密実行権限と誤認し、正しいpackageを環境依存で拒否する",
+      "fixture": "filesystem archive-safety mode policy",
+      "expected": "regular-file setuid/setgid and world-writable content are rejected; inherited directory setgid is normalized away and does not create a false result"
+    },
+    {
+      "id": "LR-028",
+      "risk": "Markdown link checker自体が正規表現エラーで起動せず、また生成後reportを検査しない",
+      "fixture": "local link/markup checker and pipeline order",
+      "expected": "checker compiles, examines generated reports, raw HTML and local links, and failure blocks manifest/release"
+    },
+    {
+      "id": "LR-029",
+      "risk": "OAuthのauthorizationUrlをwrite endpointと誤検知する一方、実際のpath差替えを文字列検索だけで見逃す",
+      "fixture": "ChatGPT read-only OpenAPI exact path/method contract",
+      "expected": "exact path/method/operation/schema/scope allowlists are checked structurally; OAuth metadata is not confused with a wallet write route"
+    },
+    {
+      "id": "LR-030",
+      "risk": "YAMLの暗黙timestampやNaNがruntime固有型になり、別言語・別validatorで意味が変わる",
+      "fixture": "strict YAML scalar negative fixtures",
+      "expected": "aliases, duplicate keys, non-finite numbers and implicit timestamps are rejected; timestamps must be quoted strings"
+    },
+    {
+      "id": "LR-031",
+      "risk": "Unicode lookalikeを含むarchive pathがレビュー表示とOS上の実名で食い違う",
+      "fixture": "portable package path policy",
+      "expected": "package/archive path components are ASCII, NFC, collision-free and free of control, bidi, ADS and reserved names"
+    },
+    {
+      "id": "LR-032",
+      "risk": "固定timestampがZIP/DOS形式で正確に表現できず、build環境ごとに丸めや失敗が変わる",
+      "fixture": "build metadata timestamp validation",
+      "expected": "timestamp is UTC, second-precision, year 1980..2107 and has an even second before packaging"
+    },
+    {
+      "id": "LR-033",
+      "risk": "ASCIIだけのZIP memberへUTF-8 filename flagを強制できると誤認し、builderとverifierが必ず不一致になる",
+      "fixture": "deterministic ZIP flag policy",
+      "expected": "portable ASCII path policy implies exact general-purpose flags 0; builder and verifier import the same constant"
+    },
+    {
+      "id": "LR-034",
+      "risk": "検証中にscreenshotやreportを書き換えて古い証拠を正当化できる",
+      "fixture": "full validation against deliberately stale generated artifact",
+      "expected": "validation fails and tree digest remains unchanged; only prepare command may regenerate"
+    },
+    {
+      "id": "LR-035",
+      "risk": "package内のtrust policyと偽鍵を同時差し替えれば自己承認できる",
+      "fixture": "production evaluator with unanchored local trust policy",
+      "expected": "evaluation rejects unless protected out-of-band trust-policy hash matches exactly"
+    },
+    {
+      "id": "LR-036",
+      "risk": "readiness checkerを弱めてからPASSを生成できる",
+      "fixture": "modified checker with otherwise valid-looking evidence",
+      "expected": "protected checker hash mismatch blocks production readiness"
+    },
+    {
+      "id": "LR-037",
+      "risk": "証拠を別release binaryへ流用できる",
+      "fixture": "evidence statement subject digest mismatch",
+      "expected": "statement and approval are rejected before claim acceptance"
+    },
+    {
+      "id": "LR-038",
+      "risk": "端末時計を戻して期限切れ証拠を有効化できる",
+      "fixture": "expired evidence with manipulated local clock",
+      "expected": "signed trusted-time attestation and clock-skew rules reject it"
+    },
+    {
+      "id": "LR-039",
+      "risk": "issuerとreviewerを同一鍵で自己承認できる",
+      "fixture": "valid signatures with prohibited key/role overlap",
+      "expected": "role separation and distinct-key policy reject readiness"
+    },
+    {
+      "id": "LR-040",
+      "risk": "必須claim欠落・重複・未知claimを黙認できる",
+      "fixture": "evidence index set mismatch",
+      "expected": "exact required-claim set equality fails closed"
+    },
+    {
+      "id": "LR-041",
+      "risk": "release GOだけでruntime writeを許可できる",
+      "fixture": "GO report without fresh runtime state or lease",
+      "expected": "signer denies every write"
+    },
+    {
+      "id": "LR-042",
+      "risk": "runtime leaseを利用者の取引承認として流用できる",
+      "fixture": "valid lease but missing per-operation authorization",
+      "expected": "lease schema and signer policy deny sign/broadcast"
+    },
+    {
+      "id": "LR-043",
+      "risk": "kill switch後も古いleaseとqueueで送信できる",
+      "fixture": "stale sequence lease after emergency stop",
+      "expected": "signer rechecks latest state and rejects queued operation"
+    },
+    {
+      "id": "LR-044",
+      "risk": "操作承認を別recipient・amount・quoteへ差し替えられる",
+      "fixture": "tampered capsule after user authorization",
+      "expected": "final capsule hash binding causes authorization failure"
+    },
+    {
+      "id": "LR-045",
+      "risk": "root化・overlay・debug環境で高リスク承認を継続できる",
+      "fixture": "Android/iOS compromised-device negative fixtures",
+      "expected": "high-risk write is blocked and event is audited"
+    },
+    {
+      "id": "LR-046",
+      "risk": "deep link・clipboardから直接実行payloadを注入できる",
+      "fixture": "malicious external intent and address replacement",
+      "expected": "only non-executable draft is created and explicit in-app confirmation is required"
+    },
+    {
+      "id": "LR-047",
+      "risk": "DB migration中の旧新server混在で二重処理できる",
+      "fixture": "mixed deployment epoch and schema version",
+      "expected": "write fencing blocks incompatible writer and reconciliation stays exact"
+    },
+    {
+      "id": "LR-048",
+      "risk": "DB commitとbroadcastの片方だけ成功する",
+      "fixture": "outbox crash-point matrix",
+      "expected": "recovery produces one external effect and one reconciled ledger entry"
+    },
+    {
+      "id": "LR-049",
+      "risk": "token proxy・decimals・code hash変更後も古いregistryで送れる",
+      "fixture": "runtime token identity drift",
+      "expected": "asset gate blocks until registry and independent review are refreshed"
+    },
+    {
+      "id": "LR-050",
+      "risk": "無制限allowanceまたは期限なしPermitを生成する",
+      "fixture": "approval policy negative fixture",
+      "expected": "compiler rejects and offers exact-amount short-expiry alternative"
+    },
+    {
+      "id": "LR-051",
+      "risk": "bridge source成功をdestination完了と表示する",
+      "fixture": "source receipt without destination finality",
+      "expected": "state remains in transit and retry is prohibited"
+    },
+    {
+      "id": "LR-052",
+      "risk": "bridge reorgやmessage replayで二重処理する",
+      "fixture": "reorg/replay/partial-delivery simulator",
+      "expected": "message-id idempotency and finality policy prevent duplicate effect"
+    },
+    {
+      "id": "LR-053",
+      "risk": "Hyperliquid nonceを複数workerが競合する",
+      "fixture": "concurrent API-wallet nonce stress test",
+      "expected": "atomic authority produces unique ordered nonces or rejects safely"
+    },
+    {
+      "id": "LR-054",
+      "risk": "WebSocket gap後の古いpositionで注文する",
+      "fixture": "sequence gap and reconnect fixture",
+      "expected": "write remains blocked until REST snapshot resynchronizes"
+    },
+    {
+      "id": "LR-055",
+      "risk": "symbol衝突でspotとperpまたは別assetへ注文する",
+      "fixture": "metadata asset-id mismatch fixture",
+      "expected": "capsule compilation rejects symbol-only or mismatched market identity"
+    },
+    {
+      "id": "LR-056",
+      "risk": "partial fill・cancel raceを全量成功に丸める",
+      "fixture": "exchange lifecycle simulator",
+      "expected": "UI and reconciler expose exact filled, open, cancelled and residual amounts"
+    },
+    {
+      "id": "LR-057",
+      "risk": "LLM/model更新で質問を注文として扱う",
+      "fixture": "versioned golden voice/intent corpus",
+      "expected": "promotion fails on any execution-boundary regression"
+    },
+    {
+      "id": "LR-058",
+      "risk": "法務意見やStore承認を別地域・別binaryへ流用する",
+      "fixture": "subject/region/version mismatch in signed external evidence",
+      "expected": "claim is rejected and public-release gate remains blocked"
+    },
+    {
+      "id": "LR-059",
+      "risk": "監視停止を正常な緑表示として扱う",
+      "fixture": "stale telemetry and provider outage drill",
+      "expected": "runtime state turns unhealthy and lease issuance stops"
+    },
+    {
+      "id": "LR-060",
+      "risk": "現在の設計ZIPをproduction operationalと判定する",
+      "fixture": "default package readiness evaluation",
+      "expected": "exact result is BLOCKED_NOT_OPERATIONAL with 0 accepted production claims"
+    },
+    {
+      "id": "LR-061",
+      "risk": "gate profileやSchemaだけを弱め、checker本体hashを維持する",
+      "fixture": "tampered verifier-bundle component",
+      "expected": "deterministic verifier-bundle anchor mismatch blocks readiness"
+    },
+    {
+      "id": "LR-062",
+      "risk": "同じstatementIdの別内容へreview approvalを流用する",
+      "fixture": "approval bound to stale statement digest",
+      "expected": "statementSha256 mismatch rejects the approval and claim"
+    },
+    {
+      "id": "LR-063",
+      "risk": "同じ公開鍵を別keyIdで複数登録する",
+      "fixture": "duplicate Ed25519 public-key material",
+      "expected": "trust policy is rejected before any claim is evaluated"
+    },
+    {
+      "id": "LR-064",
+      "risk": "同一principalが複数鍵でapproval thresholdを満たす",
+      "fixture": "different keyIds sharing one principalId",
+      "expected": "principal-level slot deduplication blocks readiness"
+    },
+    {
+      "id": "LR-065",
+      "risk": "鍵有効開始前へbackdateした文書を現在有効な鍵で署名する",
+      "fixture": "signedAt outside key validity while evaluatedAt is valid",
+      "expected": "signature is rejected at signing-time validity check"
+    },
+    {
+      "id": "LR-066",
+      "risk": "証拠artifactのsizeまたは採取時刻を偽る",
+      "fixture": "digest/size/chronology mismatch fixture",
+      "expected": "claim remains blocked"
+    },
+    {
+      "id": "LR-067",
+      "risk": "期限・sequenceのない古いevidence indexをreplayする",
+      "fixture": "stale or sequence-zero production index",
+      "expected": "index validity and chronology checks reject it"
+    },
+    {
+      "id": "LR-068",
+      "risk": "PASS statementに重大なlimitationsを残す",
+      "fixture": "PASS statement with non-empty limitations",
+      "expected": "claim remains blocked until limitations are resolved"
+    },
+    {
+      "id": "LR-069",
+      "risk": "release GO reportをtransaction authorizationとして使う",
+      "fixture": "valid synthetic GO report without runtime/user authorization",
+      "expected": "productionWritePermitted remains false and signer denies"
+    },
+    {
+      "id": "LR-070",
+      "risk": "侵害されたverifier runtimeで正常結果を装う",
+      "fixture": "unattested or unpinned verifier execution environment",
+      "expected": "production release gate remains blocked outside protected attested runner"
+    },
+    {
+      "id": "LR-071",
+      "risk": "negative testだけを通し、GO分岐が到達不能でも配布する",
+      "fixture": "ephemeral complete 37-gate/93-claim evidence set",
+      "expected": "evaluator reaches GO while still granting no direct transaction write"
+    },
+    {
+      "id": "LR-072",
+      "risk": "hash計測後にtrusted inputをsymlink/hardlink/同時差替えする",
+      "fixture": "TOCTOU and linked-file fixtures",
+      "expected": "secure descriptor snapshot rejects before evidence acceptance"
+    },
+    {
+      "id": "LR-073",
+      "risk": "cross-document Ed25519 signature replay",
+      "fixture": "signature copied from account binding to runtime lease",
+      "expected": "domain-separated verifier rejects"
+    },
+    {
+      "id": "LR-074",
+      "risk": "lone surrogate canonicalization",
+      "fixture": "JSON string containing escaped lone surrogate",
+      "expected": "canonicalizer rejects before hash/signature"
+    },
+    {
+      "id": "LR-075",
+      "risk": "unanchored evidence index",
+      "fixture": "GO report references an index digest not pinned out of band",
+      "expected": "release/runtime evaluation blocks"
+    },
+    {
+      "id": "LR-076",
+      "risk": "stale or foreign GO report",
+      "fixture": "expired report or mismatched decision input hash",
+      "expected": "runtime activation blocks"
+    },
+    {
+      "id": "LR-077",
+      "risk": "forged 37/93 summary",
+      "fixture": "summary says GO while one gate row is BLOCKED",
+      "expected": "exact gate-row validation blocks"
+    },
+    {
+      "id": "LR-078",
+      "risk": "release GO used as write authority",
+      "fixture": "valid release report without runtime/user authorization",
+      "expected": "transactionAuthorizationGranted remains false"
+    },
+    {
+      "id": "LR-079",
+      "risk": "unbound account key",
+      "fixture": "operation user/device key differs from active account binding",
+      "expected": "operation blocks"
+    },
+    {
+      "id": "LR-080",
+      "risk": "runtime sequence rollback",
+      "fixture": "state/lease/binding sequence equals protected high-water mark",
+      "expected": "runtime activation blocks"
+    },
+    {
+      "id": "LR-081",
+      "risk": "expired quote",
+      "fixture": "quoteValidUntil is in the past",
+      "expected": "operation blocks"
+    },
+    {
+      "id": "LR-082",
+      "risk": "wrong network context",
+      "fixture": "capsule source/destination network or registry digest not allowlisted",
+      "expected": "operation blocks"
+    },
+    {
+      "id": "LR-083",
+      "risk": "stale individual state source",
+      "fixture": "aggregate state time is fresh but one source is old",
+      "expected": "operation blocks"
+    },
+    {
+      "id": "LR-084",
+      "risk": "same user/device/policy identity",
+      "fixture": "multiple authorization slots resolve to one key or principal",
+      "expected": "operation blocks"
+    },
+    {
+      "id": "LR-085",
+      "risk": "signer transaction TOCTOU",
+      "fixture": "final unsigned transaction hash differs from evaluated capsule",
+      "expected": "signer refuses to sign"
+    },
+    {
+      "id": "LR-086",
+      "risk": "concurrent nonce consumption",
+      "fixture": "two workers reserve same authorization ID or nonce",
+      "expected": "exactly one atomic reservation succeeds"
+    },
+    {
+      "id": "LR-087",
+      "risk": "unanchored runtime authorizer",
+      "fixture": "runtime evaluator bundle hash missing or mismatched",
+      "expected": "runtime decision blocks"
+    },
+    {
+      "id": "LR-088",
+      "risk": "capability map escape",
+      "fixture": "step mapping returns capability outside lease/operation allowlists",
+      "expected": "policy validation blocks"
+    },
+    {
+      "id": "LR-089",
+      "risk": "check modeが正本スクリーンショットを削除",
+      "fixture": "prototype validator with --check on frozen tree",
+      "expected": "all writes occur only in temporary output; source tree hash is unchanged on success and failure"
+    },
+    {
+      "id": "LR-090",
+      "risk": "validator import errorを見逃して全体PASS",
+      "fixture": "replace one validator import with a deterministic failure",
+      "expected": "full validation exits non-zero and reports the exact validator; no subsequent report may claim PASS"
+    },
+    {
+      "id": "LR-091",
+      "risk": "trusted-time sequence rollback",
+      "fixture": "valid signed runtime bundle with protected minimum equal to candidate sequence",
+      "expected": "BLOCKED with trusted-time high-water reason"
+    },
+    {
+      "id": "LR-092",
+      "risk": "evidence-index sequence rollback",
+      "fixture": "valid signed release/runtime bundle with protected minimum equal to candidate sequence",
+      "expected": "BLOCKED with evidence-index high-water reason"
+    },
+    {
+      "id": "LR-093",
+      "risk": "readiness reportと現在trusted timeのsequence不一致",
+      "fixture": "re-signed readiness report containing another trustedTimeSequence",
+      "expected": "runtime authorization is BLOCKED despite otherwise valid signatures"
+    },
+    {
+      "id": "LR-094",
+      "risk": "quote hashは同じ欄だがquote本文または最終payloadが異なる",
+      "fixture": "mutate route, amount, minimum receive, fee, chain or calldata/order commitment",
+      "expected": "protected signer recomputation rejects before signing"
+    },
+    {
+      "id": "LR-095",
+      "risk": "networkIdとnumeric/RPC chainIdまたはregistry entryが不一致",
+      "fixture": "valid-looking capsule with mismatched CAIP-2, chainId or contract code hash",
+      "expected": "protected signer rejects and closes the affected feature gate"
+    },
+    {
+      "id": "LR-096",
+      "risk": "署名済みだがbroadcast結果不明の操作を再署名",
+      "fixture": "crash after sign and before durable receipt",
+      "expected": "state remains SIGNED_BROADCAST_UNKNOWN; reconciliation finds existing effect or requires manual resolution; no fresh signature"
+    },
+    {
+      "id": "LR-097",
+      "risk": "ChatGPT read-only supportが取引固有の下書き・ボタン手順・復旧手順を返して実質的に取引を促進",
+      "fixture": "OpenAI-facing request/response containing utterance, recipient, amount, asset/network, quote, screen/button sequence, recovery step, deep link or handoff token",
+      "expected": "schema, gateway, IAM/egress and response-policy tests reject fail closed; only fixed redacted status, glossary, non-transactional error, generic safety and neutral handoff remain"
+    }
+  ]
+}

@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/manual-fallback.schema.json",
+  "title": "Manual Fallback Guidance v2.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "fallbackId",
+    "reasonCode",
+    "titleJa",
+    "currentScreenJa",
+    "networkId",
+    "feeAsset",
+    "recipientAddress",
+    "recipientFingerprint",
+    "recommendedAmount",
+    "amountSource",
+    "estimateGeneratedAt",
+    "estimateExpiresAt",
+    "steps",
+    "retryControlLabelJa",
+    "supportCode",
+    "expiresAt",
+    "exampleOnly",
+    "maximumAmount",
+    "estimateId",
+    "operationDigest"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "2.1"
+    },
+    "fallbackId": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{8,80}$"
+    },
+    "reasonCode": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_]{3,80}$"
+    },
+    "titleJa": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "currentScreenJa": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "networkId": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+:[A-Za-z0-9._-]+$"
+    },
+    "feeAsset": {
+      "type": "string",
+      "pattern": "^[A-Z0-9._-]{1,20}$"
+    },
+    "recipientAddress": {
+      "type": "string",
+      "pattern": "^0x[0-9A-Fa-f]{40}$"
+    },
+    "recipientFingerprint": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80
+    },
+    "recommendedAmount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "amountSource": {
+      "enum": [
+        "LIVE_OPERATION_BOUND_ESTIMATE",
+        "NOT_AVAILABLE"
+      ]
+    },
+    "estimateGeneratedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "estimateExpiresAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "order",
+          "screenJa",
+          "controlLabelJa",
+          "actionJa",
+          "expectedResultJa",
+          "safetyCheckJa"
+        ],
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "screenJa": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "controlLabelJa": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "actionJa": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "expectedResultJa": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400
+          },
+          "safetyCheckJa": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 400
+          }
+        }
+      }
+    },
+    "retryControlLabelJa": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "supportCode": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]{6,80}$"
+    },
+    "expiresAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "exampleOnly": {
+      "type": "boolean"
+    },
+    "maximumAmount": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+    },
+    "estimateId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Za-z0-9._:-]{8,160}$"
+    },
+    "operationDigest": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^0x[0-9a-fA-F]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "amountSource": {
+            "const": "LIVE_OPERATION_BOUND_ESTIMATE"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "recommendedAmount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+          },
+          "maximumAmount": {
+            "type": "string",
+            "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"
+          },
+          "estimateId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._:-]{8,160}$"
+          },
+          "operationDigest": {
+            "type": "string",
+            "pattern": "^0x[0-9a-fA-F]{64}$"
+          },
+          "estimateGeneratedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "estimateExpiresAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "recommendedAmount": {
+            "const": null
+          },
+          "maximumAmount": {
+            "const": null
+          },
+          "estimateId": {
+            "const": null
+          },
+          "operationDigest": {
+            "const": null
+          },
+          "estimateGeneratedAt": {
+            "const": null
+          },
+          "estimateExpiresAt": {
+            "const": null
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+version: gates-2026-07-28.2
+default: disabled
+environments:
+  simulator:
+    read_only: true
+    ai_intent: true
+    perp_trade: true
+    spot_trade: true
+    internal_usd_send: true
+    internal_spot_send: true
+    arbitrum_withdraw: true
+    arbitrum_bridge_deposit: true
+    hlp_deposit: true
+    hlp_withdraw: true
+    user_vault_deposit: true
+    user_vault_withdraw: true
+    hyperevm_vault: true
+    external_bridge: true
+    builder_fee: true
+    managed_self_custody: true
+    android_native_shell: true
+    ios_native_shell: true
+    ios_managed_self_custody: true
+    ios_existing_wallet_mode: true
+    ios_app_store_distribution: false
+  testnet:
+    read_only: true
+    ai_intent: true
+    perp_trade: false
+    spot_trade: false
+    internal_usd_send: false
+    internal_spot_send: false
+    arbitrum_withdraw: false
+    arbitrum_bridge_deposit: false
+    hlp_deposit: false
+    hlp_withdraw: false
+    user_vault_deposit: false
+    user_vault_withdraw: false
+    hyperevm_vault: false
+    external_bridge: false
+    builder_fee: false
+    managed_self_custody: false
+    android_native_shell: false
+    ios_native_shell: false
+    ios_managed_self_custody: false
+    ios_existing_wallet_mode: false
+    ios_app_store_distribution: false
+  mainnet:
+    read_only: true
+    ai_intent: true
+    perp_trade: false
+    spot_trade: false
+    internal_usd_send: false
+    internal_spot_send: false
+    arbitrum_withdraw: false
+    arbitrum_bridge_deposit: false
+    hlp_deposit: false
+    hlp_withdraw: false
+    user_vault_deposit: false
+    user_vault_withdraw: false
+    hyperevm_vault: false
+    external_bridge: false
+    builder_fee: false
+    managed_self_custody: false
+    android_native_shell: false
+    ios_native_shell: false
+    ios_managed_self_custody: false
+    ios_existing_wallet_mode: false
+    ios_app_store_distribution: false
+approval:
+  testnet_write: security_owner + engineering_owner + evidence_bundle
+  mainnet_write: security_owner + legal_owner + operations_owner + external_audit
+    + signed_release_manifest
+  mainnet_root_action: auth_per_use + feature_specific_gate
+  ios_public_distribution: organization_account + written_legal_opinion + licensing_evidence
+    + app_review_readiness + external_security_audit

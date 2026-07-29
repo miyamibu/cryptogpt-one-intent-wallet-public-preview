@@ -1,0 +1,42 @@
+status: BLOCKED_NOT_OPERATIONAL
+gate_count: 37
+claim_count: 93
+rule: Any missing, stale, unsigned, conflicting, external, or release-mismatched evidence keeps the gate closed.
+decisions:
+  G01: NO_GO
+  G02: NO_GO
+  G03: NO_GO
+  G04: NO_GO
+  G05: NO_GO
+  G06: NO_GO
+  G07: NO_GO
+  G08: NO_GO
+  G09: NO_GO
+  G10: NO_GO
+  G11: NO_GO
+  G12: NO_GO
+  G13: NO_GO
+  G14: NO_GO
+  G15: NO_GO
+  G16: NO_GO
+  G17: NO_GO
+  G18: NO_GO
+  G19: NO_GO
+  G20: NO_GO
+  G21: NO_GO
+  G22: NO_GO
+  G23: NO_GO
+  G24: NO_GO
+  G25: NO_GO
+  G26: NO_GO
+  G27: NO_GO
+  G28: NO_GO
+  G29: NO_GO
+  G30: NO_GO
+  G31: NO_GO
+  G32: NO_GO
+  G33: NO_GO
+  G34: NO_GO
+  G35: NO_GO
+  G36: NO_GO
+  G37: NO_GO

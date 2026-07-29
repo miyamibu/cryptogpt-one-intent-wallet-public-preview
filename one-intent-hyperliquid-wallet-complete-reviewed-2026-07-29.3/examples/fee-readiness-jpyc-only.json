@@ -1,0 +1,83 @@
+{
+  "schemaVersion": "2.1",
+  "planId": "fee_jpyc_only_sim_001",
+  "environment": "SIMULATION",
+  "generatedAt": "2026-07-28T10:40:00Z",
+  "expiresAt": "2026-07-28T10:41:00Z",
+  "networkId": "eip155:137",
+  "assetRegistryId": "registry_simulation_polygon_001",
+  "registryEntryHash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+  "account": {
+    "address": "0x1111111111111111111111111111111111111111",
+    "executionModel": "SMART_ACCOUNT_ERC4337"
+  },
+  "feeAsset": {
+    "symbol": "POL",
+    "decimals": 18
+  },
+  "jpycAssetRef": {
+    "symbol": "JPYC",
+    "contract": "0x0000000000000000000000000000000000000137",
+    "decimals": 18
+  },
+  "balances": {
+    "native": "0",
+    "jpyc": "10000"
+  },
+  "actionFeeEstimate": {
+    "amount": "0.012",
+    "source": "画面例のシミュレーター",
+    "generatedAt": "2026-07-28T10:40:00Z",
+    "expiresAt": "2026-07-28T09:01:00Z"
+  },
+  "targetReserve": "0.02",
+  "status": "LOW_ZERO_ROUTE_VERIFIED",
+  "strategy": "VERIFIED_ZERO_NATIVE_ROUTE",
+  "routeCapabilityId": "fee_route_sim_polygon_001",
+  "capabilityProofState": "VERIFIED",
+  "bootstrappingMethod": "PAYMASTER",
+  "quote": {
+    "quoteId": "quote_sim_polygon_001",
+    "providerId": "simulation-provider",
+    "providerSettlementTarget": "simulation-settlement-target",
+    "nonce": "nonce-sim-001",
+    "operationDigest": "0x2222222222222222222222222222222222222222222222222222222222222222",
+    "feeAssetCost": "0.012",
+    "jpycCostExpected": "18",
+    "maxJpycCost": "25",
+    "chargeIfActionFails": "0",
+    "boundFields": [
+      "account",
+      "networkId",
+      "asset",
+      "operation",
+      "amount",
+      "nonce",
+      "expiresAt",
+      "maxJpycCost",
+      "feeAssetCost",
+      "providerSettlementTarget"
+    ],
+    "generatedAt": "2026-07-28T10:40:00Z",
+    "expiresAt": "2026-07-28T10:41:00Z",
+    "signatureState": "SIMULATION_ONLY"
+  },
+  "monthlyJpycCap": "500",
+  "manualFallbackId": "manual_zero_gas_polygon_001",
+  "userMessageJa": "これは静的な画面例です。架空の提供者を使い、表示項目だけを示します。本番では法人名、連絡先、規約、精算先、失敗時請求、対象操作へ結び付いた署名済み見積もりを検証できる場合だけ進めます。証明できなければ手動手順へ切り替えます。",
+  "safetyChecks": [
+    "登録情報は画面例であり本番利用不可",
+    "口座方式と経路能力を同じネットワークへ結び付ける",
+    "見積もりを口座・操作・金額・nonce・期限へ結び付ける",
+    "期限切れまたは署名不一致では停止",
+    "別経路へ自動変更しない"
+  ],
+  "exampleOnly": true,
+  "provider": {
+    "providerId": "simulation-provider",
+    "legalNameJa": "架空の画面例スポンサー（本番使用禁止）",
+    "contact": "https://example.invalid/support",
+    "termsVersion": "EXAMPLE-2026-07-28",
+    "termsSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  }
+}

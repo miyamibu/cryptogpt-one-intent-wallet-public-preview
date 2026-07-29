@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/policy-profile.schema.json",
+  "title": "PolicyProfile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "policyId",
+    "userId",
+    "version",
+    "environment",
+    "allowedAssets",
+    "allowedOperationTypes",
+    "limits",
+    "maxLeverage",
+    "maxSlippageBps",
+    "sessionMinutes",
+    "destinationRules",
+    "vaultRules",
+    "effectiveAt",
+    "status"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "policyId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "userId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "SIMULATOR",
+        "TESTNET",
+        "MAINNET"
+      ]
+    },
+    "allowedAssets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 256
+      },
+      "uniqueItems": true,
+      "maxItems": 512
+    },
+    "allowedOperationTypes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "PERP_ORDER",
+          "PERP_CANCEL",
+          "PERP_MODIFY",
+          "PERP_CLOSE",
+          "SPOT_ORDER",
+          "INTERNAL_USD_SEND",
+          "INTERNAL_SPOT_SEND",
+          "ARBITRUM_WITHDRAW",
+          "ARBITRUM_BRIDGE_DEPOSIT",
+          "HLP_DEPOSIT",
+          "HLP_WITHDRAW",
+          "USER_VAULT_DEPOSIT",
+          "USER_VAULT_WITHDRAW",
+          "HYPEREVM_VAULT_DEPOSIT",
+          "HYPEREVM_VAULT_WITHDRAW",
+          "USD_CLASS_TRANSFER",
+          "SEND_ASSET",
+          "APPROVE_AGENT",
+          "REVOKE_AGENT",
+          "APPROVE_BUILDER_FEE",
+          "CANCEL_ALL_ORDERS",
+          "EMERGENCY_CLOSE"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tradeNotional",
+        "transfer",
+        "withdraw",
+        "vault",
+        "totalExposure",
+        "dailyLoss"
+      ],
+      "properties": {
+        "tradeNotional": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxPerAction",
+            "maxDaily",
+            "highRiskThreshold"
+          ],
+          "properties": {
+            "maxPerAction": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "maxDaily": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "highRiskThreshold": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            }
+          }
+        },
+        "transfer": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxPerAction",
+            "maxDaily",
+            "highRiskThreshold"
+          ],
+          "properties": {
+            "maxPerAction": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "maxDaily": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "highRiskThreshold": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            }
+          }
+        },
+        "withdraw": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxPerAction",
+            "maxDaily",
+            "highRiskThreshold"
+          ],
+          "properties": {
+            "maxPerAction": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "maxDaily": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "highRiskThreshold": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            }
+          }
+        },
+        "vault": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "maxPerAction",
+            "maxDaily",
+            "highRiskThreshold"
+          ],
+          "properties": {
+            "maxPerAction": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "maxDaily": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            },
+            "highRiskThreshold": {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+              "description": "Non-negative decimal string; scientific notation prohibited."
+            }
+          }
+        },
+        "totalExposure": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+          "description": "Non-negative decimal string; scientific notation prohibited."
+        },
+        "dailyLoss": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+          "description": "Non-negative decimal string; scientific notation prohibited."
+        }
+      }
+    },
+    "maxLeverage": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "maxSlippageBps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 10000
+    },
+    "sessionMinutes": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 1440
+    },
+    "destinationRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "newDestinationCooldownSeconds",
+        "requireTestTransferAbove",
+        "requireAuthPerUseForNew"
+      ],
+      "properties": {
+        "newDestinationCooldownSeconds": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 604800
+        },
+        "requireTestTransferAbove": {
+          "type": "string",
+          "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$",
+          "description": "Non-negative decimal string; scientific notation prohibited."
+        },
+        "requireAuthPerUseForNew": {
+          "type": "boolean"
+        }
+      }
+    },
+    "vaultRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "allowHlp",
+        "allowUserVaults",
+        "allowHyperEvmVaults",
+        "allowedVaultIds"
+      ],
+      "properties": {
+        "allowHlp": {
+          "type": "boolean"
+        },
+        "allowUserVaults": {
+          "type": "boolean"
+        },
+        "allowHyperEvmVaults": {
+          "type": "boolean"
+        },
+        "allowedVaultIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "effectiveAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expiresAt": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "ACTIVE",
+        "SUSPENDED",
+        "REVOKED"
+      ]
+    }
+  }
+}

@@ -1,0 +1,432 @@
+openapi: 3.1.0
+info:
+  title: One-Intent Hyperliquid Wallet Control API
+  version: 0.2.0
+  description: First-party wallet control contract. Non-production; Mainnet writes are disabled by default and this
+    API must never be exposed as a ChatGPT, MCP, Action, or other LLM write tool.
+servers:
+- url: https://api.example.invalid
+  description: Intentionally non-routable documentation placeholder
+security:
+- bearerAuth: []
+paths:
+  /v1/intents/parse:
+    post:
+      operationId: parseIntent
+      summary: Parse user text into an untrusted ActionPlanDraft
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParseIntentRequest'
+      responses:
+        '200':
+          description: Draft only; never executable
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/action-plan.schema.json
+        '400':
+          $ref: '#/components/responses/Problem'
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/DPoP'
+  /v1/plans/compile:
+    post:
+      operationId: compilePlan
+      summary: Compile a draft against live deterministic state
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompilePlanRequest'
+      responses:
+        '200':
+          description: Execution Capsule candidate
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/execution-capsule.schema.json
+        '409':
+          $ref: '#/components/responses/Problem'
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/DPoP'
+  /v1/plans/{planId}/refresh:
+    post:
+      operationId: refreshPlan
+      summary: Refresh live state and invalidate or replace a stale plan
+      parameters:
+      - $ref: '#/components/parameters/PlanId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/DPoP'
+      responses:
+        '200':
+          description: Refreshed capsule
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/execution-capsule.schema.json
+        '409':
+          $ref: '#/components/responses/Problem'
+  /v1/plans/{planId}/authorize:
+    post:
+      operationId: authorizePlan
+      summary: Bind explicit user authorization and device evidence to a capsule
+      parameters:
+      - $ref: '#/components/parameters/PlanId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CapsuleHash'
+      - $ref: '#/components/parameters/DeviceChallenge'
+      - $ref: '#/components/parameters/DeviceEvidenceHash'
+      - $ref: '#/components/parameters/DPoP'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationRequest'
+      responses:
+        '204':
+          description: Authorized
+        '409':
+          $ref: '#/components/responses/Problem'
+      description: Accept only a one-time authorization envelope bound to the exact capsule hash, fresh device challenge,
+        and validated device evidence.
+  /v1/plans/{planId}/execute:
+    post:
+      operationId: executePlan
+      summary: Execute only a previously authorized capsule
+      description: First-party wallet execution only. This endpoint must never be exposed as an LLM tool, ChatGPT
+        App, MCP capability, Action, connector, executable deep link, or AI-facing proxy.
+      parameters:
+      - $ref: '#/components/parameters/PlanId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CapsuleHash'
+      - $ref: '#/components/parameters/AuthorizationReceiptHash'
+      - $ref: '#/components/parameters/DPoP'
+      responses:
+        '202':
+          description: Execution started
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/execution-status.schema.json
+        '409':
+          $ref: '#/components/responses/Problem'
+        '423':
+          $ref: '#/components/responses/Problem'
+  /v1/plans/{planId}/resume:
+    post:
+      operationId: resumePlan
+      summary: Resume only after deterministic reconciliation and, when required, new authorization
+      parameters:
+      - $ref: '#/components/parameters/PlanId'
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CapsuleHash'
+      - $ref: '#/components/parameters/AuthorizationReceiptHash'
+      - $ref: '#/components/parameters/DPoP'
+      responses:
+        '202':
+          description: Resume started
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/execution-status.schema.json
+        '409':
+          $ref: '#/components/responses/Problem'
+      description: Resume only remaining steps after authoritative reconciliation; bind the replacement capsule
+        and a fresh authorization receipt when required.
+  /v1/executions/{planId}:
+    get:
+      operationId: getExecution
+      summary: Get reconciled execution status
+      parameters:
+      - $ref: '#/components/parameters/PlanId'
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                $ref: ../schemas/execution-status.schema.json
+        '404':
+          $ref: '#/components/responses/Problem'
+  /v1/accounts/{accountId}/snapshot:
+    get:
+      operationId: getAccountSnapshot
+      summary: Read-only account state
+      parameters:
+      - $ref: '#/components/parameters/AccountId'
+      responses:
+        '200':
+          description: Snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountSnapshot'
+        '404':
+          $ref: '#/components/responses/Problem'
+  /v1/emergency/cancel-all-orders:
+    post:
+      operationId: emergencyCancelAllOrders
+      summary: Emergency deterministic cancel path independent of AI
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/CapsuleHash'
+      - $ref: '#/components/parameters/EmergencyActionDigest'
+      - $ref: '#/components/parameters/DeviceChallenge'
+      - $ref: '#/components/parameters/DeviceEvidenceHash'
+      - $ref: '#/components/parameters/DPoP'
+      responses:
+        '202':
+          description: Cancellation started
+        '409':
+          $ref: '#/components/responses/Problem'
+  /v1/emergency/disable-writes:
+    post:
+      operationId: disableWritesForUser
+      summary: Disable all new write operations for the authenticated user
+      responses:
+        '204':
+          description: Writes disabled
+      parameters:
+      - $ref: '#/components/parameters/IdempotencyKey'
+      - $ref: '#/components/parameters/EmergencyActionDigest'
+      - $ref: '#/components/parameters/DeviceChallenge'
+      - $ref: '#/components/parameters/DeviceEvidenceHash'
+      - $ref: '#/components/parameters/DPoP'
+      description: Fail-safe first-party control. It requires a fresh device-bound proof and an idempotent, narrowly
+        scoped emergency action digest.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Short-lived first-party session token. Every write is sender-constrained and additionally requires a device-bound DPoP/equivalent proof; bearer possession alone is insufficient.
+  parameters:
+    PlanId:
+      name: planId
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 128
+    AccountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+        minLength: 8
+        maxLength: 128
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      schema:
+        type: string
+        minLength: 16
+        maxLength: 256
+    CapsuleHash:
+      name: X-Execution-Capsule-Hash
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^0x[0-9a-fA-F]{64}$
+    DPoP:
+      name: DPoP
+      in: header
+      required: true
+      description: RFC 9449-style sender-constraining proof or an equivalently reviewed device-bound proof. The
+        server validates htm, htu, iat, jti and access-token binding.
+      schema:
+        type: string
+        minLength: 64
+        maxLength: 8192
+    DeviceChallenge:
+      name: X-Device-Challenge
+      in: header
+      required: true
+      description: Fresh, one-time, server-issued challenge bound to account, device, operation, expiry and authorization
+        context.
+      schema:
+        type: string
+        pattern: ^[A-Za-z0-9_-]{43,256}$
+    DeviceEvidenceHash:
+      name: X-Device-Evidence-Hash
+      in: header
+      required: true
+      description: SHA-256 digest of the validated device/app authorization evidence envelope.
+      schema:
+        type: string
+        pattern: ^0x[0-9a-fA-F]{64}$
+    AuthorizationReceiptHash:
+      name: X-Authorization-Receipt-Hash
+      in: header
+      required: true
+      description: Digest of the one-time authorization receipt that is bound to the exact capsule and device challenge.
+      schema:
+        type: string
+        pattern: ^0x[0-9a-fA-F]{64}$
+    EmergencyActionDigest:
+      name: X-Emergency-Action-Digest
+      in: header
+      required: true
+      description: Digest of the narrowly scoped emergency action, account, requested state, nonce and expiry.
+      schema:
+        type: string
+        pattern: ^0x[0-9a-fA-F]{64}$
+  schemas:
+    ParseIntentRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - utterance
+      - language
+      - contextToken
+      properties:
+        utterance:
+          type: string
+          minLength: 1
+          maxLength: 4000
+        language:
+          type: string
+          enum:
+          - ja
+          - en
+          - mixed
+        contextToken:
+          type: string
+          minLength: 16
+          maxLength: 512
+        availableAssetAliases:
+          type: array
+          items:
+            type: string
+            maxLength: 64
+          maxItems: 512
+        availableDestinationAliases:
+          type: array
+          items:
+            type: string
+            maxLength: 128
+          maxItems: 512
+    CompilePlanRequest:
+      type: object
+      additionalProperties: false
+      required:
+      - draftId
+      - accountId
+      - policyVersion
+      - deviceId
+      properties:
+        draftId:
+          type: string
+          minLength: 8
+          maxLength: 128
+        accountId:
+          type: string
+          minLength: 8
+          maxLength: 128
+        policyVersion:
+          type: string
+          minLength: 1
+          maxLength: 128
+        deviceId:
+          type: string
+          minLength: 8
+          maxLength: 128
+    AuthorizationRequest:
+      $ref: ../schemas/authorization-envelope.schema.json
+    AccountSnapshot:
+      type: object
+      additionalProperties: false
+      required:
+      - snapshotId
+      - account
+      - environment
+      - accountMode
+      - capturedAt
+      - stateHash
+      properties:
+        snapshotId:
+          type: string
+          minLength: 8
+          maxLength: 128
+        account:
+          type: string
+          pattern: ^0x[0-9a-fA-F]{40}$
+        environment:
+          type: string
+          enum:
+          - TESTNET
+          - MAINNET
+        accountMode:
+          type: string
+          enum:
+          - STANDARD
+          - UNIFIED
+          - PORTFOLIO_MARGIN
+          - UNKNOWN
+        capturedAt:
+          type: string
+          format: date-time
+        stateHash:
+          type: string
+          pattern: ^0x[0-9a-fA-F]{64}$
+    Problem:
+      type: object
+      additionalProperties: false
+      required:
+      - type
+      - title
+      - status
+      - code
+      - detailId
+      - retryable
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+          maxLength: 256
+        status:
+          type: integer
+          minimum: 400
+          maximum: 599
+        code:
+          type: string
+          pattern: ^[A-Z0-9_]{3,128}$
+        detailId:
+          type: string
+          minLength: 8
+          maxLength: 128
+        retryable:
+          type: boolean
+        userMessage:
+          type: string
+          maxLength: 512
+        assetLocation:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+        nextSafeAction:
+          type:
+          - string
+          - 'null'
+          maxLength: 512
+  responses:
+    Problem:
+      description: Problem Details
+      content:
+        application/problem+json:
+          schema:
+            $ref: '#/components/schemas/Problem'

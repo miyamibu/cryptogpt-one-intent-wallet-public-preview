@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "cross-language-vector-v1",
+  "status": "EXECUTABLE_CROSS_LANGUAGE_VECTOR",
+  "canonicalArtifact": "shared/canonical-vectors-v1.json",
+  "cases": [
+    {"id": "duplicate-keys", "input": "{\"a\":1,\"a\":2}", "expected": "REJECT_DUPLICATE_KEY"},
+    {"id": "non-nfc", "input": "{\"name\":\"e\\u0301\"}", "expected": "REJECT_NON_NFC"},
+    {"id": "exponent", "input": "{\"amount\":1e2}", "expected": "REJECT_EXPONENT"},
+    {"id": "integer-overflow", "input": "{\"amount\":9007199254740992}", "expected": "REJECT_INTEGER_RANGE"},
+    {"id": "negative-zero", "input": "{\"amount\":-0}", "expected": "REJECT_NEGATIVE_ZERO"},
+    {"id": "unicode-confusable-alias", "expected": "REJECT_OR_EXPLICIT_CONFIRMATION"},
+    {"id": "altered-authorization", "expected": "REJECT_CAPSULE_MISMATCH"},
+    {"id": "expired-quote", "expected": "REJECT_QUOTE_EXPIRED"},
+    {"id": "nonce-reuse", "expected": "REJECT_AUTH_REPLAY"},
+    {"id": "partial-saga", "expected": "MANUAL_RESOLUTION_OR_RECONCILIATION"}
+  ],
+  "kotlin": {"status": "TEST_ENTRY_ADDED_NOT_RUN", "artifact": "apps/android/app/src/test/"},
+  "swift": {"status": "TEST_ENTRY_ADDED", "artifact": "apps/ios/Tests/OfflineWalletContractTests/"},
+  "backend": {"status": "PASS_REFERENCE_PYTHON", "artifact": "delivery/evidence/core/reference-tests-current.json"}
+}

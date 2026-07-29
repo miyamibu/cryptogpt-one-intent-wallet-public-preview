@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "1.0",
+  "capabilityId": "fee_route_sim_polygon_001",
+  "environment": "SIMULATION",
+  "provider": {
+    "providerId": "simulation-provider",
+    "legalName": "画面例の提供者（実在しません）",
+    "supportUrl": "https://example.invalid/simulation/support",
+    "termsUrl": "https://example.invalid/simulation/terms",
+    "jurisdiction": "SIMULATION"
+  },
+  "networkId": "eip155:137",
+  "accountExecutionModel": "SMART_ACCOUNT_ERC4337",
+  "supportsZeroNativeBalance": true,
+  "bootstrapMethod": "PAYMASTER",
+  "prerequisites": {
+    "existingNativeBalanceRequired": false,
+    "allowanceRequired": false,
+    "permitStandard": "EIP2612",
+    "entryPoint": "0x0000000000000000000000000000000000000001",
+    "accountFactory": "0x0000000000000000000000000000000000000002"
+  },
+  "supportedAssets": [
+    {
+      "assetRegistryId": "registry_simulation_polygon_001",
+      "networkId": "eip155:137",
+      "symbol": "JPYC",
+      "contract": "0x0000000000000000000000000000000000000137"
+    }
+  ],
+  "quoteBinding": {
+    "requiredFields": [
+      "account",
+      "networkId",
+      "asset",
+      "operation",
+      "amount",
+      "nonce",
+      "expiresAt",
+      "maxJpycCost",
+      "feeAssetCost",
+      "providerSettlementTarget"
+    ],
+    "signatureAlgorithm": "SIMULATION_ONLY",
+    "replayProtection": "口座・ネットワーク・操作・金額・nonce・期限を同じ見積もりIDへ結び付ける画面例"
+  },
+  "chargeOnRevert": {
+    "mode": "NEVER",
+    "capJpyc": "0"
+  },
+  "evidence": {
+    "status": "SIMULATION_ONLY",
+    "retrievedAt": "2026-07-28T10:40:00Z",
+    "expiresAt": "2026-07-29T09:00:00Z",
+    "independentAuditReportId": null,
+    "contentSha256": null
+  },
+  "productionEligible": false
+}

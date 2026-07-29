@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "1.0",
+  "statementId": "EXAMPLE-FAIL-001",
+  "profileId": "JAPAN_PUBLIC_CROSS_PLATFORM_MAINNET_V1",
+  "gateId": "ANDROID_RELEASE",
+  "claimId": "ANDROID_BUILD_SIGNED",
+  "subject": {
+    "sourceCommit": null,
+    "sourceTreeSha256": null,
+    "androidArtifactSha256": null,
+    "iosArtifactSha256": null,
+    "backendImageDigest": null,
+    "signerImageDigest": null,
+    "configurationBundleSha256": null,
+    "policyBundleSha256": null,
+    "assetRegistrySha256": null,
+    "sbomSha256": null,
+    "releaseId": "2026-07-29.3-design-package",
+    "environment": "DESIGN_ONLY"
+  },
+  "environment": "DESIGN_ONLY",
+  "outcome": "FAIL",
+  "issuedAt": "2026-07-28T11:10:00Z",
+  "expiresAt": "2026-07-29T11:10:00Z",
+  "issuer": {
+    "keyId": "EXAMPLE-UNTRUSTED",
+    "role": "ANDROID_RELEASE_ENGINEER",
+    "organization": "EXAMPLE ONLY",
+    "principalId": "EXAMPLE-UNTRUSTED-PRINCIPAL"
+  },
+  "evidence": [
+    {
+      "type": "TEST_REPORT",
+      "path": "delivery/evidence/README.md",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "mediaType": "text/markdown",
+      "collectedAt": "2026-07-28T11:10:00Z",
+      "description": "Schema example only; digest intentionally not trusted.",
+      "sizeBytes": 0
+    }
+  ],
+  "limitations": [
+    "EXAMPLE_ONLY",
+    "NOT_PRODUCTION_EVIDENCE"
+  ],
+  "signature": {
+    "profile": "ONE_INTENT_ED25519_CANONICAL_JSON_V2",
+    "keyId": "EXAMPLE-UNTRUSTED",
+    "signatureBase64": "AA=="
+  }
+}
