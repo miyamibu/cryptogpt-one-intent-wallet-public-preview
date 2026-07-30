@@ -22,10 +22,13 @@ jobs:
         run: python3 -m venv "$RUNNER_TEMP/cryptogpt-venv"
       - name: Install exact validation dependencies
         run: |
-          "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m pip install             --requirement "$CANONICAL_PACKAGE/tools/requirements.txt"             --requirement "$CANONICAL_PACKAGE/tools/requirements-visual.txt"
+          "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m pip install \
+            --requirement "$CANONICAL_PACKAGE/tools/requirements.txt" \
+            --requirement "$CANONICAL_PACKAGE/tools/requirements-visual.txt"
           "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m playwright install --with-deps chromium firefox webkit
       - name: Validate sanitized package
-        run: "$RUNNER_TEMP/cryptogpt-venv/bin/python" "$CANONICAL_PACKAGE/tools/run_full_validation.py"
+        run: |
+          "$RUNNER_TEMP/cryptogpt-venv/bin/python" "$CANONICAL_PACKAGE/tools/run_full_validation.py"
       - name: Verify Android dependency locks and artifacts
         working-directory: ${{ env.CANONICAL_PACKAGE }}/apps/android
         run: ./gradlew --no-daemon test assembleRelease bundleRelease
