@@ -20,6 +20,7 @@ from shared.domain import DomainError
 _SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 _KEY_ID_RE = re.compile(r"^[A-Za-z0-9._:-]{1,256}$")
 _ENVIRONMENTS = {"development", "production"}
+_MAX_COUNTER = 2**63 - 1
 
 
 class AppAttestVerificationError(DomainError):
@@ -46,8 +47,8 @@ def _hash(value: object, label: str) -> str:
 
 
 def _non_negative_int(value: object, label: str) -> int:
-    if not isinstance(value, int) or isinstance(value, bool) or value < 0:
-        raise AppAttestVerificationError(f"{label} must be a non-negative integer")
+    if not isinstance(value, int) or isinstance(value, bool) or value < 0 or value > _MAX_COUNTER:
+        raise AppAttestVerificationError(f"{label} must be a non-negative signed 64-bit integer")
     return value
 
 
@@ -179,6 +180,9 @@ def verify_server_evidence(
     missing = [key for key in fields if key not in value]
     if missing:
         raise AppAttestVerificationError(f"App Attest evidence is missing fields: {sorted(missing)}")
+    unexpected = [key for key in value if key not in fields]
+    if unexpected:
+        raise AppAttestVerificationError(f"App Attest evidence has unexpected fields: {sorted(unexpected)}")
     evidence = AppAttestEvidence(**{target: value[source] for source, target in fields.items()})
     evidence.validate(
         expected_bundle_id=expected_bundle_id,

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/user-review-receipt-v2.schema.json",
+  "title": "UserReviewReceiptV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "receiptId", "operationSpecDigest", "displayDigest", "locale", "deviceId", "reviewedAt", "expiresAt", "proofOfPossession"],
+  "properties": {
+    "schemaVersion": {"const": "2.0"},
+    "receiptId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "operationSpecDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "displayDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "locale": {"enum": ["ja-JP", "en-US", "ko-KR", "zh-Hant"]},
+    "deviceId": {"type": "string", "minLength": 1, "maxLength": 256},
+    "reviewedAt": {"type": "integer", "minimum": 0},
+    "expiresAt": {"type": "integer", "minimum": 0},
+    "proofOfPossession": {"type": "string", "minLength": 1, "maxLength": 4096}
+  }
+}

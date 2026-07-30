@@ -5,7 +5,7 @@ phase=validated
 fullValidationStatus=PASS
 doubleBuildStatus=CONTRACT_DEFINED_NOT_RUN_BY_PREPARATION
 cleanExtractStatus=CONTRACT_DEFINED_NOT_RUN_BY_PREPARATION
-sourceTreeDigestDomain=secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata
+sourceTreeDigestDomain=secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, delivery/STATUS_MANIFEST.json, delivery/STATUS_MANIFEST.md, delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata
 
 ## Required release proof
 

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/atomic-signer-request-v2.schema.json",
+  "title": "AtomicSignerRequestV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "requestId", "operationSpec", "operationSpecDigest", "reviewReceipt", "reviewReceiptDigest", "runtimeDecision", "runtimeDecisionDigest", "authorizationId", "nonce", "requestedAt"],
+  "properties": {
+    "schemaVersion": {"const": "2.0"},
+    "requestId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "operationSpec": {"$ref": "operation-spec-v2.schema.json"},
+    "operationSpecDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewReceipt": {"$ref": "user-review-receipt-v2.schema.json"},
+    "reviewReceiptDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "runtimeDecision": {"$ref": "runtime-decision-envelope-v2.schema.json"},
+    "runtimeDecisionDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "authorizationId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "nonce": {"type": "string", "minLength": 1, "maxLength": 256},
+    "requestedAt": {"type": "integer", "minimum": 0}
+  }
+}

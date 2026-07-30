@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/operation-spec-v2.schema.json",
+  "title": "OperationSpecV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "operationId", "operationType", "account", "network", "assetId", "amount", "orderedActions", "registryDigest", "quoteDigest", "payloadCommitment", "expiresAt"],
+  "properties": {
+    "schemaVersion": {"const": "2.0"},
+    "operationId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "operationType": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,63}$"},
+    "account": {"type": "string", "minLength": 1, "maxLength": 256},
+    "network": {"type": "string", "minLength": 1, "maxLength": 128},
+    "assetId": {"type": "string", "minLength": 1, "maxLength": 256},
+    "amount": {"type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
+    "recipient": {"type": ["string", "null"], "maxLength": 512},
+    "orderedActions": {"type": "array", "minItems": 1, "maxItems": 32, "items": {"type": "string", "minLength": 1, "maxLength": 128}},
+    "registryDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "quoteDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "payloadCommitment": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "expiresAt": {"type": "integer", "minimum": 0}
+  }
+}

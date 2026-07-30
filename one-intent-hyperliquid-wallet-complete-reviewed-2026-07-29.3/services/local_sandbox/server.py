@@ -39,6 +39,10 @@ _STATIC_ROUTES: dict[str, Path] = {
     "/prototype/index.html": ROOT / "prototype/index.html",
     "/prototype/app.js": ROOT / "prototype/app.js",
     "/prototype/styles.css": ROOT / "prototype/styles.css",
+    "/docs/final-delivery-index": ROOT / "FINAL_DELIVERY_INDEX.md",
+    "/docs/fee-route-and-asset-registry": ROOT / "47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md",
+    "/FINAL_DELIVERY_INDEX.md": ROOT / "FINAL_DELIVERY_INDEX.md",
+    "/47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md": ROOT / "47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md",
 }
 
 

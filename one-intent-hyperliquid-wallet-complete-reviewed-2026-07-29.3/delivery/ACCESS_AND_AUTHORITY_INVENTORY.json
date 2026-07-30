@@ -2,7 +2,7 @@
   "schemaVersion": "1.0",
   "inventoryId": "access-authority-2026-07-29.3-local-snapshot",
   "capturedAt": "2026-07-29T12:41:29Z",
-  "lastSupplementalCaptureAt": "2026-07-29T16:20:06Z",
+  "lastSupplementalCaptureAt": "2026-07-30T04:07:00Z",
   "secretPolicy": "Secret values, tokens, passwords, private keys, seed phrases, HSM shares, KYC data, and 2FA values were not read, displayed, copied, or stored.",
   "entries": [
     {
@@ -17,201 +17,231 @@
       "verifiedAt": "2026-07-29T13:53:33Z",
       "evidencePath": "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_20260729.json",
       "status": "VERIFIED_AVAILABLE",
-      "observedFacts": ["25 of 25 official URLs returned HTTP 200 in the latest acquisition run", "25 of 25 response content SHA-256 values were recorded", "six publisher versions and four public Git commit identifiers were observed; unavailable values were not invented", "GitHub public commit metadata was recorded for the repository sources", "no response body, credential, or secret was stored"],
+      "observedFacts": [
+        "25 of 25 official URLs returned HTTP 200 in the latest acquisition run",
+        "25 of 25 response content SHA-256 values were recorded",
+        "six publisher versions and four public Git commit identifiers were observed; unavailable values were not invented",
+        "GitHub public commit metadata was recorded for the repository sources",
+        "no response body, credential, or secret was stored"
+      ],
       "exactNextAction": "Have independent reviewers confirm the exact source interpretation and then bind the approved source snapshot to a release subject; keep production writes blocked until all external gates pass.",
       "verificationCommand": "python3 -B tools/acquire_source_pins.py --output delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_20260729.json"
     },
     {
       "id": "github_account",
       "serviceEnvironment": "GitHub.com account",
-      "accountTeamOrganization": "miyamibu account; user/orgs and organization memberships returned empty",
-      "availableRolePermission": "Authenticated account; gh scopes observed: gist, read:org, repo, workflow",
-      "owner": "Release owner",
-      "independentReviewer": "Separate release reviewer; not registered in this checkout",
-      "secretManagerReferenceName": "GitHub CLI keyring entry (opaque; value not accessed)",
-      "expiryRotation": "Token expiry and rotation policy not exposed by this read-only check",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T16:20:06Z",
       "evidencePath": "delivery/ACCESS_AND_AUTHORITY_INVENTORY.json#entries/github_account",
       "status": "VERIFIED_AVAILABLE",
-      "observedFacts": ["gh auth status succeeded", "account is active", "token value was redacted by gh and not recorded", "authenticated login is miyamibu and token scopes observed were gist, read:org, repo, and workflow", "GitHub API returned no available organizations or organization memberships"],
-      "exactNextAction": "Keep the private repository and implementation branch; do not push implementation changes directly to main.",
-      "verificationCommand": "gh auth status"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "github_target_repository",
       "serviceEnvironment": "GitHub.com repository and CI",
-      "accountTeamOrganization": "miyamibu/cryptogpt-one-intent-wallet private repository; no organization",
-      "availableRolePermission": "Authenticated owner/admin can create and push the private repository and run Actions; private branch protection/rulesets are plan-blocked",
-      "owner": "Release owner",
-      "independentReviewer": "Repository administrator plus separate code owner",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "secretManagerReferenceName": null,
-      "expiryRotation": "Recheck on repository-plan, collaborator, branch-policy, or ownership change; no secret material stored",
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T16:20:06Z",
       "evidencePath": "delivery/ACCESS_AND_AUTHORITY_INVENTORY.json#entries/github_target_repository",
       "status": "VERIFIED_AVAILABLE_WITH_PLAN_BLOCKER",
-      "observedFacts": ["private repository miyamibu/cryptogpt-one-intent-wallet was created", "remote origin is configured", "basis commit e89dbd48ef7bc07c5e44c9bf32f07729c66e6551 was pushed to main", "implementation branch codex/cryptogpt-operationalization-20260729 is pushed; the exact validated commit, Actions run, and job conclusions are recorded in the parent control record delivery/REPOSITORY_AND_CI_CONTROL_STATUS.json", "branch protection and rulesets API both returned HTTP 403 because the current private personal-repository plan does not enable them", "only miyamibu is currently a collaborator; no independent CODEOWNER identity was invented", "main is unprotected at the current observation and remains at e89dbd48ef7bc07c5e44c9bf32f07729c66e6551", "repository Actions are enabled, but repository-level SHA pinning is not enabled by the remote setting; the workflow itself pins its checkout action"],
-      "exactNextAction": "Upgrade the private-repository plan or use an eligible organization/plan, then apply main protection with two approvals, stale-review dismissal, required CI, linear history, no force-push/delete, and real independent CODEOWNERS identities.",
-      "verificationCommand": "git remote -v; gh repo view miyamibu/cryptogpt-one-intent-wallet; gh api repos/miyamibu/cryptogpt-one-intent-wallet/branches/main/protection; gh api repos/miyamibu/cryptogpt-one-intent-wallet/rulesets"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "apple_local_signing_and_iphone",
       "serviceEnvironment": "macOS Xcode / local Apple device workflow",
-      "accountTeamOrganization": "Apple Distribution identity for Team 8R3B5675ZJ; iPhone 12 UDID [REDACTED_DEVICE_ID]",
-      "availableRolePermission": "Xcode 26.6; valid Apple Distribution identity for 8R3B5675ZJ; iPhone 12 visible and connected",
-      "owner": "iOS release owner",
-      "independentReviewer": "Separate mobile security reviewer",
-      "secretManagerReferenceName": "macOS Keychain codesigning identities (opaque; certificate/private-key values not accessed)",
-      "expiryRotation": "Certificate/profile expiry and rotation dates not recorded by this check; must be read in the official Apple workflow",
-      "verifiedAt": "2026-07-29T15:55:31Z",
-      "evidencePath": "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verifiedAt": "2026-07-30T04:07:00Z",
+      "evidencePath": "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
       "status": "VERIFIED_AVAILABLE",
-      "observedFacts": ["Xcode 26.6 is installed", "Apple Distribution identity for Team 8R3B5675ZJ is valid", "physical iPhone 12 is listed and paired", "provisioning profile for jp.offlinewallet.ios.review was obtained", "signed iPhoneOS build under Team 8R3B5675ZJ succeeded", "the signed app was installed and launched on the physical iPhone", "Appium/WebDriverAgent captured the real screen; the disabled CTA remained unchanged after tap and up/down gestures were verified", "canonical physical screenshot SHA-256 is 8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea", "the separate Apple Development identity observed belongs to old Team TKPC3AJZBU and must not be used", "current devicectl observation lists iPhone 12 as connected with device identifier E9D5CA0F-0729-5DFD-94B9-EFE2AB589C0E and the target app jp.offlinewallet.ios.review installed", "the target Xcode project defaults to signing disabled and does not contain a hard-coded DEVELOPMENT_TEAM; the signed evidence used Team 8R3B5675ZJ"],
-      "exactNextAction": "Use only Team 8R3B5675ZJ in the target project; verify archive/distribution profile in Apple Developer before claiming release signing.",
-      "verificationCommand": "xcodebuild -version; security find-identity -v -p codesigning; xcrun xctrace list devices"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "apple_developer_portal",
       "serviceEnvironment": "Apple Developer / App Store Connect",
-      "accountTeamOrganization": "Team 8R3B5675ZJ is known; portal role and legal-entity enrollment were not verified",
-      "availableRolePermission": "No portal session, provisioning-profile export, archive upload, App Attest environment, or Store decision was read",
-      "owner": "Apple release owner",
-      "independentReviewer": "Separate Apple/store reviewer",
-      "secretManagerReferenceName": "Apple Developer account credentials (user-operated; not accessed)",
-      "expiryRotation": "USER_INPUT_REQUIRED; portal-managed certificates/profiles must be checked there",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/ACCESS_AND_AUTHORITY_INVENTORY.json#entries/apple_developer_portal",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["local signing identity exists", "distribution portal authority and Store/TestFlight state are not locally proven"],
-      "exactNextAction": "Open the official Apple Developer and App Store Connect portals, confirm Team 8R3B5675ZJ role, and export only redacted release evidence; do not provide credentials or 2FA to Codex.",
-      "verificationCommand": "Official Apple Developer portal and App Store Connect UI"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "android_physical_device",
       "serviceEnvironment": "Android USB / Pixel 9a",
-      "accountTeamOrganization": "ADB serial 55211JEBF16639; Pixel 9a",
-      "availableRolePermission": "ADB is installed, but the current scan returned no attached device; prior Pixel 9a local evidence remains preserved",
-      "owner": "Android release owner",
-      "independentReviewer": "Separate mobile security reviewer",
-      "secretManagerReferenceName": "Android keystore (not present in package; value not accessed)",
-      "expiryRotation": "No release keystore or signing rotation evidence found",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["ADB serial 55211JEBF16639 is Pixel 9a on Android 16 in the preserved prior evidence", "current unsigned release build and debug build succeeded", "debug APK V2 signature was verified", "data-preserving adb install -r, launch, screenshot, UI hierarchy, disabled CTA, and swipe checks succeeded", "no release keystore or production credential was read", "current adb devices -l returned an empty device list", "gcloud, gradle, bundletool, and fastlane were not found in the current PATH; the package Gradle wrapper remains present"],
-      "exactNextAction": "Connect Pixel 9a when release-binary validation begins; keep release signing, Play App Signing, Play Integrity, accessibility matrix, and production attestation blocked until official credentials and independent evidence are supplied.",
-      "verificationCommand": "/opt/homebrew/bin/adb devices -l; /opt/homebrew/bin/adb version; java -version"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "google_play_portal",
       "serviceEnvironment": "Google Play Console / Play Integrity",
-      "accountTeamOrganization": "Legal entity, Play developer account, app signing key, and reviewer role not verified",
-      "availableRolePermission": "No Google Play CLI or authenticated portal session was found in the local tool inventory",
-      "owner": "Android/store release owner",
-      "independentReviewer": "Separate Google Play and legal reviewer",
-      "secretManagerReferenceName": "Google Play service account (not identified; value not accessed)",
-      "expiryRotation": "USER_INPUT_REQUIRED; signing and service-account rotation must be verified in official portal",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/ACCESS_AND_AUTHORITY_INVENTORY.json#entries/google_play_portal",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["ADB/local Android project files are present, but no authenticated Google Play CLI or portal session was found", "Play Console account, declaration, internal testing, Play App Signing, Play Integrity, and review state are unverified"],
-      "exactNextAction": "Open the official Play Console, confirm the legal-entity account and internal-testing permission, and record the exact package/binary hash without publishing.",
-      "verificationCommand": "Official Google Play Console UI"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "supabase_account_and_projects",
       "serviceEnvironment": "Supabase CLI / existing account",
-      "accountTeamOrganization": "Authenticated organization fzoijucfplurohwupchb; two existing projects listed; no CryptoGPT target linked",
-      "availableRolePermission": "Project listing permission; target project role and database/service credentials not verified",
-      "owner": "Backend/SRE owner",
-      "independentReviewer": "Separate database/security reviewer",
-      "secretManagerReferenceName": "Supabase CLI keyring/session (opaque; value not accessed)",
-      "expiryRotation": "Target project credential rotation not applicable until target is identified",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/ACCESS_AND_AUTHORITY_INVENTORY.json#entries/supabase_account_and_projects",
       "status": "VERIFIED_AVAILABLE",
-      "observedFacts": ["supabase projects list succeeded", "CLI reported no linked project for the current directory", "the listed projects were not treated as the CryptoGPT backend", "listed projects were french-restaurant (ref svnzjknjcoehfbemjbwt) and りんばむ (ref xocumgxbylmpoobfqows), both in South Asia (Mumbai)", "the current directory has no linked project and no CryptoGPT project reference was identified"],
-      "exactNextAction": "Identify the exact staging project reference through the official Supabase dashboard or user-provided non-secret reference, then verify role and migrations read-only.",
-      "verificationCommand": "supabase projects list; supabase status"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "backend_database_local_runtime",
       "serviceEnvironment": "Local Docker / repository backend and database",
-      "accountTeamOrganization": "Docker daemon 29.5.2 available; package exposes loopback-only local sandbox only",
-      "availableRolePermission": "Local container runtime available; no deployed control API, DB, outbox, ledger, or staging endpoint was identified",
-      "owner": "Backend/SRE owner",
-      "independentReviewer": "Separate operations/data reviewer",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "secretManagerReferenceName": null,
-      "expiryRotation": "Not applicable to local fake/sandbox runtime",
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/reports/FINAL_OPERATIONS_REPORT.md",
       "status": "BLOCKED_WITH_EVIDENCE",
-      "observedFacts": ["Docker CLI/server is available", "production backend and DB credentials/deployment target are not present", "local sandbox is explicitly non-transactional and loopback-only", "Docker context is colima and the running Supabase containers are for the unrelated rinbam local stack", "no CryptoGPT staging container, control API, or remote database endpoint was identified"],
-      "exactNextAction": "Provide the exact staging project/cluster reference through the official control plane, then run migration/outbox/ledger/recovery checks without production writes.",
-      "verificationCommand": "docker version; package local sandbox self-test"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "hsm_mpc_signer",
       "serviceEnvironment": "Protected HSM/MPC and release trust environment",
-      "accountTeamOrganization": "Tenant/provider, ceremony roles, public key IDs, protected anchors, and high-water marks not identified",
-      "availableRolePermission": "No HSM/MPC CLI, attestation, tenant, ceremony, or protected runtime evidence available to this workspace",
-      "owner": "Custody/security owner",
-      "independentReviewer": "Independent cryptography and key-ceremony reviewers",
-      "secretManagerReferenceName": "HSM/MPC tenant reference (not registered)",
-      "expiryRotation": "BLOCKED_WITH_EXACT_CAUSE; no tenant or key policy was observed",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/evidence/security/HSM_MPC_PUBLIC_EVIDENCE.json",
       "status": "BLOCKED_WITH_EVIDENCE",
-      "observedFacts": ["package signer is unavailable/design-only", "public-evidence checker is implemented", "HSM_MPC_PUBLIC_EVIDENCE.json remains NOT_PROVISIONED", "no private key, seed, share, or HSM material was accessed", "aws, vault, az, 1Password CLI, YubiHSM, Nitro, TPM, step, and cosign CLIs were not found", "the repository secret-name listing was empty; no secret value was accessed"],
-      "exactNextAction": "Select an approved HSM/MPC provider, create protected two-person roles, and have the human ceremony operators perform the official setup; provide only public attestation and key IDs.",
-      "verificationCommand": "Protected HSM/MPC provider console and key-ceremony evidence review"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "hyperliquid_testnet_identity",
       "serviceEnvironment": "Hyperliquid official Testnet",
-      "accountTeamOrganization": "No controlled Testnet account or API-wallet public metadata was identified",
-      "availableRolePermission": "No Testnet identity, test funds, source-pin confirmation, or redacted receipt set available",
-      "owner": "Protocol integration owner",
-      "independentReviewer": "Independent protocol reviewer",
-      "secretManagerReferenceName": "Hyperliquid Testnet API-wallet secret reference (not registered)",
-      "expiryRotation": "USER_INPUT_REQUIRED; credential expiry/revocation must be set in the protected secret manager",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/evidence/protocol/HYPERLIQUID_TESTNET_READ_ONLY_20260729.json",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["fake/local adapter exists", "public Testnet info/meta read-only request returned HTTP 200", "response SHA-256 is recorded in the evidence file", "no live Testnet account, write receipt, or personal wallet connection was accessed", "current public testnet meta returned HTTP 200 with response SHA-256 5d5ac211381a32407ba71406b83ec3be4fd08148d505b56863a2ab66b7c2ba51", "current public testnet spotMeta returned HTTP 200 with response SHA-256 ca9cc105cac94c5044ba20a0336e59c1b4f825b2d64c46c6e726c9a5e9ab352", "the public testnet RPC probe failed with TLS protocol error 35; no fallback write or identity lookup was attempted"],
-      "exactNextAction": "Provide an isolated non-personal Testnet/API-wallet identity through the protected official workflow; then run read-only smoke before any bounded Testnet write.",
-      "verificationCommand": "Official Hyperliquid Testnet UI/API with redacted receipts"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "jpyc_partner_and_fee_provider",
       "serviceEnvironment": "JPYC official materials, JPYC EX partner, and fee sponsor/provider",
-      "accountTeamOrganization": "Issuer/product identity, partner agreement, provider route, settlement target, and support contacts not identified",
-      "availableRolePermission": "No official partner portal, contract, sandbox credential, provider quote, or registry approval was available",
-      "owner": "Legal/operations/provider owner",
-      "independentReviewer": "Separate legal, finance, and partner reviewers",
-      "secretManagerReferenceName": "JPYC/provider credential references (not registered)",
-      "expiryRotation": "USER_INPUT_REQUIRED; contract and credential expiry/revocation must be recorded by the provider owner",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "secretManagerReferenceName": null,
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/evidence/provider/JPYC_PUBLIC_READ_ONLY_20260729.json",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["official JPYC and JPYC EX public pages returned HTTP 200 and content hashes are recorded", "package contains fake/contract adapters only", "no production contract address was inferred", "zero-native-balance capability remains unverified", "current curl probe returned HTTP 200 for the JPYC corporate JPYC EX announcement, HTTP 403 for jpyc.co.jp, and HTTP 404 for the public GitHub SDK link shown by that announcement", "no JPYC EX account, sandbox credential, fee provider, partner agreement, or contract registry approval was identified"],
-      "exactNextAction": "Obtain official product/network/contract materials and a sandbox partner/provider agreement; store only redacted IDs, hashes, and receipts.",
-      "verificationCommand": "Official JPYC/partner/provider portal plus signed registry/quote checks"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     },
     {
       "id": "independent_audit_legal_store",
       "serviceEnvironment": "Independent security/mobile/protocol/crypto audit, legal counsel, Apple/Google review",
-      "accountTeamOrganization": "No signed independent report, counsel opinion, Store submission decision, or exact-region approval was identified",
-      "availableRolePermission": "No external reviewer portal or legal/store evidence is available to Codex",
-      "owner": "Security, legal, and store release owners",
-      "independentReviewer": "External firm/counsel/store reviewer independent from implementation",
+      "accountTeamOrganization": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "availableRolePermission": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "owner": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "independentReviewer": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "secretManagerReferenceName": null,
-      "expiryRotation": "USER_INPUT_REQUIRED; each report/approval needs validity and revalidation date",
+      "expiryRotation": "[REDACTED_FOR_PUBLIC_PREVIEW]",
       "verifiedAt": "2026-07-29T15:55:31Z",
       "evidencePath": "delivery/EXTERNAL_BLOCKERS.md#EXT-007-and-EXT-008",
       "status": "USER_INPUT_REQUIRED",
-      "observedFacts": ["automated local audit is not treated as an independent audit", "legal/store readiness remains unknown", "no submission/publication was performed", "the delivery tree contains design-only and historical review records, but no release-bound signed independent audit, counsel opinion, or Store decision was identified"],
-      "exactNextAction": "Have the independent reviewer/counsel/store owner issue release-bound, signed/redacted evidence for the exact binary, region, policy, and source subject.",
-      "verificationCommand": "Independent evidence portal export and release-binding hash verification"
+      "observedFacts": [
+        "Operational account, role, device, path, and identifier details are omitted from the public preview."
+      ],
+      "exactNextAction": "[REDACTED_FOR_PUBLIC_PREVIEW]",
+      "verificationCommand": "[REDACTED_FOR_PUBLIC_PREVIEW]"
     }
   ],
   "globalDecision": "BLOCKED_NOT_OPERATIONAL",
@@ -220,7 +250,7 @@
   "walletConnectionUsed": false,
   "notes": [
     "Local tool/device availability is not equivalent to release signing, portal approval, production deployment, or operational GO.",
-    "The old Apple Development Team TKPC3AJZBU was observed only as a local certificate identity and is explicitly not accepted as the current Team.",
+    "The old Apple Development Team PUBLICTEAM was observed only as a local certificate identity and is explicitly not accepted as the current Team.",
     "No account, credential, or external evidence was upgraded to PASS merely because a CLI or device was present."
   ]
 }

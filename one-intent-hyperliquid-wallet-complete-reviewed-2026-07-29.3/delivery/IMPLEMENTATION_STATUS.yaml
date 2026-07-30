@@ -22,8 +22,8 @@ implemented:
 tested_locally:
   command: python3 -B -m unittest discover -s tests -p 'test_*.py'
   result: PASS
-  python_source_files_compiled: 103
-  test_count: 86
+  python_source_files_compiled: 107
+  test_count: 88
   browser_matrix: 288
   local_sandbox_self_test: PASS
   swift_contract_tests: 5

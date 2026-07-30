@@ -715,7 +715,8 @@ class DurableAuthorizationStore:
             self._connection.execute("PRAGMA synchronous=FULL")
             self._connection.execute(
                 "CREATE TABLE IF NOT EXISTS consumed_authorization "
-                "(authorization_id TEXT PRIMARY KEY, nonce TEXT NOT NULL UNIQUE)"
+                "(authorization_id TEXT PRIMARY KEY, nonce TEXT NOT NULL UNIQUE, "
+                "operation_fingerprint TEXT NOT NULL UNIQUE)"
             )
             self._verify_schema()
         except Exception:
@@ -725,20 +726,20 @@ class DurableAuthorizationStore:
 
     def _verify_schema(self) -> None:
         rows = list(self._connection.execute("PRAGMA table_info(consumed_authorization)"))
-        if len(rows) != 2 or [row[1] for row in rows] != ["authorization_id", "nonce"]:
+        if len(rows) != 3 or [row[1] for row in rows] != ["authorization_id", "nonce", "operation_fingerprint"]:
             raise DomainError("authorization store schema is unsafe or requires explicit migration")
-        if any(str(row[2]).upper() != "TEXT" for row in rows) or rows[0][5] != 1 or rows[1][3] != 1:
+        if any(str(row[2]).upper() != "TEXT" for row in rows) or rows[0][5] != 1 or any(row[3] != 1 for row in rows[1:]):
             raise DomainError("authorization store columns or primary key are unsafe")
-        unique_nonce = False
+        unique_columns: set[str] = set()
         for index in self._connection.execute("PRAGMA index_list(consumed_authorization)"):
             # seq, name, unique, origin, partial
             if index[2] != 1 or (len(index) > 4 and index[4] != 0):
                 continue
             columns = [row[2] for row in self._connection.execute(f'PRAGMA index_info("{index[1]}")')]
-            if columns == ["nonce"]:
-                unique_nonce = True
-        if not unique_nonce:
-            raise DomainError("authorization store nonce uniqueness is missing")
+            if len(columns) == 1:
+                unique_columns.add(columns[0])
+        if not {"nonce", "operation_fingerprint"}.issubset(unique_columns):
+            raise DomainError("authorization store nonce or operation uniqueness is missing")
         triggers = list(
             self._connection.execute(
                 "SELECT name FROM sqlite_master WHERE type='trigger' AND tbl_name='consumed_authorization'"
@@ -750,14 +751,16 @@ class DurableAuthorizationStore:
         if integrity is None or integrity[0] != "ok":
             raise DomainError("authorization store integrity check failed")
 
-    def reserve(self, authorization_id: str, nonce: str) -> bool:
+    def reserve(self, authorization_id: str, nonce: str, operation_fingerprint: str) -> bool:
         _bounded_text(authorization_id, "authorization store id")
         _bounded_text(nonce, "authorization store nonce")
+        _bounded_text(operation_fingerprint, "operation fingerprint")
         try:
             self._connection.execute("BEGIN IMMEDIATE")
             self._connection.execute(
-                "INSERT INTO consumed_authorization (authorization_id, nonce) VALUES (?, ?)",
-                (authorization_id, nonce),
+                "INSERT INTO consumed_authorization "
+                "(authorization_id, nonce, operation_fingerprint) VALUES (?, ?, ?)",
+                (authorization_id, nonce, operation_fingerprint),
             )
             self._connection.execute("COMMIT")
             return True
@@ -787,14 +790,21 @@ class MemoryAuthorizationStore:
     def __init__(self) -> None:
         self._authorization_ids: set[str] = set()
         self._nonces: set[str] = set()
+        self._operation_fingerprints: set[str] = set()
 
-    def reserve(self, authorization_id: str, nonce: str) -> bool:
+    def reserve(self, authorization_id: str, nonce: str, operation_fingerprint: str) -> bool:
         _bounded_text(authorization_id, "authorization store id")
         _bounded_text(nonce, "authorization store nonce")
-        if authorization_id in self._authorization_ids or nonce in self._nonces:
+        _bounded_text(operation_fingerprint, "operation fingerprint")
+        if (
+            authorization_id in self._authorization_ids
+            or nonce in self._nonces
+            or operation_fingerprint in self._operation_fingerprints
+        ):
             return False
         self._authorization_ids.add(authorization_id)
         self._nonces.add(nonce)
+        self._operation_fingerprints.add(operation_fingerprint)
         return True
 
 
@@ -849,8 +859,8 @@ class SignerGate:
             raise DomainError("capsule and authorization runtime types are required")
         capsule.validate(now)
         authorization.validate(now, capsule)
-        if not self._store.reserve(authorization.authorization_id, authorization.nonce):
-            raise DomainError("authorization or nonce replay")
+        if not self._store.reserve(authorization.authorization_id, authorization.nonce, capsule.hash):
+            raise DomainError("authorization, nonce, or operation replay")
         signed = canonical_bytes({"capsuleHash": capsule.hash, "authorizationId": authorization.authorization_id})
         self.last_signed_hash = canonical_hash("signed-operation-v1", {"bytes": signed.hex()})
         if fail_after_sign:

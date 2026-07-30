@@ -11,12 +11,12 @@
   "environment": {
     "os": "macOS 26.5.2 (25F84), arm64",
     "python": "3.14.6",
-    "validationPython": "/private/tmp/cryptogpt-validation.WLQcAJ/bin/python",
+    "validationPython": "/private/tmp/<redacted>",
     "validationDependencies": "jsonschema, PyYAML, Playwright available in isolated venv",
     "externalNetworkUsed": false
   },
   "finalCleanExtractRun": {
-    "cleanExtractPath": "/private/tmp/cryptogpt-baseline-clean-final-vgs2hdv2/one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.2",
+    "cleanExtractPath": "/private/tmp/<redacted>",
     "pythonSourceCompilation": {"status": "PASS", "files": 94},
     "pythonUnitSuite": {"status": "PASS", "tests": 64},
     "localSandboxSelfTest": {"status": "PASS"},

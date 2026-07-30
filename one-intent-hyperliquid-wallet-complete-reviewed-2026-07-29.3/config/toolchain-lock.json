@@ -52,7 +52,7 @@
   },
   "limitations": [
     "Gradle Wrapper 9.3.1, local Gradle, Android SDK API 35/36 and sdkmanager are available locally; the unsigned debug build and Pixel 9a proof remain local-only evidence.",
-    "The iOS OfflineWalletApp target has a local Team 8R3B5675ZJ Apple Development device build and iPhone 12 UI proof; archive/IPA, distribution signing, full device matrix, and production attestation remain unavailable.",
+    "The iOS OfflineWalletApp target has a local Team PUBLICTEAM Apple Development device build and iPhone 12 UI proof; archive/IPA, distribution signing, full device matrix, and production attestation remain unavailable.",
     "This file records a design-only validation environment and is not a production toolchain attestation."
   ]
 }

@@ -30,11 +30,11 @@ productionWritePermitted=false
 - `python3 -B tools/check_python_sources.py`: 103 Python source files PASS。
 - `python3 -B tools/test_python_unit_suite.py`: 86 tests PASS。
 - `python3 -B tools/run_local_sandbox.py self-test`: loopback限定local HTTP self-test PASS。
-- `swift test --package-path apps/ios --scratch-path /tmp/cryptogpt-swift-build-final`: Apple Swift 6.3.3／macOS arm64でcontract test 5件PASS。加えて、Team `8R3B5675ZJ`のsigned iPhoneOS build、iPhone 12へのインストール・起動、Appium/WDA画面取得、無効CTAタップ不変、上下gestureをlocal-onlyで確認した（archive/IPA・配布署名の証明ではない）。
+- `swift test --package-path apps/ios --scratch-path /tmp/cryptogpt-swift-build-final`: Apple Swift 6.3.3／macOS arm64でcontract test 5件PASS。加えて、Team `PUBLICTEAM`のsigned iPhoneOS build、iPhone 12へのインストール・起動、Appium/WDA画面取得、無効CTAタップ不変、上下gestureをlocal-onlyで確認した（archive/IPA・配布署名の証明ではない）。
 - browser logical-pixel matrix: 288 cases PASS。
 - `python3 -B tools/run_full_validation.py`: isolated copy上で全validator PASS、source tree byte-for-byte不変。
 - operational readiness: 意図どおり`BLOCKED_NOT_OPERATIONAL`。
 
 ## 実装しても本番有効化していないもの
 
-Androidはunsigned release APK/AABのlocal buildと、debug-signed APKをPixel 9aへdata-preserving installした画面証拠まで確認済みだが、release signing／Play App Signing／完全なmatrixはない。iOSはTeam `8R3B5675ZJ`のsigned device proofと、現行sourceのunsigned archive／App Attest client buildを分けて記録しており、配布署名／IPA／server-side App Attestはない。fake adapterは実networkの意味論、Testnet、Mainnet、JPYC partner、fee providerの代替ではない。本番化は`codex/CODEX_EXTERNAL_OPERATIONALIZATION_PROMPT_2026-07-29.md`に従い、外部資格・署名済み証拠・独立reviewを新release subjectへ結合する必要がある。
+Androidはunsigned release APK/AABのlocal buildと、debug-signed APKをPixel 9aへdata-preserving installした画面証拠まで確認済みだが、release signing／Play App Signing／完全なmatrixはない。iOSはTeam `PUBLICTEAM`のsigned device proofと、現行sourceのunsigned archive／App Attest client buildを分けて記録しており、配布署名／IPA／server-side App Attestはない。fake adapterは実networkの意味論、Testnet、Mainnet、JPYC partner、fee providerの代替ではない。本番化は`codex/CODEX_EXTERNAL_OPERATIONALIZATION_PROMPT_2026-07-29.md`に従い、外部資格・署名済み証拠・独立reviewを新release subjectへ結合する必要がある。

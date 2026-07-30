@@ -130,7 +130,8 @@ class DomainHardeningTests(unittest.TestCase):
         with self.assertRaises(DomainError):
             signer.sign(capsule, second, release_go=True, runtime_lease_valid=True, now=1001)
         signer.reconcile("confirmed")
-        signer.sign(capsule, second, release_go=True, runtime_lease_valid=True, now=1001)
+        with self.assertRaises(DomainError):
+            signer.sign(capsule, second, release_go=True, runtime_lease_valid=True, now=1001)
 
     def test_reconcile_without_pending_signature_is_rejected(self) -> None:
         with self.assertRaises(DomainError):

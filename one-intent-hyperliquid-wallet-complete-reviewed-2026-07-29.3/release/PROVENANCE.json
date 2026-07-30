@@ -6,14 +6,14 @@
     {
       "name": "one-intent-hyperliquid-wallet-complete-reviewed-2026-07-29.3",
       "digest": {
-        "sha256": "bdaeb8dd4e4832a2aa8b40363f3ff8de495d97ac01565afdc768a0ffa0504980"
+        "sha256": "640a1de967fd4dd08149d17542b2adcda87dacabd54ee082a73b8f88f188901d"
       }
     }
   ],
   "source": {
     "sourceCommit": null,
-    "sourceTreeSha256": "bdaeb8dd4e4832a2aa8b40363f3ff8de495d97ac01565afdc768a0ffa0504980",
-    "sourceTreeDigestDomain": "secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata",
+    "sourceTreeSha256": "640a1de967fd4dd08149d17542b2adcda87dacabd54ee082a73b8f88f188901d",
+    "sourceTreeDigestDomain": "secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, delivery/STATUS_MANIFEST.json, delivery/STATUS_MANIFEST.md, delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata",
     "sourceControlCommitRecordedOutsidePackage": true
   },
   "builder": {
@@ -37,7 +37,7 @@
     {
       "uri": "config/toolchain-lock.json",
       "digest": {
-        "sha256": "7af554cddaca4d4dd92e4f4f0bb00286c72302ce90f5f9e296a4ef7322c041a1"
+        "sha256": "f6b84ac78bee737405c96d4a95c5077871d76ad5c0b09e7d2243f2ab8186b755"
       }
     },
     {
@@ -50,6 +50,18 @@
       "uri": "shared/canonical-vectors-v1.json",
       "digest": {
         "sha256": "112d55f8054447364ebebcd6bf655a49371143b7ac5bd670c3fd1beb6ff925b1"
+      }
+    },
+    {
+      "uri": "apps/android/app/gradle.lockfile",
+      "digest": {
+        "sha256": "a1091a3953d2ad3498e15f82f37b9a20df343315ac01fdedd5fda721feaba5c3"
+      }
+    },
+    {
+      "uri": "apps/android/gradle/verification-metadata.xml",
+      "digest": {
+        "sha256": "e17437bf683f76f3fc04ead141093f9d166a7c4bf832654ff5aff454075f9690"
       }
     }
   ],

@@ -16,6 +16,11 @@ PROHIBITED_NAMES = {
     "credentials.json", "service-account.json", "known_hosts", "authorized_keys",
 }
 PROHIBITED_SUFFIXES = {".pem", ".key", ".p12", ".pfx", ".jks", ".keystore", ".mobileprovision"}
+ALLOWED_NON_PYTHON_EXECUTABLES = {"apps/android/gradlew"}
+
+
+def is_allowed_executable(rel: str, path: Path) -> bool:
+    return path.suffix.lower() == ".py" or rel in ALLOWED_NON_PYTHON_EXECUTABLES
 
 
 def main() -> int:
@@ -57,7 +62,7 @@ def main() -> int:
                 errors.append(f"file exceeds package size limit: {rel}")
             if path.name.lower() in {name.lower() for name in PROHIBITED_NAMES} or path.suffix.lower() in PROHIBITED_SUFFIXES:
                 errors.append(f"secret/key-container filename prohibited: {rel}")
-            if path.suffix.lower() != ".py" and st.st_mode & 0o111:
+            if st.st_mode & 0o111 and not is_allowed_executable(rel, path):
                 errors.append(f"unexpected executable bit on non-Python file: {rel}")
     if total > MAX_TOTAL_UNCOMPRESSED:
         errors.append(f"package total bytes exceed limit: {total}")

@@ -1,6 +1,6 @@
 # CryptoGPT public preview
 
-Temporary external-view mirror of the latest canonical offline design package.
+Temporary external-view mirror of the latest sanitized canonical offline design package.
 
 See [`PUBLIC_PREVIEW_NOTICE.md`](PUBLIC_PREVIEW_NOTICE.md) for scope and
 restrictions. The package is under

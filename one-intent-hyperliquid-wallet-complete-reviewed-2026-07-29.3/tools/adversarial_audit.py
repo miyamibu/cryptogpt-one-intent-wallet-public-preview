@@ -239,10 +239,12 @@ def main() -> int:
         'test_prototype.py", "--check"',
         'test_start_here.py", "--check"',
         'generate_release_contract_artifacts.py", "--check"',
+        'generate_source_pin_drift_disposition.py", "--check"',
         'check_toolchain_lock.py',
         'check_shared_canonical_vectors.py',
         'check_coverage_matrix.py',
         'generate_current_validation_evidence.py", "--check"',
+        'generate_operationalization_evidence_binding.py", "--check"',
         'generate_operational_readiness_report.py", "--check"',
         'generate_reports.py", "--check"',
         'check_release_contract.py',
@@ -262,6 +264,8 @@ def main() -> int:
     for required in (
         "update_example_hashes.py", "test_prototype.py", "test_start_here.py",
         "generate_coverage_matrix.py", "generate_release_contract_artifacts.py", "generate_current_validation_evidence.py", "generate_reports.py", "generate_manifest.py",
+        "generate_source_pin_drift_disposition.py",
+        "generate_operationalization_evidence_binding.py",
         "generate_operational_readiness_report.py",
         "run_full_validation.py",
     ):

@@ -6,7 +6,7 @@
   "validUntil": "2026-07-29T00:00:00Z",
   "decisionInputs": {
     "operationalTrustPolicySha256": "765aea911e8e50e54532463ac7ed7d39cf58b0ff46691dcc87c6766f9cf273b2",
-    "readinessVerifierBundleSha256": "abcc6f0769c4ed5c089658c3bc36d0bdf1d9b69d4c2618dbb135989950db68b0",
+    "readinessVerifierBundleSha256": "8ec19e45f8becd64e419d68443588b2ac50bc3ee59126c556f4519dc494fdb56",
     "releaseSubjectSha256": "796b1b18303e6e6523216a04525da51f944e5be55010c54e9116b7bfc7820e1e",
     "evidenceIndexSha256": "49c0ad6910166d7b99773a9f9334e6186b2de4b8467d36f8c2f8f6abde08f57d",
     "evidenceIndexSequence": 0,

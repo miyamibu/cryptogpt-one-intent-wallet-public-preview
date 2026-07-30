@@ -30,8 +30,14 @@
     },
     {
       "path": "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
-      "sha256": "75ce30a32a227d4d85b2dfde3d5e9b0f4faedbd473840705197e7daf31baced7",
-      "bytes": 1044,
+      "sha256": "a52574fe634bde049e255712b353576139f8717083b29a057ec1beae2564627d",
+      "bytes": 1058,
+      "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "path": "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md",
+      "sha256": "9367379c29e9c35f48a17e9283847ce70bbd85c7201009a0be9bea8d362d2c3a",
+      "bytes": 854,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -42,8 +48,8 @@
     },
     {
       "path": "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
-      "sha256": "87519da79a8d2d0c1dc294ee32339a97fef2287a775c3ac74f807808c4d1a0bb",
-      "bytes": 1804,
+      "sha256": "72e1972214ebbe4956122658febe619949c2df7ab2b1e042524ab112611d5bab",
+      "bytes": 1799,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -54,14 +60,26 @@
     },
     {
       "path": "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md",
-      "sha256": "844ef9e7a5e7bb23363aacb2c6303b8a679a45239e2edcfb37dbb747bb4c6027",
-      "bytes": 1346,
+      "sha256": "cf2e0b6a104579321c3adacbb099769373b444abb0cfd10187cc6d19a0b67330",
+      "bytes": 1307,
+      "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "path": "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
+      "sha256": "a75b2ef4fff18c345313ab6883e93742221b3fd42af017b15855d9aca930bb8c",
+      "bytes": 1988,
+      "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "path": "delivery/evidence/ios/iphone12-final-20260729.png",
+      "sha256": "8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea",
+      "bytes": 177281,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
-      "sha256": "956844944761dc96f82ca8c4c4a8de5ee27211b19d40241dc17cbb8ca82fe8b0",
-      "bytes": 2211,
+      "sha256": "a93fcf6e464637e8e50e1e58e7f6423fdc30349c395a511af7e8d1274508991c",
+      "bytes": 2413,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -101,21 +119,33 @@
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
+      "path": "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_CURRENT.json",
+      "sha256": "db7ef2b2f1a9e57d557230cc794e46142c12835744f62b4456fac29a58d7f196",
+      "bytes": 26698,
+      "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
+      "path": "delivery/evidence/source-pins/SOURCE_PIN_DRIFT_DISPOSITION.json",
+      "sha256": "5a8e52cbb448fcf030361dec26119c6050ad75a7f4f5a24798041bf8a2db8135",
+      "bytes": 20248,
+      "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
+    },
+    {
       "path": "delivery/reports/FINAL_ENGINEERING_REPORT.md",
-      "sha256": "dbb038885f89fc44b6e7a3d11b415784c0d317a45e17e4771d91588df875ae7f",
-      "bytes": 3479,
+      "sha256": "40311061bce75ae57a03d35be397b9b63116bbe1ddbb85d7d4c950a86f6b626e",
+      "bytes": 4048,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
       "path": "delivery/reports/FINAL_OPERATIONS_REPORT.md",
-      "sha256": "2d1e1432b561f9023508c16e6749eb9ca5252a9075ea50a83894a2d885a5b7e7",
-      "bytes": 570,
+      "sha256": "e4405a5ba6e3a4e55b6c65cf270b0ec00c60f53eda1532c65268877ddf69805c",
+      "bytes": 681,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
       "path": "delivery/reports/FINAL_SECURITY_REPORT.md",
-      "sha256": "3d0e392bf257371aacac7fe691dd8b3655c89bba12628e62ad75860e7d7787bf",
-      "bytes": 1187,
+      "sha256": "6f1f27c6db0066c0c37a35543850ef0cf1de7bb1a808b3273623ccb4091134a2",
+      "bytes": 1312,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -132,14 +162,14 @@
     },
     {
       "path": "release/SBOM.spdx.json",
-      "sha256": "1efdec89ff8225c3018064d34108da05826831f46f5a8228416e95a76a774580",
-      "bytes": 5719,
+      "sha256": "866e76f117de7947e02e5067ebfd61b30491a74bbccb5c7b10288facfe5fd731",
+      "bytes": 6648,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
       "path": "release/PROVENANCE.json",
-      "sha256": "eee62e35911e13892cd4cbe678a2848faf734c252a3627e4543f04939042e2b8",
-      "bytes": 2365,
+      "sha256": "144820babb625017d832104fb35cdca94610d9a3ef6cb3a7f59d17a456a992d7",
+      "bytes": 2863,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     }
   ],
@@ -8986,7 +9016,7 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
+        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md",
         "delivery/evidence/android/PIXEL9A_LOCAL_RECHECK_20260729.png"
       ],
       "productionEvidence": false,
@@ -8996,15 +9026,16 @@
       "gateId": "IOS_RELEASE",
       "category": "MOBILE",
       "mandatory": true,
-      "bindingStatus": "LOCAL_PARTIAL_NOT_ACCEPTED",
+      "bindingStatus": "DEVELOPMENT_SIGNED_DEVICE_AND_IPA_NOT_DISTRIBUTION",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/ios/ARCHIVE_RECHECK_20260729.md",
+        "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
+        "delivery/evidence/ios/iphone12-final-20260729.png",
         "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
       ],
       "productionEvidence": false,
-      "blocker": "Physical-device proof and an unsigned archive exist, but distribution signing and IPA evidence are absent."
+      "blocker": "Development signing, physical-device proof, and a development IPA exist; distribution signing, export, and Store evidence are absent."
     },
     {
       "gateId": "BACKEND_RELEASE",
@@ -9056,13 +9087,15 @@
       "gateId": "DEVICE_ATTESTATION",
       "category": "IDENTITY",
       "mandatory": true,
-      "bindingStatus": "CLIENT_CONTRACT_ONLY_SERVER_NOT_PROVEN",
+      "bindingStatus": "CLIENT_AND_FAIL_CLOSED_SERVER_CONTRACT_NOT_APPLE_VERIFIED",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
-        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
+        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md",
+        "services/attestation/ios_app_attest.py",
+        "tests/test_ios_app_attest.py"
       ],
       "productionEvidence": false,
-      "blocker": "App Attest client contract/build evidence exists; server-side Apple verification is not proven."
+      "blocker": "App Attest client build and a fail-closed server evidence contract exist; Apple attestation-chain verification in a protected server is not proven."
     },
     {
       "gateId": "TRANSACTION_AUTHORIZATION",
@@ -9092,7 +9125,8 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/provider/JPYC_PUBLIC_READ_ONLY_20260729.json",
-        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_20260729.json"
+        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_CURRENT.json",
+        "delivery/evidence/source-pins/SOURCE_PIN_DRIFT_DISPOSITION.json"
       ],
       "productionEvidence": false,
       "blocker": "Official public pages were hashed; partner contract, exact network/contract, and transaction E2E are absent."
@@ -9448,7 +9482,7 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
+        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md",
         "delivery/evidence/android/PIXEL9A_LOCAL_RECHECK_20260729.png"
       ],
       "productionEvidence": false,
@@ -9475,7 +9509,7 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
+        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md",
         "delivery/evidence/android/PIXEL9A_LOCAL_RECHECK_20260729.png"
       ],
       "productionEvidence": false,
@@ -9502,7 +9536,7 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
+        "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md",
         "delivery/evidence/android/PIXEL9A_LOCAL_RECHECK_20260729.png"
       ],
       "productionEvidence": false,
@@ -9526,15 +9560,16 @@
       "reviewerRoles": [
         "SUPPLY_CHAIN_REVIEWER"
       ],
-      "bindingStatus": "LOCAL_PARTIAL_NOT_ACCEPTED",
+      "bindingStatus": "DEVELOPMENT_SIGNED_DEVICE_AND_IPA_NOT_DISTRIBUTION",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/ios/ARCHIVE_RECHECK_20260729.md",
+        "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
+        "delivery/evidence/ios/iphone12-final-20260729.png",
         "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
       ],
       "productionEvidence": false,
-      "blocker": "Physical-device proof and an unsigned archive exist, but distribution signing and IPA evidence are absent."
+      "blocker": "Development signing, physical-device proof, and a development IPA exist; distribution signing, export, and Store evidence are absent."
     },
     {
       "gateId": "IOS_RELEASE",
@@ -9553,15 +9588,16 @@
       "reviewerRoles": [
         "ACCESSIBILITY_REVIEWER"
       ],
-      "bindingStatus": "LOCAL_PARTIAL_NOT_ACCEPTED",
+      "bindingStatus": "DEVELOPMENT_SIGNED_DEVICE_AND_IPA_NOT_DISTRIBUTION",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/ios/ARCHIVE_RECHECK_20260729.md",
+        "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
+        "delivery/evidence/ios/iphone12-final-20260729.png",
         "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
       ],
       "productionEvidence": false,
-      "blocker": "Physical-device proof and an unsigned archive exist, but distribution signing and IPA evidence are absent."
+      "blocker": "Development signing, physical-device proof, and a development IPA exist; distribution signing, export, and Store evidence are absent."
     },
     {
       "gateId": "IOS_RELEASE",
@@ -9580,15 +9616,16 @@
       "reviewerRoles": [
         "SECURITY_AUDITOR"
       ],
-      "bindingStatus": "LOCAL_PARTIAL_NOT_ACCEPTED",
+      "bindingStatus": "DEVELOPMENT_SIGNED_DEVICE_AND_IPA_NOT_DISTRIBUTION",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/ios/LOCAL_RECHECK_20260729.md",
-        "delivery/evidence/ios/ARCHIVE_RECHECK_20260729.md",
+        "delivery/evidence/ios/DEVELOPMENT_IPA_RECHECK_20260730.md",
+        "delivery/evidence/ios/iphone12-final-20260729.png",
         "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
       ],
       "productionEvidence": false,
-      "blocker": "Physical-device proof and an unsigned archive exist, but distribution signing and IPA evidence are absent."
+      "blocker": "Development signing, physical-device proof, and a development IPA exist; distribution signing, export, and Store evidence are absent."
     },
     {
       "gateId": "BACKEND_RELEASE",
@@ -9852,13 +9889,15 @@
       "reviewerRoles": [
         "SECURITY_AUDITOR"
       ],
-      "bindingStatus": "CLIENT_CONTRACT_ONLY_SERVER_NOT_PROVEN",
+      "bindingStatus": "CLIENT_AND_FAIL_CLOSED_SERVER_CONTRACT_NOT_APPLE_VERIFIED",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
-        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
+        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md",
+        "services/attestation/ios_app_attest.py",
+        "tests/test_ios_app_attest.py"
       ],
       "productionEvidence": false,
-      "blocker": "App Attest client contract/build evidence exists; server-side Apple verification is not proven."
+      "blocker": "App Attest client build and a fail-closed server evidence contract exist; Apple attestation-chain verification in a protected server is not proven."
     },
     {
       "gateId": "DEVICE_ATTESTATION",
@@ -9877,13 +9916,15 @@
       "reviewerRoles": [
         "MOBILE_SECURITY_ENGINEER"
       ],
-      "bindingStatus": "CLIENT_CONTRACT_ONLY_SERVER_NOT_PROVEN",
+      "bindingStatus": "CLIENT_AND_FAIL_CLOSED_SERVER_CONTRACT_NOT_APPLE_VERIFIED",
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
-        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md"
+        "delivery/evidence/ios/APP_ATTEST_CLIENT_BUILD_20260729.md",
+        "services/attestation/ios_app_attest.py",
+        "tests/test_ios_app_attest.py"
       ],
       "productionEvidence": false,
-      "blocker": "App Attest client contract/build evidence exists; server-side Apple verification is not proven."
+      "blocker": "App Attest client build and a fail-closed server evidence contract exist; Apple attestation-chain verification in a protected server is not proven."
     },
     {
       "gateId": "TRANSACTION_AUTHORIZATION",
@@ -10021,7 +10062,8 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/provider/JPYC_PUBLIC_READ_ONLY_20260729.json",
-        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_20260729.json"
+        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_CURRENT.json",
+        "delivery/evidence/source-pins/SOURCE_PIN_DRIFT_DISPOSITION.json"
       ],
       "productionEvidence": false,
       "blocker": "Official public pages were hashed; partner contract, exact network/contract, and transaction E2E are absent."
@@ -10047,7 +10089,8 @@
       "acceptanceStatus": "NOT_ACCEPTED",
       "evidenceRefs": [
         "delivery/evidence/provider/JPYC_PUBLIC_READ_ONLY_20260729.json",
-        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_20260729.json"
+        "delivery/evidence/source-pins/SOURCE_PIN_ACQUISITION_CURRENT.json",
+        "delivery/evidence/source-pins/SOURCE_PIN_DRIFT_DISPOSITION.json"
       ],
       "productionEvidence": false,
       "blocker": "Official public pages were hashed; partner contract, exact network/contract, and transaction E2E are absent."

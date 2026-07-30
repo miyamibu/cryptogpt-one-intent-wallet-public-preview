@@ -34,10 +34,10 @@ def test_html() -> str:
     regression_metric = f'<div class="metric">{REGRESSION_COUNT}</div>'
     if regression_metric not in html:
         raise RuntimeError(f"START_HERE regression metric is stale; expected {REGRESSION_COUNT}")
-    exact = '<iframe class="frame" src="prototype/index.html"'
+    exact = '<a class="button primary" href="prototype/index.html">'
     if exact not in html:
-        raise RuntimeError("START_HERE iframe marker changed; update the deterministic test fixture")
-    return html.replace(exact, '<iframe class="frame" src="about:blank"', 1)
+        raise RuntimeError("START_HERE prototype link marker changed; update the deterministic test fixture")
+    return html
 
 
 LAYOUT_CHECK = r"""
@@ -77,10 +77,10 @@ LAYOUT_CHECK = r"""
     const r=el.getBoundingClientRect();
     if(r.left < -2 || r.right > innerWidth + 2) errors.push(`card escapes viewport: ${el.className}`);
   }
-  const frame=document.querySelector('.frame'), frameCard=frame?.closest('.card');
-  if(!visible(frame)||!frameCard) errors.push('prototype frame missing');
-  else {const r=frame.getBoundingClientRect(),c=frameCard.getBoundingClientRect();if(r.left<c.left-2||r.right>c.right+2||r.height<600)errors.push('prototype frame geometry invalid');}
+  const prototypeLink=document.querySelector('a[href="prototype/index.html"]');
+  if(!visible(prototypeLink)) errors.push('top-level prototype link missing');
   const controls=[...document.querySelectorAll('a.button')].filter(visible);
+  document.documentElement.style.scrollBehavior='auto';
   for(const el of controls){
     const r=el.getBoundingClientRect();
     if(r.height<44)errors.push(`entry action below 44px: ${(el.textContent||'').trim()}`);
@@ -159,12 +159,12 @@ async def main(*, check: bool = False) -> None:
                 "focus_and_center_hit_testing",
                 "light_dark_contrast_proxy",
                 "contained_table_overflow",
-                "prototype_frame_geometry",
+                "top_level_prototype_link",
                 "no_external_requests_or_console_errors",
             ],
             "limitations": [
                 "Browser logical-pixel proxy only; browser and OS font/rendering differences remain.",
-                "The embedded prototype iframe is replaced with about:blank for entry-page isolation; the prototype itself is tested separately.",
+                "The prototype is opened as a top-level page; the entry page deliberately does not embed it in an iframe.",
             ],
         }
         write_or_check(

@@ -121,6 +121,18 @@ class CapsuleSignerTests(unittest.TestCase):
             restarted = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
             with self.assertRaises(DomainError):
                 restarted.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001)
+
+    def test_durable_store_rejects_same_operation_after_reauthorization(self) -> None:
+        _, _, capsule = fixtures()
+        first = AuthorizationEnvelope("auth-op-a", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-op-a", "review", proof("auth-op-a", "device-1", "acct-1", capsule.hash, "nonce-op-a"))
+        second = AuthorizationEnvelope("auth-op-b", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-op-b", "review", proof("auth-op-b", "device-1", "acct-1", capsule.hash, "nonce-op-b"))
+        with TemporaryDirectory() as directory:
+            database = f"{directory}/authorization.sqlite"
+            initial = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            initial.sign(capsule, first, release_go=True, runtime_lease_valid=True, now=1001)
+            restarted = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            with self.assertRaises(DomainError):
+                restarted.sign(capsule, second, release_go=True, runtime_lease_valid=True, now=1001)
     def test_future_or_outliving_authorization_fails_closed(self) -> None:
         _, _, capsule = fixtures()
         future = AuthorizationEnvelope("auth-future", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1010, 1100, "nonce-future", "review", proof("auth-future", "device-1", "acct-1", capsule.hash, "nonce-future"))
@@ -164,4 +176,3 @@ class CapsuleSignerTests(unittest.TestCase):
         draft = draft.confirm(set(draft.material_ambiguities), "確認")
         with self.assertRaises(DomainError):
             compile_capsule(draft, live_state=live, registry=fake_registry, quote=fake_quote, now=1000)
-

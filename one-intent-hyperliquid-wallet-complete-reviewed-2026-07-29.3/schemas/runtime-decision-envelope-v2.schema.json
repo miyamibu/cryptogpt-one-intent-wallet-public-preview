@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/runtime-decision-envelope-v2.schema.json",
+  "title": "RuntimeDecisionEnvelopeV2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionId", "operationSpecDigest", "reviewReceiptDigest", "releaseSubjectDigest", "policyBundleDigest", "status", "blockingReasons", "evaluatedAt", "validUntil"],
+  "properties": {
+    "schemaVersion": {"const": "2.0"},
+    "decisionId": {"type": "string", "minLength": 1, "maxLength": 128},
+    "operationSpecDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "reviewReceiptDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "releaseSubjectDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "policyBundleDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "status": {"enum": ["BLOCKED", "ELIGIBLE_FOR_ATOMIC_SIGNER_FINALIZATION"]},
+    "blockingReasons": {"type": "array", "maxItems": 64, "items": {"type": "string", "minLength": 1, "maxLength": 256}},
+    "evaluatedAt": {"type": "integer", "minimum": 0},
+    "validUntil": {"type": "integer", "minimum": 0}
+  }
+}

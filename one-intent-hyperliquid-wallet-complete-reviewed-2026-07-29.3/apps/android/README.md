@@ -6,4 +6,4 @@
 
 共通vectorは`shared/mobile-review-contract-v1.tsv`です。`bash ./gradlew --no-daemon :app:testDebugUnitTest :app:assembleDebug`で5件のunit testとunsigned debug buildをPASSしました。これはローカル確認であり、release signing・Testnet/Mainnet・wallet key accessの証拠ではありません。
 
-P0 device：Pixel 9a。今回の実行結果は `delivery/evidence/android/LOCAL_RECHECK_20260729.md` を参照してください。
+P0 device：Pixel 9a。実機結果は `delivery/evidence/android/LOCAL_RECHECK_20260729.md`、2026-07-30の再build結果は `delivery/evidence/android/RELEASE_BUILD_RECHECK_20260730.md` を参照してください。

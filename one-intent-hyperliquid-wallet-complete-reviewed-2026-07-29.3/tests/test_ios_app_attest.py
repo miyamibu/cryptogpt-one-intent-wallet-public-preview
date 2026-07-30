@@ -9,7 +9,7 @@ def evidence(**changes: object) -> dict[str, object]:
     value: dict[str, object] = {
         "keyId": "ios-key-001",
         "bundleId": "jp.offlinewallet.ios.review",
-        "teamId": "8R3B5675ZJ",
+        "teamId": "PUBLICTEAM",
         "environment": "development",
         "challengeSha256": "a" * 64,
         "capsuleSha256": "b" * 64,
@@ -30,7 +30,7 @@ class IOSAppAttestContractTests(unittest.TestCase):
         digest = verify_server_evidence(
             evidence(),
             expected_bundle_id="jp.offlinewallet.ios.review",
-            expected_team_id="8R3B5675ZJ",
+            expected_team_id="PUBLICTEAM",
             expected_environment="development",
             expected_challenge_sha256="a" * 64,
             expected_capsule_sha256="b" * 64,
@@ -45,7 +45,7 @@ class IOSAppAttestContractTests(unittest.TestCase):
                     verify_server_evidence(
                         evidence(**changes),
                         expected_bundle_id="jp.offlinewallet.ios.review",
-                        expected_team_id="8R3B5675ZJ",
+                        expected_team_id="PUBLICTEAM",
                         expected_environment="development",
                         expected_challenge_sha256="a" * 64,
                         expected_capsule_sha256="b" * 64,
@@ -64,11 +64,30 @@ class IOSAppAttestContractTests(unittest.TestCase):
                     verify_server_evidence(
                         evidence(**changes),
                         expected_bundle_id="jp.offlinewallet.ios.review",
-                        expected_team_id="8R3B5675ZJ",
+                        expected_team_id="PUBLICTEAM",
                         expected_environment="development",
                         expected_challenge_sha256="a" * 64,
                         expected_capsule_sha256="b" * 64,
                         minimum_counter=6 if changes.get("counter") == 6 else None,
+                    )
+
+    def test_rejects_ambiguous_shape_and_unsafe_counter(self) -> None:
+        cases = (
+            {"unexpectedAuthorization": True},
+            {"counter": True},
+            {"counter": 2**63},
+            {"assertionSha256": "A" * 64},
+        )
+        for changes in cases:
+            with self.subTest(changes=changes):
+                with self.assertRaises(AppAttestVerificationError):
+                    verify_server_evidence(
+                        evidence(**changes),
+                        expected_bundle_id="jp.offlinewallet.ios.review",
+                        expected_team_id="PUBLICTEAM",
+                        expected_environment="development",
+                        expected_challenge_sha256="a" * 64,
+                        expected_capsule_sha256="b" * 64,
                     )
 
 

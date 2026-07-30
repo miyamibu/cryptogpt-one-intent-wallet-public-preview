@@ -3,7 +3,7 @@
 status: LOCAL_PHYSICAL_UI_VERIFIED
 physicalUiStatus: VERIFIED
 targetBundleId: jp.offlinewallet.ios.review
-teamIdentifier: 8R3B5675ZJ
+teamIdentifier: PUBLICTEAM
 signingStatus: APPLE_DEVELOPMENT_DEVICE_BUILD_VERIFIED
 installStatus: INSTALLED_AND_LAUNCHED
 backend: Appium/WebDriverAgent
@@ -14,8 +14,8 @@ appExecutableSha256: 2b8f37a9917211c0856096eab3d27b5bff86212ed08ee5e7f998446daca
 ## Device
 
 - Model: iPhone 12
-- CoreDevice identifier: `E9D5CA0F-0729-5DFD-94B9-EFE2AB589C0E`
-- USB UDID: `[REDACTED_DEVICE_ID]`
+- CoreDevice identifier: [REDACTED_FOR_PUBLIC_PREVIEW]
+- USB UDID: [REDACTED_FOR_PUBLIC_PREVIEW]
 - Pairing: paired
 - Lock state: unlocked since boot
 - Developer Mode: enabled
@@ -30,7 +30,7 @@ appExecutableSha256: 2b8f37a9917211c0856096eab3d27b5bff86212ed08ee5e7f998446daca
 
 ## Verified build and operations
 
-- TeamIdentifier `8R3B5675ZJ` was embedded in the signed app profile.
+- TeamIdentifier `PUBLICTEAM` was embedded in the signed app profile.
 - `xcodebuild` signed device build: `BUILD SUCCEEDED`.
 - The signed app was installed and launched on the physical iPhone.
 - The disabled `最終確認へ` CTA was tapped; the visible state did not change.

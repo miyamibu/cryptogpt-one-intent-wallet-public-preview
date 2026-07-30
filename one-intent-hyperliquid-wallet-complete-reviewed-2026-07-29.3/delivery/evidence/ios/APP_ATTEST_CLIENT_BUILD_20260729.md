@@ -2,7 +2,7 @@
 
 - Target: `apps/ios/OfflineWalletApp.xcodeproj` / `OfflineWalletApp`
 - Bundle ID: `jp.offlinewallet.ios.review`
-- Build command: `xcodebuild -project OfflineWalletApp.xcodeproj -scheme OfflineWalletApp -sdk iphoneos -configuration Debug -derivedDataPath /private/tmp/cryptogpt-ios-operationalization-derived-20260729 CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build`
+- Build command: `xcodebuild -project OfflineWalletApp.xcodeproj -scheme OfflineWalletApp -sdk iphoneos -configuration Debug -derivedDataPath /private/tmp/<redacted> CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build`
 - Result: `BUILD SUCCEEDED`
 - App executable SHA-256: `130ee0f0c466e639ed5c1b966fae8d0a7d717ea53b684590f2498ce4abbb0200`
 - Linked platform frameworks observed: `DeviceCheck.framework`, `CryptoKit.framework`, `SwiftUI.framework`, `UIKit.framework`

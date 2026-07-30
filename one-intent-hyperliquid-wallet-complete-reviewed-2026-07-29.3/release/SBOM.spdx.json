@@ -106,6 +106,38 @@
     },
     {
       "SPDXID": "SPDXRef-Dependency-06",
+      "name": "Firefox",
+      "versionInfo": "Playwright build 1497",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: Playwright managed browser"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-07",
+      "name": "WebKit",
+      "versionInfo": "Playwright build 2227",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "filesAnalyzed": false,
+      "annotations": [
+        {
+          "annotationType": "OTHER",
+          "comment": "Recorded source: Playwright managed browser"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Dependency-08",
       "name": "Android Gradle Plugin",
       "versionInfo": "8.7.3",
       "downloadLocation": "NOASSERTION",
@@ -121,7 +153,7 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Dependency-07",
+      "SPDXID": "SPDXRef-Dependency-09",
       "name": "Kotlin",
       "versionInfo": "2.0.21",
       "downloadLocation": "NOASSERTION",
@@ -137,7 +169,7 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Dependency-08",
+      "SPDXID": "SPDXRef-Dependency-10",
       "name": "Compose BOM",
       "versionInfo": "2024.09.03",
       "downloadLocation": "NOASSERTION",
@@ -153,7 +185,7 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Dependency-09",
+      "SPDXID": "SPDXRef-Dependency-11",
       "name": "activity-compose",
       "versionInfo": "1.9.2",
       "downloadLocation": "NOASSERTION",
@@ -169,7 +201,7 @@
       ]
     },
     {
-      "SPDXID": "SPDXRef-Dependency-10",
+      "SPDXID": "SPDXRef-Dependency-12",
       "name": "JUnit",
       "versionInfo": "4.13.2",
       "downloadLocation": "NOASSERTION",

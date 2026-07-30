@@ -104,6 +104,8 @@ def build_sbom() -> dict:
         ("cryptography", "46.0.4", "PyPI"),
         ("playwright", "1.57.0", "PyPI"),
         ("Chromium", "143.0.7499.4", "Playwright managed browser"),
+        ("Firefox", "Playwright build 1497", "Playwright managed browser"),
+        ("WebKit", "Playwright build 2227", "Playwright managed browser"),
         ("Android Gradle Plugin", "8.7.3", "apps/android/build.gradle.kts"),
         ("Kotlin", "2.0.21", "apps/android/build.gradle.kts"),
         ("Compose BOM", "2024.09.03", "apps/android/app/build.gradle.kts"),
@@ -193,6 +195,8 @@ def build_provenance() -> dict:
             "config/toolchain-lock.json",
             "config/source-pins.json",
             "shared/canonical-vectors-v1.json",
+            "apps/android/app/gradle.lockfile",
+            "apps/android/gradle/verification-metadata.xml",
         )],
         "signatures": [],
         "independentReview": False,
@@ -227,7 +231,7 @@ complete={str(lock['complete']).lower()}
 - Android Gradle Wrapper: `{android['gradleWrapper']}`
 - Android Gradle CLI: `{android['gradle']}`
 - Android SDK/sdkmanager: `{android['androidSdk']}` / `{android['sdkManager']}`
-- iOS target: `OfflineWalletApp` Xcode app target plus Swift Package on `{lock['swift']['packageTarget']}`; local Team `8R3B5675ZJ` signed iPhoneOS device proof and unsigned Simulator compile, with no archive/IPA.
+- iOS target: `OfflineWalletApp` Xcode app target plus Swift Package on `{lock['swift']['packageTarget']}`; local Team `PUBLICTEAM` signed iPhoneOS device proof and unsigned Simulator compile, with no archive/IPA.
 
 ## Safety controls
 
@@ -237,7 +241,7 @@ complete={str(lock['complete']).lower()}
 - artifactSigningAvailable: `{str(controls['artifactSigningAvailable']).lower()}`
 - twoPersonApprovalProvisioned: `{str(controls['twoPersonApprovalProvisioned']).lower()}`
 
-`BUILD_ENVIRONMENT.md` is a recorded local design environment, not a hermetic builder attestation. Local Android debug/device proof and the Team `8R3B5675ZJ` iPhone 12 signed debug/device proof do not close release archive/IPA, distribution signing, custody, or production gates.
+`BUILD_ENVIRONMENT.md` is a recorded local design environment, not a hermetic builder attestation. Local Android debug/device proof and the Team `PUBLICTEAM` iPhone 12 signed debug/device proof do not close release archive/IPA, distribution signing, custody, or production gates.
 """
 
 
@@ -299,7 +303,7 @@ externalNetworkUsed=false
 - Fuzz smoke iterations: {fuzz_result.get('iterations', 'NOT_RUN') if isinstance(fuzz_result, dict) else 'NOT_RUN'}
 - Android Gradle wrapper tests/build: PASS_LOCAL_ONLY (Gradle 9.3.1; unsigned debug APK only)
 - Android Pixel 9a physical UI: PASS_LOCAL_DEVICE_PROOF_ONLY (serial `55211JEBF16639`; no key, signer, network, or transaction)
-- iOS `OfflineWalletApp` target: PASS_LOCAL_SIGNED_DEBUG_ONLY (Team `8R3B5675ZJ`; signed iPhoneOS build; no archive/IPA)
+- iOS `OfflineWalletApp` target: PASS_LOCAL_SIGNED_DEBUG_ONLY (Team `PUBLICTEAM`; signed iPhoneOS build; no archive/IPA)
 - iPhone 12 physical UI: VERIFIED_LOCAL_DEVICE_PROOF_ONLY (Appium/WDA; installed/launched; disabled CTA unchanged after tap; up/down gestures; screenshot SHA-256 `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`)
 - Source tree digest: {evidence.get('sourceTreeDigest', 'NOT_RUN')}
 
@@ -308,7 +312,7 @@ externalNetworkUsed=false
 - 指示者: `GPT-5.6 Sol 最大`（このローカル成果物ではモデル識別を独立証明していない）
 - 確認者: `GPT-5.6 Sol 最大`（独立レビュー記録は現行版へ結合されるまでrelease evidenceではない）
 
-複数のread-only監査視点を実行し、ローカルAndroid debug buildとPixel 9aの画面操作、Team `8R3B5675ZJ` のiPhone 12 signed debug build、インストール、起動、Appium/WDA操作を確認した。秘密値、HSM/MPC、Testnet/Mainnet、外部監査、法務、Store、provider契約、Apple配布署名・archive/IPAにはアクセスしていない。`fullValidationStatus=PASS`はこの設計packageとローカル限定のnative確認だけを示し、本番GO・配布用署名済み証拠・資金利用を示さない。
+複数のread-only監査視点を実行し、ローカルAndroid debug buildとPixel 9aの画面操作、Team `PUBLICTEAM` のiPhone 12 signed debug build、インストール、起動、Appium/WDA操作を確認した。秘密値、HSM/MPC、Testnet/Mainnet、外部監査、法務、Store、provider契約、Apple配布署名・archive/IPAにはアクセスしていない。`fullValidationStatus=PASS`はこの設計packageとローカル限定のnative確認だけを示し、本番GO・配布用署名済み証拠・資金利用を示さない。
 """
 
 
@@ -501,7 +505,14 @@ def build_outputs(*, phase: str) -> dict:
             continue
         if rel.startswith("release/"):
             hash_lines.append(f"artifact={rel} sha256={sha256_bytes(serialized[path])}")
-    for rel in ("config/build-metadata.json", "config/toolchain-lock.json", "config/source-pins.json", "shared/canonical-vectors-v1.json"):
+    for rel in (
+        "config/build-metadata.json",
+        "config/toolchain-lock.json",
+        "config/source-pins.json",
+        "shared/canonical-vectors-v1.json",
+        "apps/android/app/gradle.lockfile",
+        "apps/android/gradle/verification-metadata.xml",
+    ):
         hash_lines.append(f"input={rel} sha256={sha256_file(ROOT / rel)}")
     text_outputs[ROOT / "release/ARTIFACT_HASHES.txt"] = "\n".join(hash_lines) + "\n"
     serialized[ROOT / "release/ARTIFACT_HASHES.txt"] = text_bytes(text_outputs[ROOT / "release/ARTIFACT_HASHES.txt"])

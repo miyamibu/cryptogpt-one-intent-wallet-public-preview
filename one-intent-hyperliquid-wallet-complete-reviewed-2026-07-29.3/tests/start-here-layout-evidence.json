@@ -8,11 +8,11 @@
   ],
   "source": {
     "path": "START_HERE.html",
-    "sha256": "e17ec22f5e6103398a39a123767a6493062b8e090ede73d8fade6147e45b9af5"
+    "sha256": "3901e692b0838dec679e59659306946b6880edfd4e3a5cad260eb5e727f3246c"
   },
   "testHarness": {
     "path": "tools/test_start_here.py",
-    "sha256": "004fc13a47055e238b7a229203f89e429a0e86133a2172157522a5b226050915"
+    "sha256": "1d61cd552ae82a3e2b46e353ddda92b75c40076cac87dbb45993dc633ed2aa33"
   },
   "toolchain": {
     "playwrightPython": "1.57.0",
@@ -70,11 +70,11 @@
     "focus_and_center_hit_testing",
     "light_dark_contrast_proxy",
     "contained_table_overflow",
-    "prototype_frame_geometry",
+    "top_level_prototype_link",
     "no_external_requests_or_console_errors"
   ],
   "limitations": [
     "Browser logical-pixel proxy only; browser and OS font/rendering differences remain.",
-    "The embedded prototype iframe is replaced with about:blank for entry-page isolation; the prototype itself is tested separately."
+    "The prototype is opened as a top-level page; the entry page deliberately does not embed it in an iframe."
   ]
 }

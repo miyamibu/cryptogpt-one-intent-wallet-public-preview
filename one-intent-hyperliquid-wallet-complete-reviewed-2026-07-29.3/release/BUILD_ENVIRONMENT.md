@@ -18,7 +18,7 @@ complete=false
 - Android Gradle Wrapper: `GRADLE_WRAPPER_9.3.1_PRESENT_LOCAL_ONLY`
 - Android Gradle CLI: `GRADLE_9.3.1_PRESENT_LOCAL_ONLY`
 - Android SDK/sdkmanager: `ANDROID_SDK_API_35_36_PRESENT_LOCAL_ONLY` / `SDKMANAGER_PRESENT_LOCAL_ONLY`
-- iOS target: `OfflineWalletApp` Xcode app target plus Swift Package on `macOS 13`; local Team `8R3B5675ZJ` signed iPhoneOS device proof and unsigned Simulator compile, with no archive/IPA.
+- iOS target: `OfflineWalletApp` Xcode app target plus Swift Package on `macOS 13`; local Team `PUBLICTEAM` signed iPhoneOS device proof and unsigned Simulator compile, with no archive/IPA.
 
 ## Safety controls
 
@@ -28,4 +28,4 @@ complete=false
 - artifactSigningAvailable: `false`
 - twoPersonApprovalProvisioned: `false`
 
-`BUILD_ENVIRONMENT.md` is a recorded local design environment, not a hermetic builder attestation. Local Android debug/device proof and the Team `8R3B5675ZJ` iPhone 12 signed debug/device proof do not close release archive/IPA, distribution signing, custody, or production gates.
+`BUILD_ENVIRONMENT.md` is a recorded local design environment, not a hermetic builder attestation. Local Android debug/device proof and the Team `PUBLICTEAM` iPhone 12 signed debug/device proof do not close release archive/IPA, distribution signing, custody, or production gates.

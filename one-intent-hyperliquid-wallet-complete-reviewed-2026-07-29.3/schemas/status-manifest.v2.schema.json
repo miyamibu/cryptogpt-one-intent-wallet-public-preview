@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cryptogpt.local/schemas/status-manifest.v2.schema.json",
+  "title": "CryptoGPT status manifest v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "releaseId", "status", "productionWriteEnabled", "mainnetEnabled", "profile", "metrics", "sourceCommit", "sourceTreeDigest", "artifactDigest"],
+  "properties": {
+    "schemaVersion": {"const": "2"},
+    "releaseId": {"type": "string", "minLength": 1},
+    "status": {"enum": ["NOT_RUN", "PASS", "FAIL", "BLOCKED", "STALE", "EXPIRED", "AVAILABLE_UNATTESTED", "INDEPENDENTLY_VERIFIED", "BLOCKED_NOT_OPERATIONAL"]},
+    "productionWriteEnabled": {"const": false},
+    "mainnetEnabled": {"const": false},
+    "profile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["mandatoryGates", "passedGates", "requiredClaims", "acceptedClaims"],
+      "properties": {
+        "mandatoryGates": {"const": 37}, "passedGates": {"type": "integer", "minimum": 0},
+        "requiredClaims": {"const": 93}, "acceptedClaims": {"type": "integer", "minimum": 0}
+      }
+    },
+    "metrics": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}},
+    "sourceCommit": {"type": ["string", "null"]},
+    "sourceTreeDigest": {"type": ["string", "null"]},
+    "artifactDigest": {"type": ["string", "null"]}
+  }
+}

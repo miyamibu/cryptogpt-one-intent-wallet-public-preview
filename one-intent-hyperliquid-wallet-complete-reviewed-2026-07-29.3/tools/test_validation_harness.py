@@ -17,11 +17,12 @@ from typing import Callable
 sys.dont_write_bytecode = True
 from archive_policy import EXPECTED_ASCII_ZIP_FLAGS, member_name_problems
 from canonical_hashes import strict_load_json
+from check_archive_safety import is_allowed_executable
 from check_links_and_markdown import MD_LINK, local_target
 from package_metadata import ROOT, load_package_metadata
 from strict_data import strict_load_yaml
 
-EXPECTED_ASSERTIONS = 36
+EXPECTED_ASSERTIONS = 38
 
 
 def expect_reject(label: str, action: Callable[[], object], errors: list[str]) -> None:
@@ -92,6 +93,13 @@ def main() -> int:
         errors.append("ASCII-only ZIP filename flags must be exactly zero")
     cases += 1
 
+    if not is_allowed_executable("apps/android/gradlew", Path("apps/android/gradlew")):
+        errors.append("the exact Gradle wrapper path must be executable")
+    cases += 1
+    if is_allowed_executable("apps/android/untrusted", Path("apps/android/untrusted")):
+        errors.append("arbitrary non-Python executables must remain prohibited")
+    cases += 1
+
     metadata = load_package_metadata()
     if metadata.root_name != ROOT.name or not metadata.version.startswith("2026-"):
         errors.append("metadata/root/version single source of truth failed")
@@ -133,7 +141,13 @@ def main() -> int:
         "test_validation_harness.py", "check_python_sources.py", "test_python_unit_suite.py",
         "test_canonical_properties.py", "test_canonical_fuzz.py",
         "run_local_sandbox.py", "update_example_hashes.py", "test_prototype.py", "test_start_here.py",
-        "generate_coverage_matrix.py", "generate_release_contract_artifacts.py", "generate_current_validation_evidence.py", "generate_operational_readiness_report.py", "generate_reports.py", "check_release_contract.py", "check_toolchain_lock.py", "check_shared_canonical_vectors.py", "check_coverage_matrix.py", "check_mobile_contract_vectors.py", "check_operational_readiness.py",
+        "test_local_preview_http.py", "generate_status_outputs.py",
+        "generate_coverage_matrix.py", "generate_source_pin_drift_disposition.py",
+        "generate_release_contract_artifacts.py", "generate_current_validation_evidence.py",
+        "generate_operational_readiness_report.py", "generate_reports.py",
+        "generate_operationalization_evidence_binding.py", "check_release_contract.py",
+        "check_toolchain_lock.py", "check_shared_canonical_vectors.py", "check_coverage_matrix.py",
+        "check_mobile_contract_vectors.py", "check_operational_readiness.py",
         "test_operational_readiness_positive.py", "test_operational_readiness_negative.py",
         "check_runtime_authorization.py", "test_runtime_authorization_positive.py",
         "test_runtime_authorization_negative.py", "check_plain_japanese.py", "check_archive_safety.py",
@@ -149,11 +163,14 @@ def main() -> int:
         ("update_example_hashes.py", "--check"),
         ("test_prototype.py", "--check"),
         ("test_start_here.py", "--check"),
+        ("generate_status_outputs.py", "--check"),
         ("generate_release_contract_artifacts.py", "--check"),
         ("generate_coverage_matrix.py", "--check"),
+        ("generate_source_pin_drift_disposition.py", "--check"),
         ("generate_current_validation_evidence.py", "--check"),
         ("generate_operational_readiness_report.py", "--check"),
         ("generate_reports.py", "--check"),
+        ("generate_operationalization_evidence_binding.py", "--check"),
         ("generate_manifest.py", "--check"),
     }
     if not required_check_specs.issubset(check_specs):

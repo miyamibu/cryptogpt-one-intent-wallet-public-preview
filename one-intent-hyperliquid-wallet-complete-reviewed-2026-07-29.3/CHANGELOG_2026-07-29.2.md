@@ -13,7 +13,7 @@
 - `.1`の基準資料・履歴は上書きせず、`.2`の変更履歴を追加した。
 - Android Gradle Wrapper 9.3.1、Compose theme、unsigned debug build、Pixel 9a local UI proofを追加した。
 - iOS `OfflineWalletApp` Xcode target、Info.plist、SwiftUI entrypoint、iPhoneOS／Simulator unsigned compileを追加した。
-- Team `8R3B5675ZJ` のiOS Development signed device build、iPhone 12へのインストール・起動、Appium/WDA画面取得、無効CTAタップ不変、上下ジェスチャのlocal proofを追加した。証跡画像SHA-256は `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`。
+- Team `PUBLICTEAM` のiOS Development signed device build、iPhone 12へのインストール・起動、Appium/WDA画面取得、無効CTAタップ不変、上下ジェスチャのlocal proofを追加した。証跡画像SHA-256は `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`。
 
 ## 検証
 

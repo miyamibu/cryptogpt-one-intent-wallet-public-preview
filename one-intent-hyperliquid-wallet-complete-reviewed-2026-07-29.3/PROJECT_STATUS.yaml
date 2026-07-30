@@ -90,8 +90,8 @@ trust_model:
   evidence_index_signature_required: true
 validation:
   static_package: PASS_AFTER_PIPELINE
-  python_source_files_compiled: 103
-  python_unit_tests: 86
+  python_source_files_compiled: 107
+  python_unit_tests: 88
   swift_contract_tests: 5
   current_local_evidence: delivery/evidence/core/reference-tests-current.json
   operationalization_evidence_binding: delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json

@@ -62,13 +62,13 @@ secure tree snapshot
 
 | 項目 | 値 |
 |---|---:|
-| 追跡対象 | 409ファイル |
-| ZIP内予定 | 411ファイル |
+| 追跡対象 | 429ファイル |
+| ZIP内予定 | 431ファイル |
 | Known-Loophole | 436 |
 | Security Invariants | 268 |
 | Loophole regression | 97 |
-| Validator self-test | 36 |
-| JSON Schema | 29 |
+| Validator self-test | 38 |
+| JSON Schema | 35 |
 | JSON examples | 22 |
 | Operational gates | 37 |
 | Required claims | 93 |

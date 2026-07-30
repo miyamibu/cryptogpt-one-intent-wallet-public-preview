@@ -14,7 +14,7 @@ requiredClaims=93
 acceptedClaims=0
 ```
 
-このZIPへ高い信頼を置ける範囲は、設計、Schema、API契約、ChatGPT read-only境界、完全オフライン画面見本、敵対的回帰、非破壊検証、再現可能archive、運用証拠契約、Codexへの引継ぎである。今回、Androidのunsigned release APK/AAB build、debug-signed Pixel 9a local UI proofと、Team `8R3B5675ZJ`のiPhone 12 signed debug／Appium-WDA local UI proofを別スコープで結合したが、実資金を動かすAndroid／iOS release binary、本番backend、Signer、JPYC EX本番連携、手数料提供者、Hyperliquid Testnet／Mainnet write、外部監査、法務、Store承認は収録していない。801 coverage rowsはper-ID executable evidence未結合、37 gate／93 claimは未承認であり、対応状態は`delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json`に固定した。
+このZIPへ高い信頼を置ける範囲は、設計、Schema、API契約、ChatGPT read-only境界、完全オフライン画面見本、敵対的回帰、非破壊検証、再現可能archive、運用証拠契約、Codexへの引継ぎである。今回、Androidのunsigned release APK/AAB build、debug-signed Pixel 9a local UI proofと、Team `PUBLICTEAM`のiPhone 12 signed debug／Appium-WDA local UI proofを別スコープで結合したが、実資金を動かすAndroid／iOS release binary、本番backend、Signer、JPYC EX本番連携、手数料提供者、Hyperliquid Testnet／Mainnet write、外部監査、法務、Store承認は収録していない。801 coverage rowsはper-ID executable evidence未結合、37 gate／93 claimは未承認であり、対応状態は`delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json`に固定した。
 
 現在の正しい判定は`BLOCKED_NOT_OPERATIONAL`である。文字どおりの100%安全や未知の脆弱性がないことは主張しない。将来の`PRODUCTION_OPERATIONAL_GO`は、exact release subjectへ結合された37 gate・93 claimがすべて有効であることだけを意味し、取引承認そのものではない。
 
@@ -56,15 +56,15 @@ acceptedClaims=0
 
 | 項目 | 証拠 |
 |---|---:|
-| manifest追跡対象 | 409ファイル |
-| ZIP内の総ファイル予定 | 411ファイル |
+| manifest追跡対象 | 429ファイル |
+| ZIP内の総ファイル予定 | 431ファイル |
 | 登録済み抜け穴 | 436件 |
 | Security Invariants | 268件、連番 |
 | 敵対的な抜け穴回帰 | 97件 |
-| validator self-test | 36 assertions |
+| validator self-test | 38 assertions |
 | やさしい日本語辞書 | 20項目 |
 | 音声／copyケース | 8件 |
-| JSON Schema | 29件 |
+| JSON Schema | 35件 |
 | JSON例 | 22件 |
 | operational gates | 37件 |
 | operational claims | 93件 |
