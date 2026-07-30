@@ -113,12 +113,12 @@ def swift_contract_result() -> tuple[int | None, str | None, str]:
     )
 
 
-def build_evidence() -> dict:
+def build_evidence(*, preserve_recorded_host: bool = False) -> dict:
     visual = strict_load_json(ROOT / "tests/prototype-visual-evidence.json")
     swift_count, swift_version, swift_scope = swift_contract_result()
     property_result = run_property_checks()
     fuzz_result = run_fuzz_smoke()
-    return {
+    evidence = {
         "schemaVersion": "1.0",
         "status": "LOCAL_VALIDATION_NOT_RELEASE_EVIDENCE",
         "releaseVersion": METADATA.version,
@@ -147,13 +147,20 @@ def build_evidence() -> dict:
         "signed": False,
         "independentReview": False,
     }
+    if preserve_recorded_host:
+        recorded = strict_load_json(ROOT / "delivery/evidence/core/reference-tests-current.json")
+        for key in ("swiftContractTests", "swiftContractTestScope", "environment"):
+            if key not in recorded:
+                raise RuntimeError(f"recorded local validation evidence is missing {key}")
+            evidence[key] = recorded[key]
+    return evidence
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="compare derived bytes without writing")
     args = parser.parse_args()
-    evidence = build_evidence()
+    evidence = build_evidence(preserve_recorded_host=args.check)
     write_or_check(
         ROOT / "delivery/evidence/core/reference-tests-current.json",
         json_bytes(evidence),

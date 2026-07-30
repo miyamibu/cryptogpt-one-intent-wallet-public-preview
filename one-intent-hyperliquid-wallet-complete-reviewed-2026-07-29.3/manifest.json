@@ -758,12 +758,12 @@
     {
       "path": "delivery/STATUS_MANIFEST.json",
       "size": 588,
-      "sha256": "942c080971ac4db79b8d67654ff228d0e2a64159711b3c2a6affcca0897c2a2d"
+      "sha256": "a98acdea7616071fbf9c5477df5a8d7dabaef1a17af773fc1aa28653d9044696"
     },
     {
       "path": "delivery/STATUS_MANIFEST.md",
       "size": 491,
-      "sha256": "f8eafe6bca3a35e416fb0ae7bc888e32ce5169f68890f83cb0af00730079e8d8"
+      "sha256": "08d5a91469cda98281e06d5c30991b9b2356a728533a37530ba03d9ff46f6535"
     },
     {
       "path": "delivery/TEST_COMMANDS.jsonl",
@@ -828,7 +828,7 @@
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
       "size": 2413,
-      "sha256": "a3bf75e27879d61fd17225f9b154a36b2de76824932084135b9a2e19479ec183"
+      "sha256": "652605bae603deb5b348460a9d5073e845cf253ab2748fcdcff7d1a3af1cedc9"
     },
     {
       "path": "delivery/evidence/core/reference-tests.json",
@@ -903,7 +903,7 @@
     {
       "path": "delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json",
       "size": 447854,
-      "sha256": "8b9e8fbac7aee7758df3e273e1e063d04f4e545ca1bff73c9e691fe47ddfd58f"
+      "sha256": "b10f7f9c6eec8c861f7cab69f648d411dfc24fe3b280ace257ac3b88471bd2ad"
     },
     {
       "path": "delivery/evidence/operations/README.md",
@@ -1278,7 +1278,7 @@
     {
       "path": "release/ARTIFACT_HASHES.txt",
       "size": 2596,
-      "sha256": "096289e222dd293f6f393bde7797d1654152efb6699aaeb56d98f486f34f8e63"
+      "sha256": "8bfe1e107382b294c82f4c16573db8e24eed650dae86e4b24e8358392534d39f"
     },
     {
       "path": "release/BUILD_ENVIRONMENT.md",
@@ -1288,7 +1288,7 @@
     {
       "path": "release/CODEX_EXECUTION_REPORT.md",
       "size": 2080,
-      "sha256": "46e1c3d42fa7bace4d39e77a60d8cfd6c92b0a25784dc0ee34cb555fba8cbd4f"
+      "sha256": "3ccd6ec613683d7a7a959b0cf65363db0b8af43b9dfb87dec0cba10c5147eea7"
     },
     {
       "path": "release/OPERATIONAL_HANDOFF.md",
@@ -1298,7 +1298,7 @@
     {
       "path": "release/PROVENANCE.json",
       "size": 2863,
-      "sha256": "10cff20095d42ca7a7d632d3ef6818f60a7927a20e4515a1d84d609844e77db2"
+      "sha256": "54e6b34ae67d50ffd0447e587fc9934eb35654272371b6debec75aed1586f22f"
     },
     {
       "path": "release/README.md",
@@ -1972,8 +1972,8 @@
     },
     {
       "path": "tools/generate_current_validation_evidence.py",
-      "size": 7999,
-      "sha256": "ec41669d0d598690ce0df4dccdbf241c4a22299c2493e872f3b54b806cfb7f91"
+      "size": 8477,
+      "sha256": "e2d063bce840539e19b6e6448df2ef25fc6596c793458ff74079c45ff492d4b1"
     },
     {
       "path": "tools/generate_manifest.py",
