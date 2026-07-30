@@ -43,13 +43,15 @@ class LocalSandboxTests(unittest.TestCase):
         self.assertEqual(unknown.status, 400)
 
     def test_support_gateway_stays_fixed_catalog_and_read_only(self) -> None:
-        response = self.app.route("POST", "/v1/support/getGenericSafetyHelp", b'{"body":{"topicId":"general"}}', "application/json")
+        response = self.app.route("POST", "/v1/support/safety-help", b'{"topic":"CONTACT_SUPPORT","locale":"ja-JP"}', "application/json")
         data = self.body(response)
         self.assertEqual(response.status, 200)
-        self.assertFalse(data["writeAvailableHere"])
         self.assertFalse(data["executable"])
-        rejected = self.app.route("POST", "/v1/support/getGenericSafetyHelp", '{"body":{"topicId":"BTCを送信"}}'.encode("utf-8"), "application/json")
+        rejected = self.app.route("POST", "/v1/support/safety-help", '{"topic":"BTCを送信","locale":"ja-JP"}'.encode("utf-8"), "application/json")
         self.assertEqual(rejected.status, 400)
+        glossary = self.app.route("GET", "/v1/support/glossary/execution-capsule")
+        self.assertEqual(glossary.status, 200)
+        self.assertEqual(self.body(glossary)["termId"], "execution-capsule")
 
     def test_all_write_like_routes_are_unavailable(self) -> None:
         for method in ("GET", "POST", "PUT", "PATCH", "DELETE"):

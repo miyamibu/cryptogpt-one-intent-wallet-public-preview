@@ -4,17 +4,65 @@
   "title": "RuntimeDecisionEnvelopeV2",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "decisionId", "operationSpecDigest", "reviewReceiptDigest", "releaseSubjectDigest", "policyBundleDigest", "status", "blockingReasons", "evaluatedAt", "validUntil"],
+  "required": [
+    "schemaVersion",
+    "issuer",
+    "subject",
+    "audience",
+    "environment",
+    "deployment",
+    "decisionId",
+    "operationSpecDigest",
+    "reviewReceiptDigest",
+    "releaseSubjectDigest",
+    "policyBundleDigest",
+    "status",
+    "blockingReasons",
+    "issuedAt",
+    "notBefore",
+    "evaluatedAt",
+    "expiresAt",
+    "canonicalDigest",
+    "signatureAlgorithm",
+    "keyId",
+    "signature",
+    "revocationEpoch"
+  ],
   "properties": {
-    "schemaVersion": {"const": "2.0"},
+    "schemaVersion": {"const": "2.1"},
+    "issuer": {"type": "string", "minLength": 1, "maxLength": 256},
+    "subject": {"type": "string", "minLength": 1, "maxLength": 256},
+    "audience": {"type": "string", "minLength": 1, "maxLength": 256},
+    "environment": {"enum": ["STAGING", "TESTNET", "PRODUCTION"]},
+    "deployment": {"type": "string", "minLength": 1, "maxLength": 256},
     "decisionId": {"type": "string", "minLength": 1, "maxLength": 128},
-    "operationSpecDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "reviewReceiptDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "releaseSubjectDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "policyBundleDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "operationSpecDigest": {"$ref": "#/$defs/digest"},
+    "reviewReceiptDigest": {"$ref": "#/$defs/digest"},
+    "releaseSubjectDigest": {"$ref": "#/$defs/digest"},
+    "policyBundleDigest": {"$ref": "#/$defs/digest"},
     "status": {"enum": ["BLOCKED", "ELIGIBLE_FOR_ATOMIC_SIGNER_FINALIZATION"]},
-    "blockingReasons": {"type": "array", "maxItems": 64, "items": {"type": "string", "minLength": 1, "maxLength": 256}},
+    "blockingReasons": {"type": "array", "maxItems": 64, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 256}},
+    "issuedAt": {"type": "integer", "minimum": 0},
+    "notBefore": {"type": "integer", "minimum": 0},
     "evaluatedAt": {"type": "integer", "minimum": 0},
-    "validUntil": {"type": "integer", "minimum": 0}
+    "expiresAt": {"type": "integer", "minimum": 0},
+    "canonicalDigest": {"$ref": "#/$defs/digest"},
+    "signatureAlgorithm": {"enum": ["Ed25519", "ES256"]},
+    "keyId": {"type": "string", "minLength": 1, "maxLength": 256},
+    "signature": {"type": "string", "minLength": 1, "maxLength": 4096},
+    "revocationEpoch": {"type": "integer", "minimum": 0}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "ELIGIBLE_FOR_ATOMIC_SIGNER_FINALIZATION"}}},
+      "then": {"properties": {"blockingReasons": {"maxItems": 0}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "BLOCKED"}}},
+      "then": {"properties": {"blockingReasons": {"minItems": 1}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
   }
 }

@@ -89,8 +89,12 @@ paths:
             schema:
               $ref: '#/components/schemas/AuthorizationRequest'
       responses:
-        '204':
-          description: Authorized
+        '201':
+          description: Signed one-time authorization receipt created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationReceiptResponse'
         '409':
           $ref: '#/components/responses/Problem'
       description: Accept only a one-time authorization envelope bound to the exact capsule hash, fresh device challenge,
@@ -344,6 +348,86 @@ components:
           maxLength: 128
     AuthorizationRequest:
       $ref: ../schemas/authorization-envelope.schema.json
+    AuthorizationReceiptResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - authorizationReceipt
+      - authorizationReceiptHash
+      - expiresAt
+      - oneTimeChallenge
+      - signerKeyId
+      - signatureAlgorithm
+      - signature
+      properties:
+        authorizationReceipt:
+          type: object
+          additionalProperties: false
+          required:
+          - receiptId
+          - planId
+          - accountId
+          - executionCapsuleHash
+          - deviceEvidenceHash
+          - challengeHash
+          - bodyDigest
+          - issuedAt
+          - expiresAt
+          - oneTime
+          properties:
+            receiptId:
+              type: string
+              minLength: 16
+              maxLength: 256
+            planId:
+              type: string
+              minLength: 8
+              maxLength: 128
+            accountId:
+              type: string
+              minLength: 8
+              maxLength: 128
+            executionCapsuleHash:
+              type: string
+              pattern: ^0x[0-9a-fA-F]{64}$
+            deviceEvidenceHash:
+              type: string
+              pattern: ^0x[0-9a-fA-F]{64}$
+            challengeHash:
+              type: string
+              pattern: ^0x[0-9a-fA-F]{64}$
+            bodyDigest:
+              type: string
+              pattern: ^0x[0-9a-fA-F]{64}$
+            issuedAt:
+              type: string
+              format: date-time
+            expiresAt:
+              type: string
+              format: date-time
+            oneTime:
+              const: true
+        authorizationReceiptHash:
+          type: string
+          pattern: ^0x[0-9a-fA-F]{64}$
+        expiresAt:
+          type: string
+          format: date-time
+        oneTimeChallenge:
+          type: string
+          pattern: ^[A-Za-z0-9_-]{43,256}$
+        signerKeyId:
+          type: string
+          minLength: 1
+          maxLength: 256
+        signatureAlgorithm:
+          enum:
+          - Ed25519
+          - ES256
+        signature:
+          type: string
+          minLength: 1
+          maxLength: 4096
     AccountSnapshot:
       type: object
       additionalProperties: false

@@ -25,7 +25,7 @@ class FakeOrder:
     market_id: str
     side: str
     amount: str
-    state: str = "accepted"
+    state: str = "SIMULATED_ACCEPTED"
     filled_amount: str = "0"
     liquidation_price: str | None = None
     reference_price_age_seconds: int | None = None
@@ -44,7 +44,14 @@ class FakeHyperliquidAdapter:
     def read_account(self, account: str) -> dict[str, object]:
         _text(account, "account")
         visible = sorted(client_id for client_id, order in self.orders.items() if order.account == account)
-        return {"account": account, "source": "fake", "confirmed": True, "positions": [], "orders": visible}
+        return {
+            "account": account,
+            "source": "fake",
+            "confirmationState": "SIMULATED_ACCEPTED",
+            "confirmed": False,
+            "positions": [],
+            "orders": visible,
+        }
 
     def place_order(self, *, account: str, market_id: str, side: str, amount: str, client_id: str) -> FakeOrder:
         if not self.testnet_write_enabled:
@@ -75,8 +82,8 @@ class FakeHyperliquidAdapter:
         if type(self.emergency_cancel_enabled) is not bool or not self.emergency_cancel_enabled:
             raise DomainError("emergency cancel is disabled")
         for order in self.orders.values():
-            if order.state in {"accepted", "partial"}:
-                order.state = "cancelled"
+            if order.state in {"SIMULATED_ACCEPTED", "SIMULATED_PARTIAL"}:
+                order.state = "SIMULATED_CANCELLED"
         return sorted(self.orders)
 
     def apply_fill(
@@ -91,7 +98,7 @@ class FakeHyperliquidAdapter:
         order = self.orders.get(client_id)
         if order is None:
             raise DomainError("unknown client id")
-        if order.state in {"cancelled", "filled"}:
+        if order.state in {"SIMULATED_CANCELLED", "SIMULATED_FILLED"}:
             raise DomainError("terminal order cannot receive another fill")
         if not isinstance(filled_amount, str):
             raise DomainError("filled amount must be text")
@@ -118,11 +125,11 @@ class FakeHyperliquidAdapter:
             raise DomainError("reference price age must be a non-negative integer or null")
         order.filled_amount = filled_amount
         if filled == total:
-            order.state = "filled"
+            order.state = "SIMULATED_FILLED"
         elif filled == 0:
-            order.state = "accepted"
+            order.state = "SIMULATED_ACCEPTED"
         else:
-            order.state = "partial"
+            order.state = "SIMULATED_PARTIAL"
         order.liquidation_price = liquidation_price
         order.reference_price_age_seconds = reference_price_age_seconds
         return order

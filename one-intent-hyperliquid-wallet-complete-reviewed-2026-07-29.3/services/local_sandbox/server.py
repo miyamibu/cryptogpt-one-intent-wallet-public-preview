@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import unquote, urlsplit
 
-from services.nontransactional_support_gateway.gateway import BoundaryViolation, handle_json
+from services.nontransactional_support_gateway.gateway import BoundaryViolation, handle
 from shared.canonical import CanonicalizationError, canonical_bytes, strict_loads
 from shared.domain import DomainError, parse_intent_locally
 
@@ -235,17 +235,34 @@ class LocalSandboxApp:
                 return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
             except (UnicodeDecodeError, ValueError, CanonicalizationError, DomainError):
                 return self.json_error(HTTPStatus.BAD_REQUEST, "INVALID_DRAFT_REQUEST", "入力を確認できません。")
-        support_prefix = "/v1/support/"
-        if method == "POST" and path.startswith(support_prefix):
+        status_match = re.fullmatch(r"/v1/support/status/([A-Za-z0-9._-]{12,128})", path)
+        glossary_match = re.fullmatch(r"/v1/support/glossary/([a-z0-9-]{2,64})", path)
+        if method == "GET" and status_match:
+            try:
+                response = handle("getReadOnlyStatus", {"path": {"referenceId": status_match.group(1)}})
+                return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
+            except BoundaryViolation:
+                return self.json_error(HTTPStatus.BAD_REQUEST, "BOUNDARY_REJECTED", "この境界では処理できない入力です。")
+        if method == "GET" and glossary_match:
+            try:
+                response = handle("getPlainJapaneseTerm", {"path": {"termId": glossary_match.group(1)}})
+                return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
+            except BoundaryViolation:
+                return self.json_error(HTTPStatus.NOT_FOUND, "NOT_FOUND", "その用語はありません。")
+        support_operations = {
+            "/v1/support/explain-error": "explainNonTransactionalError",
+            "/v1/support/safety-help": "getGenericSafetyHelp",
+        }
+        if method == "POST" and path in support_operations:
             if content_type.split(";", 1)[0].strip().lower() != "application/json":
                 return self.json_error(HTTPStatus.UNSUPPORTED_MEDIA_TYPE, "JSON_REQUIRED", "JSON形式だけを受け付けます。")
             if len(body) > MAX_REQUEST_BYTES:
                 return self.json_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "REQUEST_TOO_LARGE", "入力が長すぎます。")
-            operation_id = path[len(support_prefix):]
-            if not operation_id or "/" in operation_id:
-                return self.json_error(HTTPStatus.NOT_FOUND, "NOT_FOUND", "その操作はありません。")
             try:
-                response = handle_json(operation_id, body.decode("utf-8", errors="strict"))
+                value = strict_loads(body.decode("utf-8", errors="strict"))
+                if not isinstance(value, Mapping):
+                    raise BoundaryViolation("request body must be an object")
+                response = handle(support_operations[path], {"body": value})
                 return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
             except (UnicodeDecodeError, BoundaryViolation, ValueError):
                 return self.json_error(HTTPStatus.BAD_REQUEST, "BOUNDARY_REJECTED", "この境界では処理できない入力です。")

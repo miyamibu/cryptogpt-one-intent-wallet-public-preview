@@ -19,7 +19,7 @@
   "evidence": {
     "kind": "ANDROID_PROTECTED_CONFIRMATION",
     "confirmationKeyId": "confirmation-key-demo-001",
-    "confirmationTokenBase64Url": "VEVTVF9PTkxZX1BST1RFQ1RFRF9DT05GSVJNQVRJT05fVE9LRU4",
+    "confirmationTokenBase64Url": "TEST_ONLY_TEST_ONLY_TEST_ONLY_TEST_ONLY",
     "attestationChainDigest": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   }
 }

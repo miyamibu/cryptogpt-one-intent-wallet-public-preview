@@ -543,6 +543,34 @@ def check_openapi() -> list[str]:
     auth = doc.get("components", {}).get("schemas", {}).get("AuthorizationRequest", {})
     if auth.get("$ref") != "../schemas/authorization-envelope.schema.json":
         errors.append("AuthorizationRequest must reference authorization-envelope.schema.json")
+    authorize_responses = (
+        doc.get("paths", {})
+        .get("/v1/plans/{planId}/authorize", {})
+        .get("post", {})
+        .get("responses", {})
+    )
+    receipt_schema = (
+        authorize_responses.get("201", {})
+        .get("content", {})
+        .get("application/json", {})
+        .get("schema", {})
+    )
+    if receipt_schema.get("$ref") != "#/components/schemas/AuthorizationReceiptResponse":
+        errors.append("authorize must return a signed one-time receipt in a 201 response")
+    if "204" in authorize_responses:
+        errors.append("authorize must not hide receipt creation behind an empty 204 response")
+    receipt = doc.get("components", {}).get("schemas", {}).get("AuthorizationReceiptResponse", {})
+    receipt_required = set(receipt.get("required", []))
+    if not {
+        "authorizationReceipt",
+        "authorizationReceiptHash",
+        "expiresAt",
+        "oneTimeChallenge",
+        "signerKeyId",
+        "signatureAlgorithm",
+        "signature",
+    }.issubset(receipt_required):
+        errors.append("AuthorizationReceiptResponse lacks signed receipt binding fields")
     bearer_description = doc.get("components", {}).get("securitySchemes", {}).get("bearerAuth", {}).get("description", "")
     if "sender" not in bearer_description.lower() or "DPoP" not in bearer_description:
         errors.append("first-party bearer authentication must be explicitly sender-constrained")
