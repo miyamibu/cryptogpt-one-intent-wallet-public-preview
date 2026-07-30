@@ -486,6 +486,24 @@ async def main(*, check: bool = False) -> None:
         assert not unexpected, f"unexpected network requests: {unexpected}"
         assert not console_errors, f"console errors: {console_errors}"
 
+        evidence_screenshot_states = screenshot_states
+        if stored_evidence is not None and not render_profile_matches:
+            canonical_states = stored_evidence.get("screenshotReviewStates")
+            if not isinstance(canonical_states, dict) or set(canonical_states) != set(screenshot_states):
+                raise RuntimeError("stored cross-profile screenshot state set does not match the screenshot plan")
+            stable_state_keys = ("captureMode", "actionVisible", "partialTopBlocks", "scrollCue")
+            for filename, state in screenshot_states.items():
+                canonical_state = canonical_states.get(filename)
+                if not isinstance(canonical_state, dict):
+                    raise RuntimeError(f"stored screenshot state is invalid: {filename}")
+                for key in stable_state_keys:
+                    if canonical_state.get(key) != state.get(key):
+                        raise RuntimeError(
+                            f"cross-profile screenshot state changed: "
+                            f"{filename} {key} stored={canonical_state.get(key)!r} runtime={state.get(key)!r}"
+                        )
+            evidence_screenshot_states = canonical_states
+
         evidence = {
             "schemaVersion": "2.0",
             "release": METADATA.version,
@@ -506,7 +524,7 @@ async def main(*, check: bool = False) -> None:
             "geometryAndContrastCases": geometry_cases,
             "overflowingCasesWithReachableReviewEnd": matrix["scrollCases"],
             "screenshots": [f"prototype/screenshots/{x[6]}" for x in screenshot_plan],
-            "screenshotReviewStates": screenshot_states,
+            "screenshotReviewStates": evidence_screenshot_states,
             "checks": [
                 "persistent_simulation_marker","source_request_preserved_in_large_text","voice_correction_hard_gate",
                 "no_network_or_console_error","all_light_dark_flow_viewport_combinations","WCAG_contrast_proxy",

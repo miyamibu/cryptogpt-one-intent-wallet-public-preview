@@ -32,7 +32,7 @@
     "productionEvidence": false
   },
   "environment": "macOS-26.5.2-arm64-arm-64bit-Mach-O / 3.14.6 / Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
-  "sourceTreeDigest": "7c07af9e47e9d867f77a61bc2f228306074cdebe9d303607d51586e7bc08d1a5",
+  "sourceTreeDigest": "5a13674f1cfc7afb20203d88f78e3ead677cb913b04cb4ab1991853f7ca5cc36",
   "sourceTreeDigestDomain": "secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, delivery/STATUS_MANIFEST.json, delivery/STATUS_MANIFEST.md, delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata",
   "scope": "offline standard-library reference implementation and logical-pixel browser prototype",
   "limitations": [

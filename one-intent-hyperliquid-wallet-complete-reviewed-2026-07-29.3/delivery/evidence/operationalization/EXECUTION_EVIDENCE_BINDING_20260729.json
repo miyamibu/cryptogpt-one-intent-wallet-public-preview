@@ -78,7 +78,7 @@
     },
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
-      "sha256": "263b58d71f89549acd75e0b0e35a3eb50e4b8605e42cf58b866a6d35d165ea49",
+      "sha256": "623624c0e84ce1440d9466153686a2b6b5bc5ea31ab636e71338ba3f11f34998",
       "bytes": 2413,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
@@ -168,7 +168,7 @@
     },
     {
       "path": "release/PROVENANCE.json",
-      "sha256": "41cfe531e6f6db43765d273b0576eaa445976ecc8041943767dbaa9b2366c42a",
+      "sha256": "18eb30cac5719844b4ef6977976416f48bb99b1faccc82c00b8fc8da5fcca27e",
       "bytes": 2863,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     }
