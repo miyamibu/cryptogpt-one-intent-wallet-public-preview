@@ -519,21 +519,34 @@ async def main(*, check: bool = False) -> None:
                 "Browser logical-pixel proxy only; native SwiftUI and Jetpack Compose rendering are not proven.",
                 "No real-device safe area, VoiceOver, TalkBack, IME, biometric prompt, secure element, GPU, or OS font renderer is proven.",
                 "One CSS pixel is not one physical millimetre; real-device screenshot comparison remains mandatory.",
-                "Screenshot bytes are compared exactly only on the recorded render profile; cross-profile validation requires identical PNG dimensions plus the complete browser matrix.",
+                "Screenshot bytes are compared exactly only on the recorded render profile; cross-profile validation permits at most one device pixel of border-rounding variance and requires the complete browser matrix.",
                 "Static values are examples; no live price, balance, fee, contract, JPYC EX, or Hyperliquid lookup occurs."
             ],
         }
         if check:
             for item in screenshot_plan:
                 filename = item[6]
+                expected_dimensions = (item[2], item[3])
                 stored = SHOTS / filename
                 generated = output_shots / filename
                 if not stored.is_file():
                     raise RuntimeError(f"missing stored screenshot: {stored.relative_to(ROOT)}")
                 if render_profile_matches and stored.read_bytes() != generated.read_bytes():
                     raise RuntimeError(f"stale or non-reproducible screenshot: {stored.relative_to(ROOT)}")
-                if not render_profile_matches and png_dimensions(stored) != png_dimensions(generated):
-                    raise RuntimeError(f"cross-profile screenshot dimensions changed: {stored.relative_to(ROOT)}")
+                if not render_profile_matches:
+                    stored_dimensions = png_dimensions(stored)
+                    generated_dimensions = png_dimensions(generated)
+                    for dimensions in (stored_dimensions, generated_dimensions):
+                        if any(abs(actual - expected) > 1 for actual, expected in zip(dimensions, expected_dimensions)):
+                            raise RuntimeError(
+                                f"cross-profile screenshot dimensions exceed viewport tolerance: "
+                                f"{stored.relative_to(ROOT)} expected={expected_dimensions} actual={dimensions}"
+                            )
+                    if any(abs(a - b) > 1 for a, b in zip(stored_dimensions, generated_dimensions)):
+                        raise RuntimeError(
+                            f"cross-profile screenshot dimensions changed by more than one pixel: "
+                            f"{stored.relative_to(ROOT)} stored={stored_dimensions} generated={generated_dimensions}"
+                        )
             if not render_profile_matches:
                 print(
                     "CROSS-PROFILE SCREENSHOT CHECK PASSED "
