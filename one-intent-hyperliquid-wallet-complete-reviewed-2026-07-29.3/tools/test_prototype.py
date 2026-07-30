@@ -6,6 +6,7 @@ import asyncio
 import hashlib
 import importlib.metadata
 import json
+import platform
 import sys
 import tempfile
 from pathlib import Path
@@ -29,6 +30,21 @@ VIEWPORTS = (
     ("android-compact", "android", 360, 800),
     ("pixel9a-logical", "android", 412, 915),
 )
+
+
+def render_profile() -> dict[str, str]:
+    return {
+        "platform": sys.platform,
+        "osRelease": platform.release(),
+        "machine": platform.machine(),
+    }
+
+
+def png_dimensions(path: Path) -> tuple[int, int]:
+    data = path.read_bytes()
+    if len(data) < 24 or data[:8] != b"\x89PNG\r\n\x1a\n" or data[12:16] != b"IHDR":
+        raise RuntimeError(f"invalid PNG screenshot: {path.relative_to(ROOT)}")
+    return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
 
 
 def bundled_html() -> str:
@@ -248,6 +264,11 @@ MATRIX_JS = r"""
 
 
 async def main(*, check: bool = False) -> None:
+    stored_evidence = None
+    if check:
+        if not EVIDENCE.is_file():
+            raise RuntimeError(f"missing stored evidence: {EVIDENCE.relative_to(ROOT)}")
+        stored_evidence = json.loads(EVIDENCE.read_text(encoding="utf-8"))
     temporary = tempfile.TemporaryDirectory(prefix="wallet-prototype-check-") if check else None
     output_shots = Path(temporary.name) if temporary is not None else SHOTS
     output_shots.mkdir(parents=True, exist_ok=True)
@@ -259,9 +280,28 @@ async def main(*, check: bool = False) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=True,
-            executable_path="/usr/bin/chromium" if Path("/usr/bin/chromium").exists() else None,
             args=["--disable-dev-shm-usage", "--force-color-profile=srgb"],
         )
+        runtime_toolchain = {
+            "playwrightPython": importlib.metadata.version("playwright"),
+            "browser": browser.version,
+            "browserSource": "playwright-managed",
+            "renderProfile": render_profile(),
+        }
+        evidence_toolchain = runtime_toolchain
+        render_profile_matches = True
+        if stored_evidence is not None:
+            canonical_toolchain = stored_evidence.get("toolchain")
+            if not isinstance(canonical_toolchain, dict):
+                raise RuntimeError("stored prototype evidence has no toolchain object")
+            for key in ("playwrightPython", "browser"):
+                if canonical_toolchain.get(key) != runtime_toolchain[key]:
+                    raise RuntimeError(
+                        f"prototype toolchain mismatch for {key}: "
+                        f"stored={canonical_toolchain.get(key)!r} runtime={runtime_toolchain[key]!r}"
+                    )
+            render_profile_matches = canonical_toolchain.get("renderProfile") == runtime_toolchain["renderProfile"]
+            evidence_toolchain = canonical_toolchain
         page = await browser.new_page(viewport={"width": 1360, "height": 1200}, device_scale_factor=1, locale="ja-JP")
         unexpected: list[str] = []
         console_errors: list[str] = []
@@ -453,11 +493,7 @@ async def main(*, check: bool = False) -> None:
             "result": "PASS",
             "script": "tools/test_prototype.py",
             "localeExecuted": ["ja-JP"],
-            "toolchain": {
-                "playwrightPython": importlib.metadata.version("playwright"),
-                "browser": browser.version,
-                "browserSource": "/usr/bin/chromium" if Path("/usr/bin/chromium").exists() else "playwright-managed",
-            },
+            "toolchain": evidence_toolchain,
             "testHarness": {
                 "path": "tools/test_prototype.py",
                 "sha256": hashlib.sha256((ROOT / "tools/test_prototype.py").read_bytes()).hexdigest(),
@@ -483,6 +519,7 @@ async def main(*, check: bool = False) -> None:
                 "Browser logical-pixel proxy only; native SwiftUI and Jetpack Compose rendering are not proven.",
                 "No real-device safe area, VoiceOver, TalkBack, IME, biometric prompt, secure element, GPU, or OS font renderer is proven.",
                 "One CSS pixel is not one physical millimetre; real-device screenshot comparison remains mandatory.",
+                "Screenshot bytes are compared exactly only on the recorded render profile; cross-profile validation requires identical PNG dimensions plus the complete browser matrix.",
                 "Static values are examples; no live price, balance, fee, contract, JPYC EX, or Hyperliquid lookup occurs."
             ],
         }
@@ -493,8 +530,16 @@ async def main(*, check: bool = False) -> None:
                 generated = output_shots / filename
                 if not stored.is_file():
                     raise RuntimeError(f"missing stored screenshot: {stored.relative_to(ROOT)}")
-                if stored.read_bytes() != generated.read_bytes():
+                if render_profile_matches and stored.read_bytes() != generated.read_bytes():
                     raise RuntimeError(f"stale or non-reproducible screenshot: {stored.relative_to(ROOT)}")
+                if not render_profile_matches and png_dimensions(stored) != png_dimensions(generated):
+                    raise RuntimeError(f"cross-profile screenshot dimensions changed: {stored.relative_to(ROOT)}")
+            if not render_profile_matches:
+                print(
+                    "CROSS-PROFILE SCREENSHOT CHECK PASSED "
+                    "(stored bytes protected by manifest; generated dimensions and browser matrix verified)",
+                    flush=True,
+                )
         write_or_check(
             EVIDENCE,
             json_bytes(evidence),

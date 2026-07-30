@@ -10,11 +10,16 @@
   "toolchain": {
     "playwrightPython": "1.57.0",
     "browser": "143.0.7499.4",
-    "browserSource": "playwright-managed"
+    "browserSource": "playwright-managed",
+    "renderProfile": {
+      "platform": "darwin",
+      "osRelease": "25.5.0",
+      "machine": "arm64"
+    }
   },
   "testHarness": {
     "path": "tools/test_prototype.py",
-    "sha256": "a68eb4141d5a8750bc981f9e1156d1edb38668f5cc13d43f2208aa3971f1670c"
+    "sha256": "126ac7e1d394fc9b6511b776b70f20b8da1875fc3b0d9d8159865d8bf23b76b0"
   },
   "prototypeFiles": {
     "prototype/index.html": "3b8c543d8405a569f8cfb581b93fb82dfac279db2ef42a2b09a8d7030a6e2396",
@@ -201,6 +206,7 @@
     "Browser logical-pixel proxy only; native SwiftUI and Jetpack Compose rendering are not proven.",
     "No real-device safe area, VoiceOver, TalkBack, IME, biometric prompt, secure element, GPU, or OS font renderer is proven.",
     "One CSS pixel is not one physical millimetre; real-device screenshot comparison remains mandatory.",
+    "Screenshot bytes are compared exactly only on the recorded render profile; cross-profile validation requires identical PNG dimensions plus the complete browser matrix.",
     "Static values are examples; no live price, balance, fee, contract, JPYC EX, or Hyperliquid lookup occurs."
   ]
 }
