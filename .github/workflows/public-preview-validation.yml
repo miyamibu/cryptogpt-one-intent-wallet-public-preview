@@ -14,7 +14,7 @@ env:
 
 jobs:
   validate:
-    runs-on: ubuntu-24.04
+    runs-on: macos-15
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -25,7 +25,7 @@ jobs:
           "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m pip install \
             --requirement "$CANONICAL_PACKAGE/tools/requirements.txt" \
             --requirement "$CANONICAL_PACKAGE/tools/requirements-visual.txt"
-          "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m playwright install --with-deps chromium firefox webkit
+          "$RUNNER_TEMP/cryptogpt-venv/bin/python" -m playwright install chromium firefox webkit
       - name: Validate sanitized package
         run: |
           "$RUNNER_TEMP/cryptogpt-venv/bin/python" "$CANONICAL_PACKAGE/tools/run_full_validation.py"

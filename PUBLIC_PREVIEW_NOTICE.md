@@ -3,7 +3,7 @@
 This repository is a temporary, sanitized viewing mirror of the canonical
 offline design package `.3` from `miyamibu/cryptogpt-one-intent-wallet`.
 
-- Private source revision: `25a587e65500451c88b979bd436e994f3be25ee5`
+- Private source revision: `000f42b1049112122d52752cf141d3499c92cb53`
 - Private repository history and controls: intentionally omitted
 - Account, team, signing, device, and local filesystem identifiers: redacted
 - Wallet connection, signing, transaction broadcast, Mainnet, and production activation: unavailable
