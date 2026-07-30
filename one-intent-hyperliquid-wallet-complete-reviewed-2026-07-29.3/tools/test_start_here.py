@@ -113,7 +113,6 @@ async def main(*, check: bool = False) -> None:
     async with async_playwright() as p:
         browser = await p.chromium.launch(
             headless=True,
-            executable_path="/usr/bin/chromium" if Path("/usr/bin/chromium").exists() else None,
             args=["--disable-dev-shm-usage", "--force-color-profile=srgb"],
         )
         browser_version = browser.version
@@ -149,7 +148,7 @@ async def main(*, check: bool = False) -> None:
             "toolchain": {
                 "playwrightPython": importlib.metadata.version("playwright"),
                 "browser": browser_version,
-                "browserSource": "/usr/bin/chromium" if Path("/usr/bin/chromium").exists() else "playwright-managed",
+                "browserSource": "playwright-managed",
             },
             "cases": results,
             "checks": [

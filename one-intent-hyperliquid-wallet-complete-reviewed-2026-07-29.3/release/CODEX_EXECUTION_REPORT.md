@@ -23,7 +23,7 @@ externalNetworkUsed=false
 - Android Pixel 9a physical UI: PASS_LOCAL_DEVICE_PROOF_ONLY (serial `55211JEBF16639`; no key, signer, network, or transaction)
 - iOS `OfflineWalletApp` target: PASS_LOCAL_SIGNED_DEBUG_ONLY (Team `PUBLICTEAM`; signed iPhoneOS build; no archive/IPA)
 - iPhone 12 physical UI: VERIFIED_LOCAL_DEVICE_PROOF_ONLY (Appium/WDA; installed/launched; disabled CTA unchanged after tap; up/down gestures; screenshot SHA-256 `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`)
-- Source tree digest: 5a13674f1cfc7afb20203d88f78e3ead677cb913b04cb4ab1991853f7ca5cc36
+- Source tree digest: 53370ea9ba10bc1af6a3d93b1a6241a980683aea6b1a3a18a460e5c2b80f1bdc
 
 ## Requested reviewer roles
 

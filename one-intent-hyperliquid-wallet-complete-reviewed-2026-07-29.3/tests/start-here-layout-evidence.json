@@ -12,7 +12,7 @@
   },
   "testHarness": {
     "path": "tools/test_start_here.py",
-    "sha256": "1d61cd552ae82a3e2b46e353ddda92b75c40076cac87dbb45993dc633ed2aa33"
+    "sha256": "bee2ceef08a40ed1276f37cb7fb41d46b3e728d8c6e151fd5627e3e44a408f2f"
   },
   "toolchain": {
     "playwrightPython": "1.57.0",

@@ -758,12 +758,12 @@
     {
       "path": "delivery/STATUS_MANIFEST.json",
       "size": 588,
-      "sha256": "361a37cc081351d3dc1f882fa56a920d374a74087903283d7fcd231000151ab4"
+      "sha256": "942c080971ac4db79b8d67654ff228d0e2a64159711b3c2a6affcca0897c2a2d"
     },
     {
       "path": "delivery/STATUS_MANIFEST.md",
       "size": 491,
-      "sha256": "7f8a64e1eb885d02409909b567747b89189dd211e63cae9f59de2992ce481026"
+      "sha256": "f8eafe6bca3a35e416fb0ae7bc888e32ce5169f68890f83cb0af00730079e8d8"
     },
     {
       "path": "delivery/TEST_COMMANDS.jsonl",
@@ -828,7 +828,7 @@
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
       "size": 2413,
-      "sha256": "623624c0e84ce1440d9466153686a2b6b5bc5ea31ab636e71338ba3f11f34998"
+      "sha256": "a3bf75e27879d61fd17225f9b154a36b2de76824932084135b9a2e19479ec183"
     },
     {
       "path": "delivery/evidence/core/reference-tests.json",
@@ -903,7 +903,7 @@
     {
       "path": "delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json",
       "size": 447854,
-      "sha256": "a0764ab8bc99da0b22289b862387195bcece9baeb7e71fa2b5570259e4183493"
+      "sha256": "8b9e8fbac7aee7758df3e273e1e063d04f4e545ca1bff73c9e691fe47ddfd58f"
     },
     {
       "path": "delivery/evidence/operations/README.md",
@@ -1278,7 +1278,7 @@
     {
       "path": "release/ARTIFACT_HASHES.txt",
       "size": 2596,
-      "sha256": "d6b8c52e6b4b23bcd336f5736ec94e2ccf19bfd21b654b064a840f7e0417e3f8"
+      "sha256": "096289e222dd293f6f393bde7797d1654152efb6699aaeb56d98f486f34f8e63"
     },
     {
       "path": "release/BUILD_ENVIRONMENT.md",
@@ -1288,7 +1288,7 @@
     {
       "path": "release/CODEX_EXECUTION_REPORT.md",
       "size": 2080,
-      "sha256": "9a17c3d19abc57ef36c0ef545c098cf34eb9800dd0081380e74bfb0340e17fe3"
+      "sha256": "46e1c3d42fa7bace4d39e77a60d8cfd6c92b0a25784dc0ee34cb555fba8cbd4f"
     },
     {
       "path": "release/OPERATIONAL_HANDOFF.md",
@@ -1298,7 +1298,7 @@
     {
       "path": "release/PROVENANCE.json",
       "size": 2863,
-      "sha256": "18eb30cac5719844b4ef6977976416f48bb99b1faccc82c00b8fc8da5fcca27e"
+      "sha256": "10cff20095d42ca7a7d632d3ef6818f60a7927a20e4515a1d84d609844e77db2"
     },
     {
       "path": "release/README.md",
@@ -1783,7 +1783,7 @@
     {
       "path": "tests/start-here-layout-evidence.json",
       "size": 1917,
-      "sha256": "2a191c3e761b2e7062f5061dc202a51154ef95a5bfcd5e5db0d5b6d1c4b5b9ba"
+      "sha256": "61aaa3728bbe9b6d6e1336e6f8f57883b10b8ee5b049fab9591a9713fd4d4509"
     },
     {
       "path": "tests/test_canonical.py",
@@ -2127,8 +2127,8 @@
     },
     {
       "path": "tools/test_start_here.py",
-      "size": 9442,
-      "sha256": "1d61cd552ae82a3e2b46e353ddda92b75c40076cac87dbb45993dc633ed2aa33"
+      "size": 9282,
+      "sha256": "bee2ceef08a40ed1276f37cb7fb41d46b3e728d8c6e151fd5627e3e44a408f2f"
     },
     {
       "path": "tools/test_validation_harness.py",
