@@ -1,5 +1,5 @@
 {"command":"python3 -B tools/check_python_sources.py","exitCode":0,"result":"PASS","notes":"112 Python source files compiled in memory; no bytecode written"}
-{"command":"python3 -B tools/test_python_unit_suite.py","exitCode":0,"result":"PASS","notes":"98 Python unit tests including deterministic-core, adapter, protected signature trust store, atomic signer request, Android/iOS attestation, SQLite ledger, and local HTTP hardening"}
+{"command":"python3 -B tools/test_python_unit_suite.py","exitCode":0,"result":"PASS","notes":"118 Python unit tests including deterministic-core, adapter, protected signature trust store, atomic signer request, Android/iOS attestation, SQLite ledger, bounded read-only gateway context, and local HTTP hardening"}
 {"command":"python3 -B tools/test_browser_matrix.py","exitCode":0,"result":"PASS","notes":"6 viewports x 12 flows x 2 text modes x 2 themes = 288 logical cases"}
 {"command":"python3 -B tools/run_local_sandbox.py self-test","exitCode":0,"result":"LOCAL_SANDBOX_OPERATIONAL_GO","notes":"Loopback-only; no signer, broadcast, credentials, or external network"}
 {"command":"python3 -B tools/check_signer_policy.py","exitCode":0,"result":"PASS","notes":"Independent denial/replay check; no private key or network"}

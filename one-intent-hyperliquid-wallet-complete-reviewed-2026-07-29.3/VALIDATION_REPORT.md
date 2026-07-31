@@ -62,8 +62,8 @@ secure tree snapshot
 
 | 項目 | 値 |
 |---|---:|
-| 追跡対象 | 434ファイル |
-| ZIP内予定 | 436ファイル |
+| 追跡対象 | 438ファイル |
+| ZIP内予定 | 440ファイル |
 | Known-Loophole | 436 |
 | Security Invariants | 268 |
 | Loophole regression | 97 |

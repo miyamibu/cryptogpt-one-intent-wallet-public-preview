@@ -77,7 +77,7 @@ def main() -> int:
     thread.start()
     try:
         paths = (
-            "/", "/prototype/index.html", "/prototype/app.js", "/prototype/styles.css",
+            "/", "/START_HERE.html", "/START_HERE.css", "/prototype/index.html", "/prototype/app.js", "/prototype/styles.css",
             "/docs/final-delivery-index", "/docs/fee-route-and-asset-registry",
             "/FINAL_DELIVERY_INDEX.md", "/47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md",
         )

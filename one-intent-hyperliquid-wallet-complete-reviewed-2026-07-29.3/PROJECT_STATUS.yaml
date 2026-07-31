@@ -11,8 +11,8 @@ release_stage_decisions:
   offline_prototype: OFFLINE_PROTOTYPE_GO
   local_sandbox: LOCAL_SANDBOX_OPERATIONAL_GO
   codex_implementation: CODEX_IMPLEMENTATION_GO
-  android_build: ANDROID_BUILD_NO_GO
-  ios_build: IOS_BUILD_NO_GO
+  android_release_signing: ANDROID_RELEASE_SIGNING_NO_GO
+  ios_distribution_archive: IOS_DISTRIBUTION_ARCHIVE_NO_GO
   ios_device_proof: IOS_IPHONE12_LOCAL_PROOF_GO
   testnet_write: TESTNET_WRITE_NO_GO
   personal_small_mainnet: PERSONAL_SMALL_MAINNET_NO_GO
@@ -91,7 +91,7 @@ trust_model:
 validation:
   static_package: PASS_AFTER_PIPELINE
   python_source_files_compiled: 112
-  python_unit_tests: 98
+  python_unit_tests: 118
   swift_contract_tests: 5
   current_local_evidence: delivery/evidence/core/reference-tests-current.json
   operationalization_evidence_binding: delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json

@@ -23,7 +23,7 @@ tested_locally:
   command: python3 -B -m unittest discover -s tests -p 'test_*.py'
   result: PASS
   python_source_files_compiled: 112
-  test_count: 98
+  test_count: 118
   browser_matrix: 288
   local_sandbox_self_test: PASS
   swift_contract_tests: 5
@@ -45,7 +45,7 @@ local_only_verified:
   ios:
     - OfflineWalletApp_unsigned_iphoneos_compile
     - OfflineWalletApp_unsigned_simulator_compile
-    - OfflineWalletApp_signed_iphoneos_build_team_8R3B5675ZJ
+    - OfflineWalletApp_signed_iphoneos_build_team_PUBLICTEAM
     - iphone_12_install_launch_appium_tap_scroll
 not_verified:
   - android_release_signing_play_signing_and_integrity

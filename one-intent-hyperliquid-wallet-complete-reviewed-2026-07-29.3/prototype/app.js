@@ -310,27 +310,19 @@ function actionHtml(flow, buttonId = 'executeButton') {
   </div>`;
 }
 
-function scrollStatusHtml() {
-  return `<p class="scroll-status" data-position="top" aria-live="polite">
-    <span class="scroll-status-icon" aria-hidden="true">↓</span>
-    <span class="scroll-status-text">下に続きがあります</span>
-  </p>`;
-}
-
 function getActiveScroller() {
-  const active = document.querySelector('.execution-card:not(.hidden), .timeline:not(.hidden)');
-  return active ? active.querySelector('.card-scroll, .timeline-scroll') : null;
+  return document.getElementById('reviewScroll');
 }
 
 function updateScrollStatus(scroller = getActiveScroller()) {
   if (!scroller) return;
-  const active = scroller.closest('.execution-card, .timeline');
-  const status = active ? active.querySelector('.scroll-status') : null;
+  const status = document.getElementById('scrollStatus');
   if (!status) return;
   const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
   const atTop = scroller.scrollTop <= 2;
   const scrollerRect = scroller.getBoundingClientRect();
-  const lastBlock = scroller.lastElementChild;
+  const activeCard = document.querySelector('.execution-card:not(.hidden), .timeline:not(.hidden)');
+  const lastBlock = activeCard ? activeCard.lastElementChild : null;
   const lastBlockFullyVisible = Boolean(lastBlock) && lastBlock.getBoundingClientRect().bottom <= scrollerRect.bottom + 2;
   const atBottom = scroller.scrollTop >= max - 2 || lastBlockFullyVisible;
   let position = 'middle';
@@ -358,7 +350,10 @@ function resetScrollAndStatus() {
 function wireScroller() {
   const scroller = getActiveScroller();
   if (!scroller) return;
-  scroller.addEventListener('scroll', () => updateScrollStatus(scroller), {passive: true});
+  if (scroller.dataset.scrollBound !== 'true') {
+    scroller.addEventListener('scroll', () => updateScrollStatus(scroller), {passive: true});
+    scroller.dataset.scrollBound = 'true';
+  }
   resetScrollAndStatus();
 }
 
@@ -370,7 +365,7 @@ function renderStandard(flow) {
       <h3>${escapeHtml(flow.title)}</h3>
       <span class="badge ${escapeHtml(flow.badgeTone || '')}">${escapeHtml(flow.badge)}</span>
     </header>
-    <div class="card-scroll" tabindex="0" aria-label="実行前の明細。下へスクロールして最後まで確認してください">
+    <div class="card-content">
       <p class="sticky-summary">${escapeHtml(flow.summary)}</p>
       ${understandingHtml(flow)}
       ${correctionHtml(flow)}
@@ -378,7 +373,6 @@ function renderStandard(flow) {
       <p class="notice">${escapeHtml(flow.notice)}</p>
       ${actionHtml(flow)}
     </div>
-    ${scrollStatusHtml()}
   `;
   wireCardActions(flow);
   wireScroller();
@@ -392,7 +386,7 @@ function renderPartial(flow) {
       <h3>${escapeHtml(flow.title)}</h3>
       <span class="badge warning">${escapeHtml(flow.badge)}</span>
     </header>
-    <div class="timeline-scroll" tabindex="0" aria-label="処理状況。下へスクロールして最後まで確認してください">
+    <div class="card-content timeline-content">
       ${understandingHtml(flow)}
       <div class="step"><span class="step-number">1</span><div><strong>HYPEの売却は完了</strong><small>948.72 USDC（画面例）を受け取り済み。取引番号と成立価格を照合済みの画面例です。</small></div></div>
       <div class="step"><span class="step-number">2</span><div><strong>HLPの運用口座への300 USDCは完了</strong><small>預入済み。完了済みの操作は再実行しません。</small></div></div>
@@ -404,7 +398,6 @@ function renderPartial(flow) {
         <button id="resumeButton" class="primary" type="button">残りの送金だけを作り直す</button>
       </div>
     </div>
-    ${scrollStatusHtml()}
   `;
   document.getElementById('resumeButton').addEventListener('click', () => setStatus('画面見本：残りの操作だけを再見積もりする想定です。実処理はありません。'));
   wireScroller();
@@ -418,7 +411,7 @@ function renderManual(flow) {
       <h3>${escapeHtml(flow.title)}</h3>
       <span class="badge danger">${escapeHtml(flow.badge)}</span>
     </header>
-    <div class="card-scroll" tabindex="0" aria-label="手動で行う手順。下へスクロールして最後まで確認してください">
+    <div class="card-content">
       <p class="sticky-summary">必要量は、その時点の見積もりから表示</p>
       ${understandingHtml(flow)}
       <div class="manual-step"><span class="step-number">1</span><div><strong>「手数料見積もりを更新」を押す</strong><small>対象操作、Polygon、POLの現在残高、混雑状況を取得します。取得できない場合は送らないでください。</small></div></div>
@@ -434,7 +427,6 @@ function renderManual(flow) {
         <button id="estimateButton" class="primary" type="button">手数料見積もりを更新する</button>
       </div>
     </div>
-    ${scrollStatusHtml()}
   `;
   document.getElementById('estimateButton').addEventListener('click', () => setStatus('画面見本：本番では最新の推奨量と有効期限を取得します。ここでは取得しません。'));
   wireScroller();
@@ -520,18 +512,6 @@ document.getElementById('permissionButton').addEventListener('click', () => {
 
 document.querySelector('.account').addEventListener('click', () => {
   setStatus('完全な口座アドレス、照合用の指紋、利用ネットワークを確認する画面を開く想定です。');
-});
-
-document.querySelector('.plus').addEventListener('click', () => {
-  setStatus('資料を追加する画面を開く想定です。秘密鍵や復旧用の単語は追加しないでください。');
-});
-
-document.querySelector('.fake-input').addEventListener('click', () => {
-  setStatus('文字入力欄を開く想定です。この画面見本では入力しません。');
-});
-
-document.getElementById('micButton').addEventListener('click', () => {
-  setStatus('音声入力を始める想定です。誤変換の可能性がある重要語は実行前に確認します。');
 });
 
 window.__WALLET_PROTOTYPE__ = Object.freeze({

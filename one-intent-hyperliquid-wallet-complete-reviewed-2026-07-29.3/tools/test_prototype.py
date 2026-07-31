@@ -159,13 +159,20 @@ MATRIX_JS = r"""
           const fail = (message) => errors.push(`${label}: ${message}`);
           const phone = by('#phone'), screen = by('.screen');
           const active = by('.execution-card:not(.hidden),.timeline:not(.hidden)');
-          const scroller = active?.querySelector('.card-scroll,.timeline-scroll');
+          const scroller = by('#reviewScroll');
           const primary = active?.querySelector('.primary');
-          const status = active?.querySelector('.scroll-status');
+          const status = by('#scrollStatus');
+          const activeContent = active?.querySelector('.card-content');
           if (!phone || !screen || !active || !scroller || !primary || !status) { fail('active structure incomplete'); continue; }
           if (!inside(screen, phone, 11)) fail('screen outside phone');
           for (const e of [...document.querySelectorAll('.app-header,.simulation-strip,.permission-rail,.conversation,.execution-card:not(.hidden),.timeline:not(.hidden),.composer')].filter(visible)) {
-            if (!inside(e, screen, 2)) fail(`section outside screen: ${e.className}`);
+            const scrollableSection = e.matches('.execution-card,.timeline');
+            const er = rect(e), sr = rect(screen);
+            if (scrollableSection) {
+              if (er.left < sr.left - 2 || er.right > sr.right + 2) fail(`section outside screen horizontally: ${e.className}`);
+            } else if (!inside(e, screen, 2)) {
+              fail(`section outside screen: ${e.className}`);
+            }
             if (overflowX(e)) fail(`section horizontal overflow: ${e.className}`);
           }
           const source = by('.bubble.user');
@@ -174,9 +181,9 @@ MATRIX_JS = r"""
           if (!visible(by('.simulation-strip'))) fail('simulation marker missing');
           if (scroller.clientHeight < 44) fail(`detail viewport too short: ${scroller.clientHeight}`);
           if (Math.abs(scroller.scrollTop) > 1) fail('scroll state leaked');
-          if (primary.closest('.card-scroll,.timeline-scroll') !== scroller) fail('primary is outside review scroller');
-          if (!scroller.lastElementChild?.classList.contains('action-footer')) fail('final review block is not last');
-          if (!inside(status, active, 2)) fail('scroll status outside card');
+          if (!scroller.contains(primary)) fail('primary is outside review scroller');
+          if (!activeContent?.lastElementChild?.classList.contains('action-footer')) fail('final review block is not last');
+          if (!inside(status, screen, 2)) fail('scroll status outside screen');
 
           const required = vp.platform === 'ios' ? 44 : 48;
           for (const e of [...document.querySelectorAll('#phone button')].filter(visible)) {
@@ -370,7 +377,7 @@ async def main(*, check: bool = False) -> None:
               const l=document.querySelector('#largeTextToggle');if(!l.checked){l.checked=true;l.dispatchEvent(new Event('change',{bubbles:true}));}
               const t=document.querySelector('#themeToggle');if(!t.checked){t.checked=true;t.dispatchEvent(new Event('change',{bubbles:true}));}
               const phone=document.querySelector('#phone');phone.style.width='390px';phone.style.height='844px';
-              const active=document.querySelector('.execution-card:not(.hidden)'),s=active.querySelector('.card-scroll');
+              const active=document.querySelector('.execution-card:not(.hidden)'),s=document.querySelector('#reviewScroll');
               const screen=document.querySelector('.screen').getBoundingClientRect(),errors=[];
               for(const e of [...document.querySelectorAll('#phone button')].filter(x=>{const st=getComputedStyle(x),r=x.getBoundingClientRect();return !x.disabled&&st.display!=='none'&&st.visibility!=='hidden'&&r.width>.5&&r.height>.5;})){
                 if(s.contains(e)){
@@ -396,7 +403,7 @@ async def main(*, check: bool = False) -> None:
         """)
         spacing_errors = await page.evaluate(
             """flows => {
-              const errors=[];for(const flow of flows){document.querySelector(`[data-flow="${flow}"]`).click();const a=document.querySelector('.execution-card:not(.hidden),.timeline:not(.hidden)'),s=a.querySelector('.card-scroll,.timeline-scroll');
+              const errors=[];for(const flow of flows){document.querySelector(`[data-flow="${flow}"]`).click();const a=document.querySelector('.execution-card:not(.hidden),.timeline:not(.hidden)'),s=document.querySelector('#reviewScroll');
                 for(const e of a.querySelectorAll('.understanding,.row,.notice,.subline,.step,.manual-step'))if(e.scrollWidth>e.clientWidth+8)errors.push(`${flow} spacing clip ${e.className}`);
                 const max=Math.max(0,s.scrollHeight-s.clientHeight);s.scrollTop=max;if(Math.abs(s.scrollTop-max)>2)errors.push(`${flow} spacing bottom unreachable`);
               }return errors;
@@ -422,7 +429,7 @@ async def main(*, check: bool = False) -> None:
             # every 15px line and the final CTA remain bounded without shrinking
             # the accessibility stress text. This is prototype evidence only;
             # physical iPhone evidence remains a separate gate.
-            ("ios","jpyc",500,932,True,False,"iphone-jpyc-large.png",True,False),
+            ("ios","jpyc",520,1200,True,False,"iphone-jpyc-large.png",True,False),
             ("ios","composite",320,568,False,False,"iphone-se-composite-top.png",False,False),
             # Compact 360/412px behavior remains covered by the 288-case matrix;
             # this taller review frame keeps a complete disclosure block above
@@ -441,9 +448,10 @@ async def main(*, check: bool = False) -> None:
                   if(t.checked!==d.dark){t.checked=d.dark;t.dispatchEvent(new Event('change',{bubbles:true}));}
                   const p=document.querySelector('#phone');p.style.width=`${d.width}px`;p.style.height=`${d.height}px`;
                   if(d.confirm)document.querySelector('#confirmInterpretation')?.click();
-                  const s=document.querySelector('.execution-card:not(.hidden) .card-scroll,.timeline:not(.hidden) .timeline-scroll');
-                  const action=s.querySelector('.action-footer');
-                  const blocks=[...s.querySelectorAll('.understanding,.correction-check,.row,.notice,.step,.manual-step,.action-footer')];
+                  const active=document.querySelector('.execution-card:not(.hidden),.timeline:not(.hidden)');
+                  const s=document.querySelector('#reviewScroll');
+                  const action=active.querySelector('.action-footer');
+                  const blocks=[...active.querySelectorAll('.understanding,.correction-check,.row,.notice,.step,.manual-step,.action-footer')];
                   const max=Math.max(0,s.scrollHeight-s.clientHeight);
                   let chosen=0;
                   let partialTopBlocks=0;
@@ -477,7 +485,7 @@ async def main(*, check: bool = False) -> None:
                     actionVisible=ar.top>=sr.top-2&&ar.bottom<=sr.bottom+2;chosen=0;
                   }
                   document.activeElement?.blur();
-                  return {captureMode:d.bottom?'BOTTOM_ACTION':'TOP',scrollTop:chosen,maxScroll:max,actionVisible,partialTopBlocks,scrollCue:document.querySelector('.execution-card:not(.hidden) .scroll-status,.timeline:not(.hidden) .scroll-status')?.dataset.position||null};
+                  return {captureMode:d.bottom?'BOTTOM_ACTION':'TOP',scrollTop:chosen,maxScroll:max,actionVisible,partialTopBlocks,scrollCue:document.querySelector('#scrollStatus')?.dataset.position||null};
                 }""",
                 {"platform":platform,"flow":flow,"width":width,"height":height,"large":large,"dark":dark,"bottom":bottom,"confirm":confirm},
             )

@@ -20,7 +20,7 @@
 | Plain Japanese | `config/user-facing-terms.ja.json`, `tests/plain-japanese-copy-cases.json`, `41_*` | 用語辞書、音声表記揺れ、初心者向け表示 |
 | JPYC／fee | `47_FEE_ROUTE_AND_ASSET_REGISTRY_SPEC.md`, fee/asset Schema | registry、zero-gas capability、provider/quote、固定量なしの手動復旧 |
 | Platform scaffold | `mobile/*`, `apps/*`, `core/shared/*`, `services/*` | Android/iOS/backendの境界。完成sourceではない |
-| Test | `tests/*`, `tools/run_full_validation.py` | 86 Python source compile、62 Python unit tests、4 Swift contract tests、schema、hash、copy、archive、secret、link、visual、adversarial、non-mutating validation |
+| Test | `tests/*`, `tools/run_full_validation.py` | 112 Python source compile、118 Python unit tests、5 Swift contract tests、schema、hash、copy、archive、secret、link、visual、adversarial、non-mutating validation |
 | Release | `config/build-metadata.json`, `tools/prepare_release_artifacts.py`, `tools/build_release.py`, `tools/verify_zip.py` | 生成と検証の分離、再現可能ZIP、clean extract |
 | Codex | `CODEX_START_HERE.md`, `codex/CODEX_REMAINING_WORK_MASTER_PROMPT.md`, `codex/CODEX_EXTERNAL_OPERATIONALIZATION_PROMPT_2026-07-29.md` | 機能仕様と、外部運用化・証拠取得の実行契約 |
 | Sources | `references/SOURCES.md`, `references/CLAIM_TO_SOURCE_MATRIX.md`, `config/source-pins.example.yaml` | 公式情報、主張との対応、freshness/revocation方針 |

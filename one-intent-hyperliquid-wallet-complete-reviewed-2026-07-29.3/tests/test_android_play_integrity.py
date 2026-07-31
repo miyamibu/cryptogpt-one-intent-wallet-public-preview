@@ -8,7 +8,11 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from services.attestation.android_play_integrity import PlayIntegrityVerificationError, verify_play_integrity_receipt
 from shared.canonical import canonical_bytes, canonical_hash
-from shared.signature_trust_store import SignatureTrustStore, TrustedVerifierKey
+from shared.signature_trust_store import (
+    SignatureTrustStore,
+    TrustedVerifierKey,
+    VerifierRole,
+)
 
 
 _PRIVATE = Ed25519PrivateKey.from_private_bytes(b"g" * 32)
@@ -17,6 +21,8 @@ _STORE = SignatureTrustStore(
         issuer="play-integrity-verifier-1",
         key_id="play-key-1",
         public_key=_PRIVATE.public_key().public_bytes(serialization.Encoding.Raw, serialization.PublicFormat.Raw),
+        role=VerifierRole.ATTESTATION,
+        allowed_domains=frozenset({"android-play-integrity-verifier-receipt-v1"}),
     )]
 )
 

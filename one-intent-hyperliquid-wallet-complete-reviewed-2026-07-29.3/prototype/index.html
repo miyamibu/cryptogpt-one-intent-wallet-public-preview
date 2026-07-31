@@ -61,41 +61,46 @@
       <div id="phone" class="phone ios" data-theme="light">
         <div class="sensor" aria-hidden="true"></div>
         <div class="screen">
-          <header class="app-header">
-            <div class="app-title">
-              <span class="eyebrow">Hyperliquid連携・非公式</span>
-              <h2>会話ウォレット</h2>
-            </div>
-            <button type="button" class="account" aria-label="口座と利用ネットワークを確認">0x1111…1111</button>
-          </header>
+          <div class="watermark-layer" aria-hidden="true">
+            <span>DEMO · NO WALLET · NO TRANSACTION</span>
+            <span>DEMO · NO WALLET · NO TRANSACTION</span>
+            <span>DEMO · NO WALLET · NO TRANSACTION</span>
+          </div>
+          <div class="screen-watermark screen-watermark-top" role="note">DEMO · NO WALLET CONNECTION · NO TRANSACTION</div>
 
-          <div class="simulation-strip" aria-label="画面見本の状態"><span aria-hidden="true">●</span>画面見本・実際の処理なし</div>
+          <div id="reviewScroll" class="review-scroll" tabindex="0" aria-label="画面見本の確認内容。縦方向に一つの領域としてスクロールできます">
+            <header class="app-header">
+              <div class="app-title">
+                <span class="eyebrow">Hyperliquid想定の画面見本（未接続・非公式）</span>
+                <h2>会話ウォレット</h2>
+              </div>
+              <button type="button" class="account" aria-label="デモ口座表示の見本を見る。実口座には接続していません">DEMO-ACCOUNT</button>
+            </header>
 
-          <section class="permission-rail" aria-label="会話操作の許可状態">
-            <span class="rail-dot" aria-hidden="true"></span>
-            <div><strong>制限付きで有効（画面例）</strong><small>30分・保存済みの相手・上限あり</small></div>
-            <button id="permissionButton" class="rail-button" type="button">確認・停止</button>
-          </section>
+            <div class="simulation-strip" aria-label="画面見本の状態"><span aria-hidden="true">◆</span>未接続の画面見本・実際の処理なし</div>
 
-          <section class="conversation" aria-label="依頼内容">
-            <div class="bubble assistant">話すだけで下書きを作ります。曖昧な金額・相手・ネットワーク・聞き間違いは、勝手に決めず確認します。</div>
-            <div id="userBubble" class="bubble user">BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。</div>
-          </section>
+            <section class="permission-rail" aria-label="例示設定の状態。実際には無効です">
+              <span class="rail-dot" aria-hidden="true"></span>
+              <div><strong>例示設定・実際には無効</strong><small>未接続・権限なし・保存なし</small></div>
+              <button id="permissionButton" class="rail-button" type="button">設定画面の見本を見る</button>
+            </section>
 
-          <p id="liveStatus" class="sr-only" role="status" aria-live="polite"></p>
-          <section id="executionCard" class="execution-card" aria-label="実行前の確認内容"></section>
-          <section id="timeline" class="timeline hidden" aria-label="処理の現在地"></section>
+            <section class="conversation" aria-label="依頼内容">
+              <div class="bubble assistant">話すだけで下書きを作ります。曖昧な金額・相手・ネットワーク・聞き間違いは、勝手に決めず確認します。</div>
+              <div id="userBubble" class="bubble user">BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。</div>
+            </section>
 
-          <footer class="composer">
-            <div class="input-row">
-              <button type="button" class="plus" aria-label="画像や資料を追加">＋</button>
-              <button type="button" class="fake-input" aria-label="文字で入力する">話すか、文字で入力</button>
-              <button id="micButton" type="button" class="mic" aria-label="音声入力を試す">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 15.25a3.75 3.75 0 0 0 3.75-3.75V6.75a3.75 3.75 0 1 0-7.5 0v4.75A3.75 3.75 0 0 0 12 15.25Zm-6-4a1 1 0 1 0-2 0 8 8 0 0 0 7 7.93V21H8.75a1 1 0 1 0 0 2h6.5a1 1 0 1 0 0-2H13v-1.82a8 8 0 0 0 7-7.93 1 1 0 1 0-2 0 6 6 0 1 1-12 0Z"/></svg>
-              </button>
-            </div>
-            <p id="assuranceText" class="assurance"></p>
-          </footer>
+            <p id="liveStatus" class="sr-only" role="status" aria-live="polite"></p>
+            <section id="executionCard" class="execution-card" aria-label="実行前の確認内容"></section>
+            <section id="timeline" class="timeline hidden" aria-label="処理の現在地"></section>
+          </div>
+
+          <p id="scrollStatus" class="scroll-status" data-position="top" aria-live="polite">
+            <span class="scroll-status-icon" aria-hidden="true">↓</span>
+            <span class="scroll-status-text">下に続きがあります</span>
+          </p>
+          <p id="assuranceText" class="assurance"></p>
+          <div class="screen-watermark screen-watermark-bottom" role="note">DEMO · NO WALLET CONNECTION · NO TRANSACTION</div>
         </div>
       </div>
     </section>

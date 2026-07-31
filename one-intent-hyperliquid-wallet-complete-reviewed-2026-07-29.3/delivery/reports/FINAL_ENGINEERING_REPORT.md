@@ -27,8 +27,8 @@ productionWritePermitted=false
 
 ## 検証済み
 
-- `python3 -B tools/check_python_sources.py`: 103 Python source files PASS。
-- `python3 -B tools/test_python_unit_suite.py`: 86 tests PASS。
+- `python3 -B tools/check_python_sources.py`: 112 Python source files PASS。
+- `python3 -B tools/test_python_unit_suite.py`: 118 tests PASS。
 - `python3 -B tools/run_local_sandbox.py self-test`: loopback限定local HTTP self-test PASS。
 - `swift test --package-path apps/ios --scratch-path /tmp/cryptogpt-swift-build-final`: Apple Swift 6.3.3／macOS arm64でcontract test 5件PASS。加えて、Team `PUBLICTEAM`のsigned iPhoneOS build、iPhone 12へのインストール・起動、Appium/WDA画面取得、無効CTAタップ不変、上下gestureをlocal-onlyで確認した（archive/IPA・配布署名の証明ではない）。
 - browser logical-pixel matrix: 288 cases PASS。
