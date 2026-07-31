@@ -3,7 +3,7 @@
   "scope": "SANITIZED_PUBLIC_PREVIEW_ONLY",
   "productionEvidence": false,
   "signed": false,
-  "privateSourceCommit": "e4af8a7dff8c08f6a1f27ba8c1d66e2156b4fbb8",
+  "privateSourceCommit": "bc446c6948713a0eb2f8008e08e60034f4f7877b",
   "exportPolicySha256": "d8a7b1618dae953315e26cc4e1e5f02d156cc89a02ba6a9d946cc42bc38329da",
   "sanitizedPackageTreeSha256": "bfdbbc4cca99b0be7ed60c22e5966babbc1157c47826aa467e11e3390ce70292",
   "scannerStatus": "PASS_BEFORE_DESTINATION_UPDATE"
