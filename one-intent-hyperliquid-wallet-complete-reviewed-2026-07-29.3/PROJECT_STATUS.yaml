@@ -90,8 +90,8 @@ trust_model:
   evidence_index_signature_required: true
 validation:
   static_package: PASS_AFTER_PIPELINE
-  python_source_files_compiled: 107
-  python_unit_tests: 88
+  python_source_files_compiled: 112
+  python_unit_tests: 98
   swift_contract_tests: 5
   current_local_evidence: delivery/evidence/core/reference-tests-current.json
   operationalization_evidence_binding: delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json
@@ -112,7 +112,7 @@ validation:
   known_loopholes_registered: 436
   security_invariants: 268
   loophole_regression_cases: 97
-  validator_self_test_assertions: 36
+  validator_self_test_assertions: 38
   operational_readiness_negative_assertions: 34
   runtime_authorization_negative_assertions: 50
   current_readiness_report: delivery/OPERATIONAL_READINESS_REPORT.json

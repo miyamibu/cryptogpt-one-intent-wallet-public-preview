@@ -333,7 +333,7 @@
     {
       "path": "FINAL_AUDIT_REPORT.md",
       "size": 7641,
-      "sha256": "f44cbe584d7c21065976de04d8196e484e53829d37cde8442799970e76d430be"
+      "sha256": "3216c9bac94ea9400f7587773969d85d108075c9c39cf98cf18c40e2071a62f3"
     },
     {
       "path": "FINAL_DELIVERY_INDEX.md",
@@ -353,7 +353,7 @@
     {
       "path": "PROJECT_STATUS.yaml",
       "size": 4955,
-      "sha256": "3385f8b36952b35bcbc1a506bb6f01b745610cd0acca4fac796be594b6dc1009"
+      "sha256": "eb6e57a951e30814ba27dd7d5eb2bdda4f46a93818538ba8f84b8aa1d637df0c"
     },
     {
       "path": "README.md",
@@ -378,7 +378,7 @@
     {
       "path": "VALIDATION_REPORT.md",
       "size": 5908,
-      "sha256": "d655d2ea8070a84bde926ee7cfb3a0e002383e7da09f6faca4423d7e8b54b29b"
+      "sha256": "5c674e21d0183f5fcde0389327ffff9296c02c7672303de0a73f13ae5e0efcd8"
     },
     {
       "path": "adapters/README.md",
@@ -422,8 +422,8 @@
     },
     {
       "path": "adapters/hyperliquid/fake_adapter.py",
-      "size": 6510,
-      "sha256": "80092d44b31f7c73289caaf66d77175062d07fefb61b47730634fec065717a60"
+      "size": 6727,
+      "sha256": "ad36ebc0f8d06dc084b6d2e22ac5c78b5eb9e07fc59f41b122e45ddf44d4489f"
     },
     {
       "path": "adapters/jpyc-ex-handoff/README.md",
@@ -447,13 +447,13 @@
     },
     {
       "path": "apps/README.md",
-      "size": 694,
-      "sha256": "66b590b5055d07e1807e1bec660bc1f5b686ea7f608cdb9d06b5a0995d5dd186"
+      "size": 709,
+      "sha256": "f875e247146d57f6dcf8fbbd0cdfb4a62b11f6ed93aa680a6d2e32f4514a992f"
     },
     {
       "path": "apps/android/README.md",
-      "size": 1354,
-      "sha256": "77fc637b2a9b778c164a1e5616bac6e1ba95adb09e6dd428599235f8e66db1f5"
+      "size": 1369,
+      "sha256": "cc5e23b261edeb36288dba9d18abdf53257fc6e8635e0bc345fe3e703457fb41"
     },
     {
       "path": "apps/android/app/build.gradle.kts",
@@ -527,8 +527,8 @@
     },
     {
       "path": "apps/android/gradle/wrapper/gradle-wrapper.properties",
-      "size": 252,
-      "sha256": "a180163249c7252412ddaee1c7adcf59f6494b1183136f690fbd9a3b8aaed00e"
+      "size": 339,
+      "sha256": "1e3d87ddfd70069f68afa0c9ddcaab26913c3baf3d809447b0362d2d49f57325"
     },
     {
       "path": "apps/android/gradlew",
@@ -702,8 +702,8 @@
     },
     {
       "path": "contracts/openapi.yaml",
-      "size": 13075,
-      "sha256": "eafe9fd4989d4381d48d4e38277413392d0c8708bf0b30e16a49c23a708bbc3f"
+      "size": 15364,
+      "sha256": "6cf660b326235ce5b2a3b89f8723ed6c3e6c3b25d01017b0facf9fdfded89d4f"
     },
     {
       "path": "core/shared/README.md",
@@ -727,8 +727,8 @@
     },
     {
       "path": "delivery/EXTERNAL_BLOCKERS.md",
-      "size": 14636,
-      "sha256": "ead1f632fbfd017d6c92f1cd05afc1a7c95a846e6692451d0d2d85716224b882"
+      "size": 14630,
+      "sha256": "d69ec99de589a45deef56ff81621784b9ebde29b0438203db376d1a21caa1820"
     },
     {
       "path": "delivery/GATE_DECISIONS.json",
@@ -743,7 +743,7 @@
     {
       "path": "delivery/IMPLEMENTATION_STATUS.yaml",
       "size": 2664,
-      "sha256": "e7bd8133c99110f1bc2980112b0fca80d5662971cbc0e9c516ea3164ab702ed8"
+      "sha256": "89b250e44cdc3bd385eedb47c9fed661781cba8d96ec1af8528a198135a214b6"
     },
     {
       "path": "delivery/OPERATIONAL_READINESS_REPORT.json",
@@ -758,17 +758,17 @@
     {
       "path": "delivery/STATUS_MANIFEST.json",
       "size": 588,
-      "sha256": "a98acdea7616071fbf9c5477df5a8d7dabaef1a17af773fc1aa28653d9044696"
+      "sha256": "6a5cd09daf1a3bcc65b116510dfbb171f53e10db84623e5a2c3d996870f952a1"
     },
     {
       "path": "delivery/STATUS_MANIFEST.md",
       "size": 491,
-      "sha256": "08d5a91469cda98281e06d5c30991b9b2356a728533a37530ba03d9ff46f6535"
+      "sha256": "3b9d51224f3e6711528d2c91347dd4c724a5ae405eeb8860fef86ba5691ae0fc"
     },
     {
       "path": "delivery/TEST_COMMANDS.jsonl",
-      "size": 2730,
-      "sha256": "f61595dbeba1be8bee997b93a68bd1724adfe91fa14f6c6c72605c031ae4a00f"
+      "size": 2763,
+      "sha256": "ed7f45a4930387d98a3d860bdb4704beeb1531a2a94c4023ad5671e67b751f14"
     },
     {
       "path": "delivery/evidence-index.json",
@@ -782,8 +782,8 @@
     },
     {
       "path": "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-      "size": 1515,
-      "sha256": "699f566b806a3f7b329be66a681d26010bd4e7bab2d348acaf1948c71595d69e"
+      "size": 1528,
+      "sha256": "53b33050e68c31888e0d1220971efff0220d78d6492b556887fee107bb82c0c6"
     },
     {
       "path": "delivery/evidence/android/PIXEL9A_LOCAL_RECHECK_20260729.png",
@@ -792,8 +792,8 @@
     },
     {
       "path": "delivery/evidence/android/README.md",
-      "size": 667,
-      "sha256": "40761eaab408340fdd2ec60ef7c5bf865c66bf4bf1ec52909d59754500394761"
+      "size": 682,
+      "sha256": "f2d03a9311fef0664ef237e4f4a7c46da489346a025990c697186f6b05f2d596"
     },
     {
       "path": "delivery/evidence/android/RELEASE_BUILD_RECHECK_20260729.md",
@@ -828,7 +828,7 @@
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
       "size": 2413,
-      "sha256": "652605bae603deb5b348460a9d5073e845cf253ab2748fcdcff7d1a3af1cedc9"
+      "sha256": "ab5f84a6776458f5bbf12a40d2f876d6cacb80f92fb56eb3020e70f23e18f86a"
     },
     {
       "path": "delivery/evidence/core/reference-tests.json",
@@ -882,13 +882,13 @@
     },
     {
       "path": "delivery/evidence/ios/iphone12-appium-recheck-20260729.png",
-      "size": 177655,
-      "sha256": "5c87b7bd369c0c91dc03cc7f13ca7edfd595f0a31bf2ff7f30398e8f58ea29c0"
+      "size": 177511,
+      "sha256": "a58a7f8f1b41028430c29e927c4e96704f4971b2a89dcfb7805da478d394ec2b"
     },
     {
       "path": "delivery/evidence/ios/iphone12-final-20260729.png",
-      "size": 177281,
-      "sha256": "8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea"
+      "size": 177137,
+      "sha256": "a8bb2dbcdb743e4cefb0fd5965cb12a51260196d2fa7d367f005e8cf60d5f014"
     },
     {
       "path": "delivery/evidence/jpyc-ex/README.md",
@@ -903,7 +903,7 @@
     {
       "path": "delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json",
       "size": 447854,
-      "sha256": "b10f7f9c6eec8c861f7cab69f648d411dfc24fe3b280ace257ac3b88471bd2ad"
+      "sha256": "9452dfbb7c13b1104edcfd7ed66290400595850d5366249db25bf669c6d08f65"
     },
     {
       "path": "delivery/evidence/operations/README.md",
@@ -1052,8 +1052,8 @@
     },
     {
       "path": "examples/authorization-envelope-protected-confirmation.json",
-      "size": 1171,
-      "sha256": "ac2f843a1c32e2c10b723a8c34ddafae9ab50524f8c935e53304578977e28801"
+      "size": 1159,
+      "sha256": "7babcf63ab02ee51383a523221f33c9168d191b5fa0a7893a9ab4d7f82f2a9ff"
     },
     {
       "path": "examples/execution-capsule-composite.json",
@@ -1212,58 +1212,58 @@
     },
     {
       "path": "prototype/screenshots/android-compact-spot-large-dark.png",
-      "size": 103967,
-      "sha256": "a4a9038b94ec67344710398baa62c7e136d5d90c782b865c199b21a8800c4b5d"
+      "size": 127670,
+      "sha256": "b0741c26ab576f6c88c6516f8c44edebbaec18826f64b7435838a07ac237bceb"
     },
     {
       "path": "prototype/screenshots/android-tall-partial-dark.png",
-      "size": 117933,
-      "sha256": "889cdb6b37b5215d83241a4f7cd0378d877e2a2b00248462454daef814a870ba"
+      "size": 118470,
+      "sha256": "876f2765371825e1fc6b31dc894bdb51319abef2842db36820e789e20f39c8bd"
     },
     {
       "path": "prototype/screenshots/iphone-jpyc-large.png",
-      "size": 124686,
-      "sha256": "e8c2be595354ce2c1808cf11ddb01b2324664d87870054d9bfbbefa54dbc3ea9"
+      "size": 135406,
+      "sha256": "9a04c7f94cc875dc51e573b9ff350a261d666be1edc78ecf0d60581da802b8d3"
     },
     {
       "path": "prototype/screenshots/iphone-large-withdraw.png",
-      "size": 80830,
-      "sha256": "62e472ff28ae30fbc25b6bf5e6f90e8046067f644ec92f6dbb6914ca51941053"
+      "size": 91885,
+      "sha256": "f0646b8d68c5421a0b421e784aa4118a9cb8a295fde5bf01fb2c8b7dae6eddea"
     },
     {
       "path": "prototype/screenshots/iphone-limited-authorization.png",
-      "size": 110222,
-      "sha256": "80fdfda9aa329c1a01bf089d647b8d9bdfa0e036c5223a9e008d3c14b3f2af14"
+      "size": 111048,
+      "sha256": "2e8148ddfdbf76fb4512249fd4898f7376b6acef19f3f6145c8b539e4798104e"
     },
     {
       "path": "prototype/screenshots/iphone-perp-after-confirmation.png",
-      "size": 118385,
-      "sha256": "9c09bddc80bfe1031fab371b2695c1aa68e0a8b78ef26c22744b1c770a27a6f6"
+      "size": 125413,
+      "sha256": "99e32ed17bc42335774f8e6b12fcd63305ed6df43bf50af605070508e7d02e5d"
     },
     {
       "path": "prototype/screenshots/iphone-perp-before-confirmation.png",
-      "size": 100583,
-      "sha256": "c0120a9069f9b3c12741c600a94fc3c7a518bd517432cfb4d77e9dd09ce54cf8"
+      "size": 100945,
+      "sha256": "388eb46f45ee260ccf87e3e22706b5b5c8b95bf8a102347b5f55f472fac44455"
     },
     {
       "path": "prototype/screenshots/iphone-se-composite-top.png",
-      "size": 69448,
-      "sha256": "e88aa9084a9b98782e99df6f79b9f1a3f37c4fa09401ef8a6ae8247d9dee2e6b"
+      "size": 77782,
+      "sha256": "06caa7a307e311104917d073064087ed12371b8f8aacce28278faf979c6c94fd"
     },
     {
       "path": "prototype/screenshots/pixel9a-fee-dark.png",
-      "size": 118500,
-      "sha256": "ffaeed32980fa76785b921d60750d193ef5996e8ab785dbfe71cf4acedda9166"
+      "size": 119022,
+      "sha256": "b5ff8074b21d2b4d31c71571ea6c9e815aa9f3027df22e8c98ff33a0e1c2f761"
     },
     {
       "path": "prototype/screenshots/pixel9a-manual.png",
-      "size": 130792,
-      "sha256": "01f0abc272b4ad6e48401c8dbb29933e885f2ff6bf5612d9961daeda6f1eabb8"
+      "size": 131173,
+      "sha256": "7f59d0b3e9b3beeda5b4aafdf0590a1932c4e736c3e0467255eb6dd682dd9462"
     },
     {
       "path": "prototype/styles.css",
-      "size": 20113,
-      "sha256": "7c4867d879c77c271f260d5f0929f58d2c2ce4072e7aa50513b9abfdd51f3d4f"
+      "size": 21137,
+      "sha256": "85effe27349342313d18049dfd2dbea30ae57beeb398fd7bc2f927d66016cdec"
     },
     {
       "path": "references/CLAIM_TO_SOURCE_MATRIX.md",
@@ -1278,7 +1278,7 @@
     {
       "path": "release/ARTIFACT_HASHES.txt",
       "size": 2596,
-      "sha256": "8bfe1e107382b294c82f4c16573db8e24eed650dae86e4b24e8358392534d39f"
+      "sha256": "20315a29fa5067ab089ea8cf5e4bfb8a6a232a6449e00c34cb82fd9685f37174"
     },
     {
       "path": "release/BUILD_ENVIRONMENT.md",
@@ -1287,8 +1287,8 @@
     },
     {
       "path": "release/CODEX_EXECUTION_REPORT.md",
-      "size": 2080,
-      "sha256": "3ccd6ec613683d7a7a959b0cf65363db0b8af43b9dfb87dec0cba10c5147eea7"
+      "size": 2095,
+      "sha256": "9e43c640701487597a8440da01ded6726c80271a1baff314a14e99a2c377739e"
     },
     {
       "path": "release/OPERATIONAL_HANDOFF.md",
@@ -1298,7 +1298,7 @@
     {
       "path": "release/PROVENANCE.json",
       "size": 2863,
-      "sha256": "54e6b34ae67d50ffd0447e587fc9934eb35654272371b6debec75aed1586f22f"
+      "sha256": "eb1bd9c47961e3760408e04f0fb538b31db79a902ea1f32f705a22e1443cd1d1"
     },
     {
       "path": "release/README.md",
@@ -1357,8 +1357,8 @@
     },
     {
       "path": "schemas/atomic-signer-request-v2.schema.json",
-      "size": 1217,
-      "sha256": "88678747aa36da0712ec47691d157b282c62231f2442057e84dcf9c2fc9d1b22"
+      "size": 2257,
+      "sha256": "187d8b9deac6871dd1d23c9f141d320fe8b1b5f46d1f9142c8f39781d524d1fe"
     },
     {
       "path": "schemas/authorization-envelope.schema.json",
@@ -1407,8 +1407,8 @@
     },
     {
       "path": "schemas/operation-spec-v2.schema.json",
-      "size": 1376,
-      "sha256": "35194efe3fcf157dc35ac340838a28e7ce8e5f6cc139665db3edc710d77826a2"
+      "size": 6667,
+      "sha256": "db418794af48388781781c369ec434ecfd745fed0c9d78ded64d1466f39c4d58"
     },
     {
       "path": "schemas/operational-evidence-index.schema.json",
@@ -1487,8 +1487,8 @@
     },
     {
       "path": "schemas/runtime-decision-envelope-v2.schema.json",
-      "size": 1184,
-      "sha256": "5328b376bcc6c90046f40265006991226d68a59f0d7e7ad4d33dec52267d2207"
+      "size": 2548,
+      "sha256": "03ee5028db8ad5f0d0a7080f72db023d77fd2a63819f86e3113693527444401e"
     },
     {
       "path": "schemas/runtime-state-bundle.schema.json",
@@ -1512,8 +1512,8 @@
     },
     {
       "path": "schemas/user-review-receipt-v2.schema.json",
-      "size": 983,
-      "sha256": "1bf60f1273b8b9200a1fdc596b31e4e09f86158fb8f3bcfe4d28512b12ffb4c2"
+      "size": 2320,
+      "sha256": "8b7c2dbfc54c543a250e5860fe61d29f7d0a78c8c2c1af722963abd89088c5cb"
     },
     {
       "path": "security/KEY_MANAGEMENT_REQUIREMENTS.md",
@@ -1556,9 +1556,14 @@
       "sha256": "90659d196332b0978bd53de7a8b1df38bd8cfd79d5157d1794292531114dd3c2"
     },
     {
+      "path": "services/attestation/android_play_integrity.py",
+      "size": 6294,
+      "sha256": "a1539861307e3d4176af6d2eb581653b94ec61780fa8c9d517f7a8c8da50d467"
+    },
+    {
       "path": "services/attestation/ios_app_attest.py",
-      "size": 8532,
-      "sha256": "02b14d6f0511bfbd2ddf1878f48c93a10e8c5b72ca3b35aa559c5d1550ab3437"
+      "size": 10167,
+      "sha256": "bcd2afa6c07bd44454aea8572104540fe781dfdc26f79b75fec788552b3d84bf"
     },
     {
       "path": "services/control-api/README.md",
@@ -1612,8 +1617,8 @@
     },
     {
       "path": "services/local_sandbox/server.py",
-      "size": 21739,
-      "sha256": "5cada85e3eccc90adb523308f63513c84cdf9cf6d595f506759dd4c835e7a809"
+      "size": 22888,
+      "sha256": "1f66e8bfcd1f614379fbcf5f6b30c523654a1e5fcce101a8681aff103f782034"
     },
     {
       "path": "services/nontransactional-support-gateway/README.md",
@@ -1632,8 +1637,8 @@
     },
     {
       "path": "services/nontransactional_support_gateway/gateway.py",
-      "size": 4967,
-      "sha256": "082c890a524b3c54589ff9b7d4abcdac44e78808f0af0608f98f9b8510d945ef"
+      "size": 7695,
+      "sha256": "ebab83a00932e072b7c8d1f45e49e4889f06270abf99c9576fab46a5b3e1c971"
     },
     {
       "path": "services/reconciler/__init__.py",
@@ -1681,6 +1686,11 @@
       "sha256": "2a4ff5ee299a924ee23454bb1d453c9fec04e8f54dbae1bebc86e47686926bb4"
     },
     {
+      "path": "shared/atomic_signer_contract.py",
+      "size": 11516,
+      "sha256": "6b86c877919269b996d25d3135a09faedf140023d01ab4999fa2795fa2270144"
+    },
+    {
       "path": "shared/canonical-vectors-v1.json",
       "size": 2187,
       "sha256": "112d55f8054447364ebebcd6bf655a49371143b7ac5bd670c3fd1beb6ff925b1"
@@ -1697,8 +1707,8 @@
     },
     {
       "path": "shared/domain.py",
-      "size": 41759,
-      "sha256": "0999c473f76138ef49abe35290fa6a603ae091c46c45bff2f3c565c1e581f84f"
+      "size": 44048,
+      "sha256": "006946d581182f11f272f80e0602bf7274602816fe5fa06ff94a6a5c966dbf0a"
     },
     {
       "path": "shared/intent_compiler.py",
@@ -1714,6 +1724,11 @@
       "path": "shared/policy_engine.py",
       "size": 193,
       "sha256": "a259c23cf64e9e5b306e02a0aa4ce39f73a6a0aa0aacf6f1c6768228db1480d7"
+    },
+    {
+      "path": "shared/signature_trust_store.py",
+      "size": 4392,
+      "sha256": "4b24fcb0dd680faa73f3f5c51913c59b3d74e26c3bed882321e25f6bb2288d21"
     },
     {
       "path": "shared/state_machine.py",
@@ -1773,7 +1788,7 @@
     {
       "path": "tests/prototype-visual-evidence.json",
       "size": 5996,
-      "sha256": "b2b643f2df91cb5ee060d86b9a4f39646485971a6498bbf31976f4f13961e5dc"
+      "sha256": "931f95026d08400b5680254f33c82896d7c0c4d95411bd8957066ffe14bf21e1"
     },
     {
       "path": "tests/release-gate-checklist.md",
@@ -1786,14 +1801,24 @@
       "sha256": "61aaa3728bbe9b6d6e1336e6f8f57883b10b8ee5b049fab9591a9713fd4d4509"
     },
     {
+      "path": "tests/test_android_play_integrity.py",
+      "size": 4041,
+      "sha256": "b46ac6e9a97e0f6f6d1c75035e4e072d7f9432cda1545f52bebd6c36d68fa54e"
+    },
+    {
+      "path": "tests/test_atomic_signer_contract.py",
+      "size": 8719,
+      "sha256": "7eb89d04b91540f77084748554a6eabd6cf5751189abfcb403c9a67d5ca973e8"
+    },
+    {
       "path": "tests/test_canonical.py",
       "size": 1369,
       "sha256": "71b58c52903fd728dfd6d49364af62fe546af341df94a3e9bc7dc982544bfffd"
     },
     {
       "path": "tests/test_capsule_signer.py",
-      "size": 12153,
-      "sha256": "fb51f828236596f80d1e28a8d1e98c87bec6fcf4d405d55697b84b8c231d4446"
+      "size": 12507,
+      "sha256": "7dd960a523ce5c4cf6fd88a99f16499767f8e7c8d210f1ce0def2340d37726d9"
     },
     {
       "path": "tests/test_control_api.py",
@@ -1802,28 +1827,28 @@
     },
     {
       "path": "tests/test_fee_jpyc_hyperliquid.py",
-      "size": 4800,
-      "sha256": "f8ca3cb68332758474441ad8cd21e8e861736172ba0cb1c2d82afc59241bd83a"
+      "size": 4810,
+      "sha256": "0a04e46466a593346174f6af645f08f7beda48afeb677ec347c25bfcad76d9b5"
     },
     {
       "path": "tests/test_intent_and_boundary.py",
-      "size": 2579,
-      "sha256": "707d8566210abe03f061a125e1c725a315c092ac30570c774cefc319b3910929"
+      "size": 4027,
+      "sha256": "76109abb4d081a275b61363037ccc073f4ce6369e63e979b564ad47cb348d1af"
     },
     {
       "path": "tests/test_ios_app_attest.py",
-      "size": 3767,
-      "sha256": "d18a3224073fc32b0e3693bf7eade7e5e60524519120660b5b8b2076da5a9f19"
+      "size": 4275,
+      "sha256": "226b24d97116a96d060047a5a0fa6b8aa175d075588c5bd2cd753a09f3214054"
     },
     {
       "path": "tests/test_ledger_store.py",
-      "size": 17017,
-      "sha256": "dc6f2d5da6c1d4dedadaf382edc5e105431d4f5f3c5e65b2fb37a05b5a1d5a6b"
+      "size": 16982,
+      "sha256": "3c2cb56432fb976cb2ee6f41ecbb66192e5f236759b5c88b9f2e9758976f3972"
     },
     {
       "path": "tests/test_local_sandbox.py",
-      "size": 3558,
-      "sha256": "f2ac542278e7b25385b9bc748fe8fd4201b561f3316709fcf423103b2880b6f8"
+      "size": 3714,
+      "sha256": "f29411ffe80791c998484bdd1a530f43953f23fc25aad068bee52e5af5aff75e"
     },
     {
       "path": "tests/test_readiness_tools.py",
@@ -1842,8 +1867,8 @@
     },
     {
       "path": "tests/test_security_hardening.py",
-      "size": 15722,
-      "sha256": "f22474a435feb197be35e2a05cfa7c2ac05d63c0eb303caa84e4a58f78cbdcf9"
+      "size": 15893,
+      "sha256": "0675d7faa3793c755c99aaff8a7bffe76036e84c70f5c645ad87dc41149a7328"
     },
     {
       "path": "tests/visual-regression-cases.yaml",
@@ -1962,8 +1987,8 @@
     },
     {
       "path": "tools/check_toolchain_lock.py",
-      "size": 2887,
-      "sha256": "46557f82b502256764eee71800116b2f48395f5218699dad9a35aedc1f077e9b"
+      "size": 3253,
+      "sha256": "82fcc9b3840ff4adebac34de93fa5c4c639b3b09a76f495d1848b47d99944ec2"
     },
     {
       "path": "tools/generate_coverage_matrix.py",
@@ -1992,8 +2017,8 @@
     },
     {
       "path": "tools/generate_release_contract_artifacts.py",
-      "size": 25119,
-      "sha256": "b22f90a453e6bbf8581bc588b308e000ef3b64c685216ea721f74ecc905098bf"
+      "size": 25134,
+      "sha256": "f1c0dc7d105b4942176c6e9fd7c7416ee4940de9dde44618d2d7e9fb4d15b43d"
     },
     {
       "path": "tools/generate_reports.py",
@@ -2047,8 +2072,8 @@
     },
     {
       "path": "tools/run_local_sandbox.py",
-      "size": 6472,
-      "sha256": "e240394b7a0b3180cf68979f8ddf5c4b81d07e7481ff936f6fb49d87a0895e03"
+      "size": 6590,
+      "sha256": "76bca5aeb7243d443dab2f51f22eb27a12319cc56cc85dee9b40fee0f578fadc"
     },
     {
       "path": "tools/runtime_authorization.py",
@@ -2107,8 +2132,8 @@
     },
     {
       "path": "tools/test_prototype.py",
-      "size": 37541,
-      "sha256": "41505b04cc72e5f929ce432d7c6183e1a945b64fd1319a2d18a5b1ca70a2bdc8"
+      "size": 37872,
+      "sha256": "29988ade86894d00a49e63a1cb45ea5129911f43ac0658cc1fb9187109d153bb"
     },
     {
       "path": "tools/test_python_unit_suite.py",
@@ -2142,8 +2167,8 @@
     },
     {
       "path": "tools/validate_package.py",
-      "size": 73784,
-      "sha256": "b63110c65c7bd17e70ae98501c93805ecd6f2a6597c22e095a8f2b635fdfb459"
+      "size": 74911,
+      "sha256": "8266aeebdd8ead60f9d41ea1af40bb7e9d30ad5de29f005e13250af5f19bf1cc"
     },
     {
       "path": "tools/verify_zip.py",

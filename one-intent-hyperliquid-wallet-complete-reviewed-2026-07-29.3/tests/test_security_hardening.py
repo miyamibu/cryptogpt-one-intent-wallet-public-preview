@@ -200,6 +200,9 @@ class AdapterHardeningTests(unittest.TestCase):
 
     def test_fake_hyperliquid_rejects_idempotency_conflict_overfill_and_negative_age(self) -> None:
         adapter = FakeHyperliquidAdapter(testnet_write_enabled=True)
+        account = adapter.read_account("acct")
+        self.assertEqual(account["confirmationState"], "SIMULATED_ACCEPTED")
+        self.assertFalse(account["confirmed"])
         adapter.place_order(account="acct", market_id="BTC-PERP", side="buy", amount="1", client_id="client")
         with self.assertRaises(DomainError):
             adapter.place_order(account="acct", market_id="BTC-PERP", side="buy", amount="2", client_id="client")

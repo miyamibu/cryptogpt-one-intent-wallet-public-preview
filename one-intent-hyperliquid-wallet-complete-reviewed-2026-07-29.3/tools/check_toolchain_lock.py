@@ -32,6 +32,10 @@ def main() -> int:
         value = android.get(key)
         if not isinstance(value, str) or not value.endswith("_LOCAL_ONLY"):
             errors.append(f"Android {key} must be recorded as PRESENT_LOCAL_ONLY and cannot be a release attestation")
+    wrapper = (ROOT / "apps/android/gradle/wrapper/gradle-wrapper.properties").read_text(encoding="utf-8")
+    expected_distribution_hash = "b266d5ff6b90eada6dc3b20cb090e3731302e553a27c5d3e4df1f0d76beaff06"
+    if f"distributionSha256Sum={expected_distribution_hash}" not in wrapper:
+        errors.append("Gradle 9.3.1 wrapper distribution checksum is not pinned")
     controls = lock.get("releaseControls", {})
     for key in ("networkAccessForValidation", "productionWritePermitted", "nativeSignedArtifactsAvailable", "sourcePinContentHashesPopulated", "artifactSigningAvailable", "twoPersonApprovalProvisioned"):
         if controls.get(key) is not False:

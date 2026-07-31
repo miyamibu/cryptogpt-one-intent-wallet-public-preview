@@ -38,6 +38,29 @@ class DomainError(ValueError):
     pass
 
 
+class FrozenDict(dict[str, Any]):
+    """A JSON-compatible dictionary that cannot be mutated after creation."""
+
+    def _blocked(self, *_args: Any, **_kwargs: Any) -> None:
+        raise TypeError("frozen mapping cannot be mutated")
+
+    __setitem__ = _blocked
+    __delitem__ = _blocked
+    clear = _blocked
+    pop = _blocked
+    popitem = _blocked
+    setdefault = _blocked
+    update = _blocked
+
+
+def _deep_freeze(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return FrozenDict({key: _deep_freeze(child) for key, child in value.items()})
+    if isinstance(value, (list, tuple)):
+        return tuple(_deep_freeze(child) for child in value)
+    return value
+
+
 class GateStatus(str, Enum):
     NO_GO = "NO_GO"
     BLOCKED_INTERNAL = "BLOCKED_INTERNAL"
@@ -94,6 +117,11 @@ class ActionPlanDraft:
     material_ambiguities: tuple[str, ...] = ()
     user_confirmed: bool = False
 
+    def __post_init__(self) -> None:
+        if not isinstance(self.proposed, Mapping):
+            raise DomainError("proposed intent must be an object")
+        object.__setattr__(self, "proposed", _deep_freeze(self.proposed))
+
     @property
     def executable(self) -> bool:
         return self.user_confirmed is True and not self.material_ambiguities
@@ -149,19 +177,43 @@ class ActionPlanDraft:
             raise DomainError("ambiguous draft cannot be confirmed")
         canonical_bytes(proposed)
 
-    def confirm(self, resolved_ambiguities: set[str], interpretation: str) -> "ActionPlanDraft":
-        if not isinstance(resolved_ambiguities, set) or any(not isinstance(item, str) for item in resolved_ambiguities):
-            raise DomainError("resolved ambiguities must be a set of text identifiers")
-        missing = set(self.material_ambiguities) - resolved_ambiguities
-        unknown = resolved_ambiguities - set(self.material_ambiguities)
+    def confirm(self, resolved_ambiguities: Mapping[str, str], interpretation: str) -> "ActionPlanDraft":
+        if not isinstance(resolved_ambiguities, Mapping) or any(
+            not isinstance(key, str) or not isinstance(value, str)
+            for key, value in resolved_ambiguities.items()
+        ):
+            raise DomainError("resolved ambiguities must be a typed mapping")
+        missing = set(self.material_ambiguities) - set(resolved_ambiguities)
+        unknown = set(resolved_ambiguities) - set(self.material_ambiguities)
         if missing:
             raise DomainError(f"material ambiguity remains: {sorted(missing)}")
         if unknown:
             raise DomainError(f"unknown ambiguity resolution supplied: {sorted(unknown)}")
+        typed = dict(self.proposed)
+        for ambiguity, resolution in resolved_ambiguities.items():
+            _bounded_text(resolution, f"resolution for {ambiguity}", maximum=512)
+            if ambiguity == "方向":
+                if resolution not in {"LONG", "SHORT"}:
+                    raise DomainError("position side resolution must be LONG or SHORT")
+                typed["positionSide"] = resolution
+            elif ambiguity == "ネットワーク":
+                if not _CAIP2_RE.fullmatch(resolution):
+                    raise DomainError("network resolution must be a CAIP-2 identifier")
+                typed["network"] = resolution
+            elif ambiguity == "ペイパチャルという語の意味":
+                if resolution != "PERPETUAL_ORDER":
+                    raise DomainError("ambiguous product term must resolve to a typed operation")
+                typed["operationType"] = resolution
+            elif ambiguity == "生産価格という語の意味":
+                if resolution != "LIQUIDATION_PRICE":
+                    raise DomainError("ambiguous risk term must resolve to a typed field")
+                typed["riskDisplay"] = resolution
+            else:
+                raise DomainError(f"no typed resolution rule exists for: {ambiguity}")
         confirmed = ActionPlanDraft(
             source_utterance=self.source_utterance,
             normalized_interpretation=interpretation,
-            proposed=dict(self.proposed),
+            proposed=typed,
             material_ambiguities=(),
             user_confirmed=True,
         )

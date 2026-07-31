@@ -7,7 +7,7 @@
 - gates: `0/37` passed
 - claims: `0/93` accepted
 - sourceCommit: `unavailable`
-- sourceTreeDigest: `sha256:88751affcc1283294e074b71864865472080d2974789d3ac902f5799474948b5`
-- artifactDigest: `sha256:86943e4b3a70ab3cb2756f198c93ca32cc5cee73ca1fe4357e427b7c04536038`
+- sourceTreeDigest: `sha256:ea4fb77917638ce38173329ca5c51a2eb41f91ffaf745d5e61abb0bc1687fdf7`
+- artifactDigest: `sha256:8ba9a21897b624dad3d2b4429843f0e7161511020f0ed625838d9ca2c2464d46`
 
 > This is local design/evidence status only. It is not production approval.

@@ -59,4 +59,4 @@ class FeeJpycHyperliquidTests(unittest.TestCase):
         with self.assertRaises(DomainError):
             adapter.validate_perpetual_review(order.client_id)
         adapter.cancel_all()
-        self.assertEqual(adapter.orders["c1"].state, "cancelled")
+        self.assertEqual(adapter.orders["c1"].state, "SIMULATED_CANCELLED")

@@ -23,9 +23,19 @@ def proof(authorization_id: str, device_id: str, account: str, capsule_hash: str
     return canonical_hash("dpop-proof-v1", {"authorizationId": authorization_id, "deviceId": device_id, "account": account, "capsuleHash": capsule_hash, "nonce": nonce})
 
 
+def typed_resolutions(draft: ActionPlanDraft) -> dict[str, str]:
+    values = {
+        "ペイパチャルという語の意味": "PERPETUAL_ORDER",
+        "生産価格という語の意味": "LIQUIDATION_PRICE",
+        "方向": "LONG",
+        "ネットワーク": "eip155:42161",
+    }
+    return {ambiguity: values[ambiguity] for ambiguity in draft.material_ambiguities}
+
+
 def fixtures(now: int = 1000):
     draft = parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。")
-    draft = draft.confirm(set(draft.material_ambiguities), "BTCを500 USDCで先物取引（期限なし）。清算価格を表示。")
+    draft = draft.confirm(typed_resolutions(draft), "BTCを500 USDCで先物取引（期限なし）。清算価格を表示。")
     registry = SignedRegistry(
         registry_id="registry-test-1", sequence=1, valid_from=900, expires_at=2000,
         signer_key_id="test-key", signature="test-signature", signature_valid=True,
@@ -63,7 +73,7 @@ class CapsuleSignerTests(unittest.TestCase):
             "finalPayload": dict(capsule.final_payload), "expiresAt": capsule.expires_at,
         }
         draft = parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。").confirm(
-            set(parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。").material_ambiguities), "確認"
+            typed_resolutions(parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。")), "確認"
         )
         with self.assertRaises(DomainError):
             compile_capsule(draft, live_state=live, registry=registry, quote=replacement, now=1000)
@@ -84,7 +94,7 @@ class CapsuleSignerTests(unittest.TestCase):
             "expiresAt": capsule.expires_at,
         }
         draft = parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。")
-        draft = draft.confirm(set(draft.material_ambiguities), "確認")
+        draft = draft.confirm(typed_resolutions(draft), "確認")
         with self.assertRaises(DomainError):
             compile_capsule(draft, live_state=altered_live, registry=registry, quote=quote, now=1000)
         expired = quote.__class__(**{**quote.__dict__, "expires_at": 1000})
@@ -173,6 +183,6 @@ class CapsuleSignerTests(unittest.TestCase):
             "finalPayload": payload, "expiresAt": capsule.expires_at,
         }
         draft = parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。")
-        draft = draft.confirm(set(draft.material_ambiguities), "確認")
+        draft = draft.confirm(typed_resolutions(draft), "確認")
         with self.assertRaises(DomainError):
             compile_capsule(draft, live_state=live, registry=fake_registry, quote=fake_quote, now=1000)

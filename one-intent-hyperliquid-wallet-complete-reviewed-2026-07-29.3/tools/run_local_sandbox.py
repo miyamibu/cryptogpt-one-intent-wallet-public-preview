@@ -81,8 +81,13 @@ def self_test() -> int:
         status, _, draft = _request(base + "/v1/draft", body={"utterance": "BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。"})
         if status != 200 or draft.get("primaryActionEnabled") is not False or not draft.get("materialAmbiguities"):
             raise RuntimeError(f"draft fail-closed contract failed: {status} {draft}")
-        status, _, support = _request(base + "/v1/support/getGenericSafetyHelp", body={"body": {"topicId": "general"}})
-        if status != 200 or support.get("writeAvailableHere") is not False or support.get("executable") is not False:
+        status, _, support = _request(
+            base + "/v1/support/safety-help",
+            body={"topic": "PROTECT_RECOVERY_SECRET", "locale": "ja-JP"},
+        )
+        if status != 200 or support.get("executable") is not False or any(
+            key in support for key in ("transaction", "payload", "signature", "deepLink", "handoff")
+        ):
             raise RuntimeError(f"support boundary failed: {status} {support}")
         status, _, blocked = _request(base + "/v1/execute", body={})
         if status != 405 or blocked.get("productionWritePermitted") is not False:

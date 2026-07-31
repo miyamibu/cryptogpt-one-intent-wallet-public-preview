@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "1.0",
+  "scope": "SANITIZED_PUBLIC_PREVIEW_ONLY",
+  "productionEvidence": false,
+  "signed": false,
+  "privateSourceCommit": "c74f09f1c73368aa9e061ff47d0dc0c598b6dcf6",
+  "exportPolicySha256": "7acdc3f310b5b595dc3c6b44ecab7c5cf297f75fb0ba2b39ee1e88e31588fe04",
+  "sanitizedPackageTreeSha256": "ac42d982f178f097094b3e5968966299b29e9c63bd9a17334d6ade7f73802b4e",
+  "scannerStatus": "PASS_BEFORE_DESTINATION_UPDATE"
+}

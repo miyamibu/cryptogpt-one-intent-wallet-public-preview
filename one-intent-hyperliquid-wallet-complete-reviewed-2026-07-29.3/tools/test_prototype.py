@@ -408,7 +408,11 @@ async def main(*, check: bool = False) -> None:
 
         screenshot_plan = [
             ("ios","perp",390,844,False,False,"iphone-perp-before-confirmation.png",False,False),
-            ("ios","perp",430,932,False,False,"iphone-perp-after-confirmation.png",True,True),
+            # The bottom-action evidence frame is taller than the device matrix
+            # viewport so the screenshot starts on a complete disclosure block.
+            # Real 390/375px device behavior remains enforced by the 288-case
+            # matrix above; this frame is a review artifact, not device proof.
+            ("ios","perp",430,1000,False,False,"iphone-perp-after-confirmation.png",True,True),
             ("android","fee",412,915,False,True,"pixel9a-fee-dark.png",False,False),
             ("ios","withdraw",375,667,True,False,"iphone-large-withdraw.png",False,False),
             ("android","manual",412,915,False,False,"pixel9a-manual.png",False,False),
@@ -420,10 +424,10 @@ async def main(*, check: bool = False) -> None:
             # physical iPhone evidence remains a separate gate.
             ("ios","jpyc",500,932,True,False,"iphone-jpyc-large.png",True,False),
             ("ios","composite",320,568,False,False,"iphone-se-composite-top.png",False,False),
-            # The compact 360px stress viewport remains covered by the 288-case
-            # matrix; this final frame uses a renderer-stable review viewport so
-            # Linux font metrics do not cut the last review block.
-            ("android","spot",430,844,True,True,"android-compact-spot-large-dark.png",True,False),
+            # Compact 360/412px behavior remains covered by the 288-case matrix;
+            # this taller review frame keeps a complete disclosure block above
+            # the bottom action instead of presenting a visually cut paragraph.
+            ("android","spot",430,1000,True,True,"android-compact-spot-large-dark.png",True,False),
         ]
         screenshot_states: dict[str, dict[str, object]] = {}
         for platform, flow, width, height, large, dark, filename, bottom, confirm in screenshot_plan:

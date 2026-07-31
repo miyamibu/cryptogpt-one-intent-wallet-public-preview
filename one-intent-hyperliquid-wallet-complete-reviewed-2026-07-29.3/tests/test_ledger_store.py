@@ -52,7 +52,7 @@ class LedgerStoreTests(unittest.TestCase):
     def post(self):
         return self.store.post_operation(
             operation_id="operation-1",
-            idempotency_key="idempotency-1",
+            idempotency_key="case-a",
             transaction_id="transaction-1",
             lines=self.lines(),
             outbox=self.message(),
@@ -90,7 +90,7 @@ class LedgerStoreTests(unittest.TestCase):
         with self.assertRaises(LedgerValidationError):
             self.store.post_operation(
                 operation_id="operation-1",
-                idempotency_key="idempotency-1",
+                idempotency_key="case-a",
                 transaction_id="transaction-1",
                 lines=(
                     LedgerLine("wallet-cash", "USDC", -500),
@@ -108,7 +108,7 @@ class LedgerStoreTests(unittest.TestCase):
         with self.assertRaises(LedgerConflictError):
             self.store.post_operation(
                 operation_id="operation-2",
-                idempotency_key="idempotency-2",
+                idempotency_key="case-b",
                 transaction_id="transaction-2",
                 lines=self.lines(200),
                 outbox=self.message(event_id="event-1", dedupe_key="dedupe-2"),
@@ -142,7 +142,7 @@ class LedgerStoreTests(unittest.TestCase):
         with self.assertRaises(LedgerConflictError):
             self.store.post_operation(
                 operation_id="operation-1",
-                idempotency_key="idempotency-1",
+                idempotency_key="case-a",
                 transaction_id="transaction-1",
                 lines=self.lines(600),
                 outbox=self.message(),
@@ -290,7 +290,7 @@ class LedgerStoreTests(unittest.TestCase):
         )
         self.store.post_operation(
             operation_id="operation-2",
-            idempotency_key="idempotency-2",
+            idempotency_key="case-b",
             transaction_id="transaction-2",
             lines=self.lines(200),
             outbox=self.message("event-2", "dedupe-2"),

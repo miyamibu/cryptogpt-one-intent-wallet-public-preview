@@ -84,7 +84,7 @@ Claim ID は外部証跡が直接必要なものだけを記載します。ロ�
 - Owner: fee-route operations owner; reviewer: independent risk/finance reviewer
 - Service/portal: provider onboarding portal and contract/API documentation
 - Account/permission: provider account with terms, support, jurisdiction, settlement and reserve visibility
-- Menu/field: capability status, exact account model, supported network/token, allowance/permit bootstrap, quote API, expiry, maximum fee, failure charge, reimbursement terms, rate limit and revoke control
+- Menu/field: capability status, exact account model, supported network and asset, permit bootstrap, quote API, expiry, maximum fee, failure charge, reimbursement terms, rate limit and revoke control
 - Prepare: provider ID, route ID, settlement target, operation limits, monthly/daily/user budgets, support escalation
 - Verify: operation-bound quote, nonce replay, provider revocation, expired quote, chain mismatch, failed-action charge, duplicate reimbursement, no silent fallback, zero-native-balance canary in sandbox
 - Evidence: `delivery/evidence/fee-route/` with signed capability/quote, terms hash, reserve/health evidence, provider key identity and test receipts

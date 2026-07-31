@@ -302,7 +302,7 @@ externalNetworkUsed=false
 - Property checks: {property_result.get('propertyCases', 'NOT_RUN') if isinstance(property_result, dict) else 'NOT_RUN'}
 - Fuzz smoke iterations: {fuzz_result.get('iterations', 'NOT_RUN') if isinstance(fuzz_result, dict) else 'NOT_RUN'}
 - Android Gradle wrapper tests/build: PASS_LOCAL_ONLY (Gradle 9.3.1; unsigned debug APK only)
-- Android Pixel 9a physical UI: PASS_LOCAL_DEVICE_PROOF_ONLY (serial `55211JEBF16639`; no key, signer, network, or transaction)
+- Android Pixel 9a physical UI: PASS_LOCAL_DEVICE_PROOF_ONLY (serial `[REDACTED_FOR_PUBLIC_PREVIEW]`; no key, signer, network, or transaction)
 - iOS `OfflineWalletApp` target: PASS_LOCAL_SIGNED_DEBUG_ONLY (Team `PUBLICTEAM`; signed iPhoneOS build; no archive/IPA)
 - iPhone 12 physical UI: VERIFIED_LOCAL_DEVICE_PROOF_ONLY (Appium/WDA; installed/launched; disabled CTA unchanged after tap; up/down gestures; screenshot SHA-256 `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`)
 - Source tree digest: {evidence.get('sourceTreeDigest', 'NOT_RUN')}

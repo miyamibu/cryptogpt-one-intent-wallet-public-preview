@@ -6,8 +6,8 @@
   "evidenceId": "core-reference-tests-2026-07-29.3",
   "result": "PASS",
   "command": "python3 -B -m unittest discover -s tests -p 'test_*.py'",
-  "pythonSourceFilesCompiled": 107,
-  "testCount": 88,
+  "pythonSourceFilesCompiled": 112,
+  "testCount": 98,
   "browserLogicalCases": 288,
   "swiftContractTests": 5,
   "swiftContractTestScope": "CURRENT_HOST_EXECUTION_RECORDED",
@@ -32,7 +32,7 @@
     "productionEvidence": false
   },
   "environment": "macOS-26.5.2-arm64-arm-64bit-Mach-O / 3.14.6 / Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)",
-  "sourceTreeDigest": "e924d1c563fe46885b4585a69b37f430bcbe653a7463b942318ab2a3025fdf3f",
+  "sourceTreeDigest": "48d8230d54a096ba7bc8bba442158aa85608a43fb303b9b1d8e4243bfd1a6e17",
   "sourceTreeDigestDomain": "secure_tree content snapshot with canonical archive file mode 0644, excluding manifest.json, SHA256SUMS.txt, delivery/evidence/core/reference-tests-current.json, delivery/evidence/core/PROPERTY_TEST_REPORT.json, delivery/evidence/core/FUZZ_REPORT.json, tests/coverage-matrix-v1.json, delivery/GATE_DECISIONS.json, delivery/OPERATIONAL_READINESS_REPORT.json, delivery/RUNTIME_ACTIVATION_REPORT.json, delivery/STATUS_MANIFEST.json, delivery/STATUS_MANIFEST.md, delivery/evidence/operationalization/EXECUTION_EVIDENCE_BINDING_20260729.json, FINAL_AUDIT_REPORT.md, VALIDATION_REPORT.md, release contract artifacts, and OS metadata",
   "scope": "offline standard-library reference implementation and logical-pixel browser prototype",
   "limitations": [

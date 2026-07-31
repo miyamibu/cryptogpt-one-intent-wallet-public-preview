@@ -1,7 +1,7 @@
 # Android Pixel 9a local recheck — 2026-07-29
 
 - Device model: `Pixel 9a`
-- ADB serial: `55211JEBF16639`
+- ADB serial: [REDACTED_FOR_PUBLIC_PREVIEW]
 - Android: `16`
 - Package: `jp.offlinewallet`
 - Build command: `bash ./gradlew assembleDebug --no-daemon`

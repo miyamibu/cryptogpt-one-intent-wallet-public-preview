@@ -4,20 +4,178 @@
   "title": "OperationSpecV2",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schemaVersion", "operationId", "operationType", "account", "network", "assetId", "amount", "orderedActions", "registryDigest", "quoteDigest", "payloadCommitment", "expiresAt"],
+  "required": [
+    "schemaVersion",
+    "operationId",
+    "operationType",
+    "account",
+    "network",
+    "assetId",
+    "orderedActions",
+    "registryDigest",
+    "quoteDigest",
+    "sourceStateDigest",
+    "payloadCommitment",
+    "displayManifestDigest",
+    "operationDetails",
+    "expiresAt"
+  ],
   "properties": {
-    "schemaVersion": {"const": "2.0"},
+    "schemaVersion": {"const": "2.1"},
     "operationId": {"type": "string", "minLength": 1, "maxLength": 128},
-    "operationType": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,63}$"},
+    "operationType": {
+      "enum": [
+        "TRANSFER",
+        "SWAP",
+        "PERP_OPEN",
+        "PERP_CLOSE",
+        "VAULT_DEPOSIT",
+        "VAULT_WITHDRAW",
+        "CANCEL",
+        "REVOKE_AUTHORIZATION"
+      ]
+    },
     "account": {"type": "string", "minLength": 1, "maxLength": 256},
     "network": {"type": "string", "minLength": 1, "maxLength": 128},
     "assetId": {"type": "string", "minLength": 1, "maxLength": 256},
-    "amount": {"type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$"},
-    "recipient": {"type": ["string", "null"], "maxLength": 512},
-    "orderedActions": {"type": "array", "minItems": 1, "maxItems": 32, "items": {"type": "string", "minLength": 1, "maxLength": 128}},
-    "registryDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "quoteDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "payloadCommitment": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "orderedActions": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 32,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1, "maxLength": 128}
+    },
+    "registryDigest": {"$ref": "#/$defs/digest"},
+    "quoteDigest": {"$ref": "#/$defs/digest"},
+    "sourceStateDigest": {"$ref": "#/$defs/digest"},
+    "payloadCommitment": {"$ref": "#/$defs/digest"},
+    "displayManifestDigest": {"$ref": "#/$defs/digest"},
+    "operationDetails": {"type": "object"},
     "expiresAt": {"type": "integer", "minimum": 0}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"operationType": {"const": "TRANSFER"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/transfer"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "SWAP"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/swap"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "PERP_OPEN"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/perpOpen"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "PERP_CLOSE"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/perpClose"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "VAULT_DEPOSIT"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/vaultDeposit"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "VAULT_WITHDRAW"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/vaultWithdraw"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "CANCEL"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/cancel"}}}
+    },
+    {
+      "if": {"properties": {"operationType": {"const": "REVOKE_AUTHORIZATION"}}},
+      "then": {"properties": {"operationDetails": {"$ref": "#/$defs/revoke"}}}
+    }
+  ],
+  "$defs": {
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "decimal": {"type": "string", "pattern": "^(0|[1-9][0-9]*)(\\.[0-9]+)?$", "maxLength": 128},
+    "transfer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "recipient", "tokenContract", "fee", "feeRecipient"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "recipient": {"type": "string", "minLength": 1, "maxLength": 512},
+        "tokenContract": {"type": "string", "minLength": 1, "maxLength": 256},
+        "fee": {"$ref": "#/$defs/decimal"},
+        "feeRecipient": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "swap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "outputAssetId", "minimumOutput", "maximumSlippageBps", "fee", "feeRecipient"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "outputAssetId": {"type": "string", "minLength": 1, "maxLength": 256},
+        "minimumOutput": {"$ref": "#/$defs/decimal"},
+        "maximumSlippageBps": {"type": "integer", "minimum": 0, "maximum": 10000},
+        "fee": {"$ref": "#/$defs/decimal"},
+        "feeRecipient": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "perpOpen": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "side", "leverage", "marginMode", "maximumSlippageBps", "reduceOnly"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "side": {"enum": ["LONG", "SHORT"]},
+        "leverage": {"type": "integer", "minimum": 1, "maximum": 100},
+        "marginMode": {"enum": ["CROSS", "ISOLATED"]},
+        "maximumSlippageBps": {"type": "integer", "minimum": 0, "maximum": 10000},
+        "reduceOnly": {"const": false}
+      }
+    },
+    "perpClose": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "side", "positionId", "maximumSlippageBps", "reduceOnly"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "side": {"enum": ["LONG", "SHORT"]},
+        "positionId": {"type": "string", "minLength": 1, "maxLength": 256},
+        "maximumSlippageBps": {"type": "integer", "minimum": 0, "maximum": 10000},
+        "reduceOnly": {"const": true}
+      }
+    },
+    "vaultDeposit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "vaultId"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "vaultId": {"type": "string", "minLength": 1, "maxLength": 256}
+      }
+    },
+    "vaultWithdraw": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["amount", "vaultId", "recipient"],
+      "properties": {
+        "amount": {"$ref": "#/$defs/decimal"},
+        "vaultId": {"type": "string", "minLength": 1, "maxLength": 256},
+        "recipient": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "cancel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetOperationId", "marketId"],
+      "properties": {
+        "targetOperationId": {"type": "string", "minLength": 1, "maxLength": 128},
+        "marketId": {"type": "string", "minLength": 1, "maxLength": 256}
+      }
+    },
+    "revoke": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorizationId", "authorizationKeyId"],
+      "properties": {
+        "authorizationId": {"type": "string", "minLength": 1, "maxLength": 128},
+        "authorizationKeyId": {"type": "string", "minLength": 1, "maxLength": 256}
+      }
+    }
   }
 }

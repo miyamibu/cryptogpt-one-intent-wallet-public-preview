@@ -24,8 +24,8 @@
   "evidenceBundles": [
     {
       "path": "delivery/evidence/android/LOCAL_RECHECK_20260729.md",
-      "sha256": "699f566b806a3f7b329be66a681d26010bd4e7bab2d348acaf1948c71595d69e",
-      "bytes": 1515,
+      "sha256": "53b33050e68c31888e0d1220971efff0220d78d6492b556887fee107bb82c0c6",
+      "bytes": 1528,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -72,13 +72,13 @@
     },
     {
       "path": "delivery/evidence/ios/iphone12-final-20260729.png",
-      "sha256": "8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea",
-      "bytes": 177281,
+      "sha256": "a8bb2dbcdb743e4cefb0fd5965cb12a51260196d2fa7d367f005e8cf60d5f014",
+      "bytes": 177137,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
       "path": "delivery/evidence/core/reference-tests-current.json",
-      "sha256": "652605bae603deb5b348460a9d5073e845cf253ab2748fcdcff7d1a3af1cedc9",
+      "sha256": "ab5f84a6776458f5bbf12a40d2f876d6cacb80f92fb56eb3020e70f23e18f86a",
       "bytes": 2413,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
@@ -156,8 +156,8 @@
     },
     {
       "path": "tests/test_ledger_store.py",
-      "sha256": "dc6f2d5da6c1d4dedadaf382edc5e105431d4f5f3c5e65b2fb37a05b5a1d5a6b",
-      "bytes": 17017,
+      "sha256": "3c2cb56432fb976cb2ee6f41ecbb66192e5f236759b5c88b9f2e9758976f3972",
+      "bytes": 16982,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     },
     {
@@ -168,7 +168,7 @@
     },
     {
       "path": "release/PROVENANCE.json",
-      "sha256": "54e6b34ae67d50ffd0447e587fc9934eb35654272371b6debec75aed1586f22f",
+      "sha256": "eb1bd9c47961e3760408e04f0fb538b31db79a902ea1f32f705a22e1443cd1d1",
       "bytes": 2863,
       "operationalStatus": "LOCAL_OR_READ_ONLY_NOT_PRODUCTION_ACCEPTANCE"
     }
