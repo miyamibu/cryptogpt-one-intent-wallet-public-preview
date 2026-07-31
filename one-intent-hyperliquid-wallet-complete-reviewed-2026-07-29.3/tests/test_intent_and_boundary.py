@@ -3,7 +3,13 @@ from __future__ import annotations
 import unittest
 
 from shared.domain import DomainError, parse_intent_locally
-from services.nontransactional_support_gateway.gateway import BoundaryViolation, handle, handle_json
+from services.nontransactional_support_gateway.gateway import (
+    BoundaryViolation,
+    FixedWindowRateLimiter,
+    LOCAL_DEMO_CONTEXT,
+    handle,
+    handle_json,
+)
 
 
 SAMPLE = "BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。"
@@ -63,14 +69,45 @@ class IntentBoundaryTests(unittest.TestCase):
         with self.assertRaises(BoundaryViolation):
             handle_json("getPlainJapaneseTerm", '{"path":{"termId":"execution-capsule","termId":"reconciliation"}}')
 
+    def test_chatgpt_status_requires_owned_high_entropy_context(self) -> None:
+        request = {"path": {"referenceId": "status-reference-id-1234"}}
+        with self.assertRaises(BoundaryViolation):
+            handle("getReadOnlyStatus", request)
+        with self.assertRaises(BoundaryViolation):
+            handle("getReadOnlyStatus", request, trusted_context={**LOCAL_DEMO_CONTEXT, "subjectId": "short"})
+        with self.assertRaises(BoundaryViolation):
+            handle(
+                "getReadOnlyStatus",
+                request,
+                trusted_context={**LOCAL_DEMO_CONTEXT, "referenceOwnerTenantId": "ten_other_tenant_4c8e2a1f6d9b3e7c"},
+            )
+
     def test_chatgpt_rejects_benign_query_or_header_context_too(self) -> None:
         with self.assertRaises(BoundaryViolation):
             handle("getPlainJapaneseTerm", {"path": {"termId": "execution-capsule"}, "query": {"termId": "execution-capsule"}})
 
     def test_gateway_shapes_match_read_only_openapi(self) -> None:
-        status = handle("getReadOnlyStatus", {"path": {"referenceId": "status-ref-1234"}})
+        status = handle(
+            "getReadOnlyStatus",
+            {"path": {"referenceId": "status-reference-id-1234"}},
+            trusted_context=LOCAL_DEMO_CONTEXT,
+        )
         self.assertEqual(status["status"], "INFORMATION_ONLY")
         self.assertFalse(status["writeAvailableHere"])
-        safety = handle("getGenericSafetyHelp", {"body": {"topic": "CONTACT_SUPPORT", "locale": "ja-JP"}})
+        safety = handle(
+            "getGenericSafetyHelp",
+            {"body": {"topic": "CONTACT_SUPPORT", "locale": "ja-JP"}},
+            trusted_context=LOCAL_DEMO_CONTEXT,
+        )
         self.assertFalse(safety["executable"])
         self.assertEqual(safety["catalogEntryId"], "CONTACT_SUPPORT")
+
+    def test_gateway_rate_limiter_bounds_subject_state(self) -> None:
+        limiter = FixedWindowRateLimiter(limit=2, window_seconds=60, max_subjects=2)
+        contexts = [
+            {"subjectId": f"sub_{index:024d}", "tenantId": f"ten_{index:024d}"}
+            for index in range(3)
+        ]
+        for index, context in enumerate(contexts):
+            self.assertTrue(limiter.allow(context, now=float(index)))
+        self.assertLessEqual(len(limiter._windows), 2)

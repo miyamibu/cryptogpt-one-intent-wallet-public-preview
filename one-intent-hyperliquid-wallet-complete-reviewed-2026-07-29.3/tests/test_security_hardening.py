@@ -13,7 +13,7 @@ from pathlib import Path
 from adapters.fee_route.fee import FeeRouteCapability, OperationBoundQuote, fee_readiness_plan, zero_native_balance_eligible
 from adapters.hyperliquid.fake_adapter import FakeHyperliquidAdapter
 from adapters.jpyc_ex_handoff.adapter import JpycHandoff, prepare_handoff, validate_return
-from services.local_sandbox.server import LocalSandboxApp, create_server
+from services.local_sandbox.server import MAX_RATE_LIMIT_SOURCES, LocalSandboxApp, create_server
 from services.signer_interface.signer import SignerInterface
 from shared.canonical import CanonicalizationError, ResourceLimitError, canonical_bytes, decimal_string, strict_loads
 from shared.domain import (
@@ -255,6 +255,15 @@ class SignerInterfaceHardeningTests(unittest.TestCase):
 
 
 class LocalSandboxHardeningTests(unittest.TestCase):
+    def test_http_rate_limit_state_has_a_fixed_source_bound(self) -> None:
+        server = create_server("127.0.0.1", 0, root=ROOT)
+        try:
+            for index in range(MAX_RATE_LIMIT_SOURCES + 8):
+                self.assertTrue(server._allow_rate((f"source-{index}", 0)))
+            self.assertLessEqual(len(server._rate_windows), MAX_RATE_LIMIT_SOURCES)
+        finally:
+            server.server_close()
+
     def test_router_hides_parser_details_and_rejects_query_context(self) -> None:
         app = LocalSandboxApp(ROOT)
         duplicate = app.route("POST", "/v1/draft", b'{"utterance":"a","utterance":"b"}', "application/json")
@@ -299,6 +308,7 @@ class LocalSandboxHardeningTests(unittest.TestCase):
             self.assertEqual(response.status, 200)
             self.assertEqual(response.getheader("X-Frame-Options"), "DENY")
             self.assertEqual(response.getheader("Cross-Origin-Opener-Policy"), "same-origin")
+            self.assertEqual(response.getheader("Content-Security-Policy").split("style-src ", 1)[1].split(";", 1)[0], "'self'")
             connection.close()
 
             invalid_host = b"GET /healthz HTTP/1.1\r\nHost: evil.example\r\nConnection: close\r\n\r\n"
@@ -316,6 +326,17 @@ class LocalSandboxHardeningTests(unittest.TestCase):
             server.shutdown()
             server.server_close()
             thread.join(timeout=5)
+
+    def test_server_has_bounded_workers_and_per_source_rate_limit(self) -> None:
+        server = create_server("127.0.0.1", 0, root=ROOT)
+        try:
+            self.assertEqual(server._worker_slots._value, 16)
+            for _ in range(60):
+                self.assertTrue(server._allow_rate(("127.0.0.1", 1)))
+            self.assertFalse(server._allow_rate(("127.0.0.1", 1)))
+            self.assertTrue(server._allow_rate(("127.0.0.2", 1)))
+        finally:
+            server.server_close()
 
 
 if __name__ == "__main__":

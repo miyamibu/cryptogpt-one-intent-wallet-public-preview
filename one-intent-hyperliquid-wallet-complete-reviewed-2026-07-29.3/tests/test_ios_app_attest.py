@@ -8,7 +8,11 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
 from services.attestation.ios_app_attest import AppAttestVerificationError, verify_server_evidence
 from shared.canonical import CanonicalizationError, canonical_bytes, canonical_hash
-from shared.signature_trust_store import SignatureTrustStore, TrustedVerifierKey
+from shared.signature_trust_store import (
+    SignatureTrustStore,
+    TrustedVerifierKey,
+    VerifierRole,
+)
 
 
 _PRIVATE_KEY = Ed25519PrivateKey.from_private_bytes(b"a" * 32)
@@ -21,6 +25,8 @@ _TRUST_STORE = SignatureTrustStore(
                 encoding=serialization.Encoding.Raw,
                 format=serialization.PublicFormat.Raw,
             ),
+            role=VerifierRole.ATTESTATION,
+            allowed_domains=frozenset({"ios-app-attest-verifier-receipt-v2"}),
         )
     ]
 )

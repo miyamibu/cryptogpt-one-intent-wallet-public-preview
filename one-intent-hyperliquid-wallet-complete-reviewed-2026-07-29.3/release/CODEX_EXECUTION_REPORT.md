@@ -13,7 +13,7 @@ externalNetworkUsed=false
 ## Local evidence
 
 - Python source compile: 112
-- Python unit tests: 98
+- Python unit tests: 118
 - Swift Package contract tests: 5
 - Swift Package contract-test scope: CURRENT_HOST_EXECUTION_RECORDED
 - Browser logical cases: 288
@@ -23,7 +23,7 @@ externalNetworkUsed=false
 - Android Pixel 9a physical UI: PASS_LOCAL_DEVICE_PROOF_ONLY (serial `[REDACTED_FOR_PUBLIC_PREVIEW]`; no key, signer, network, or transaction)
 - iOS `OfflineWalletApp` target: PASS_LOCAL_SIGNED_DEBUG_ONLY (Team `PUBLICTEAM`; signed iPhoneOS build; no archive/IPA)
 - iPhone 12 physical UI: VERIFIED_LOCAL_DEVICE_PROOF_ONLY (Appium/WDA; installed/launched; disabled CTA unchanged after tap; up/down gestures; screenshot SHA-256 `8a1e808d66fc9580e74c5ae90d4f34549986f87e05f3b4b0e3269fdbae7444ea`)
-- Source tree digest: 48d8230d54a096ba7bc8bba442158aa85608a43fb303b9b1d8e4243bfd1a6e17
+- Source tree digest: 3c24e78f396776188e9bab4c27c10c0fb4ec91d2b413ce2d76f114ddc3a90de5
 
 ## Requested reviewer roles
 

@@ -8,10 +8,13 @@ and the fixed-catalog read-only support boundary.
 from __future__ import annotations
 
 import argparse
+from collections import defaultdict, deque
 import ipaddress
 import mimetypes
 import re
 import socket
+import threading
+import time
 from dataclasses import dataclass
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -19,7 +22,7 @@ from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import unquote, urlsplit
 
-from services.nontransactional_support_gateway.gateway import BoundaryViolation, handle
+from services.nontransactional_support_gateway.gateway import BoundaryViolation, LOCAL_DEMO_CONTEXT, handle
 from shared.canonical import CanonicalizationError, canonical_bytes, strict_loads
 from shared.domain import DomainError, parse_intent_locally
 
@@ -27,6 +30,10 @@ from shared.domain import DomainError, parse_intent_locally
 ROOT = Path(__file__).resolve().parents[2]
 MAX_REQUEST_BYTES = 16 * 1024
 MAX_STATIC_BYTES = 2 * 1024 * 1024
+MAX_CONCURRENT_REQUESTS = 16
+RATE_LIMIT_WINDOW_SECONDS = 1.0
+RATE_LIMIT_REQUESTS_PER_WINDOW = 60
+MAX_RATE_LIMIT_SOURCES = 1024
 LOCAL_STATUS = "LOCAL_SANDBOX_OPERATIONAL_GO"
 PRODUCTION_STATUS = "BLOCKED_NOT_OPERATIONAL"
 _PERCENT_ESCAPE = re.compile(r"%(?![0-9A-Fa-f]{2})")
@@ -34,6 +41,7 @@ _PERCENT_ESCAPE = re.compile(r"%(?![0-9A-Fa-f]{2})")
 _STATIC_ROUTES: dict[str, Path] = {
     "/": ROOT / "START_HERE.html",
     "/START_HERE.html": ROOT / "START_HERE.html",
+    "/START_HERE.css": ROOT / "START_HERE.css",
     "/prototype": ROOT / "prototype/index.html",
     "/prototype/": ROOT / "prototype/index.html",
     "/prototype/index.html": ROOT / "prototype/index.html",
@@ -235,11 +243,15 @@ class LocalSandboxApp:
                 return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
             except (UnicodeDecodeError, ValueError, CanonicalizationError, DomainError):
                 return self.json_error(HTTPStatus.BAD_REQUEST, "INVALID_DRAFT_REQUEST", "入力を確認できません。")
-        status_match = re.fullmatch(r"/v1/support/status/([A-Za-z0-9._-]{12,128})", path)
+        status_match = re.fullmatch(r"/v1/support/status/([A-Za-z0-9_-]{24,128})", path)
         glossary_match = re.fullmatch(r"/v1/support/glossary/([a-z0-9-]{2,64})", path)
         if method == "GET" and status_match:
             try:
-                response = handle("getReadOnlyStatus", {"path": {"referenceId": status_match.group(1)}})
+                response = handle(
+                    "getReadOnlyStatus",
+                    {"path": {"referenceId": status_match.group(1)}},
+                    trusted_context=LOCAL_DEMO_CONTEXT,
+                )
                 return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
             except BoundaryViolation:
                 return self.json_error(HTTPStatus.BAD_REQUEST, "BOUNDARY_REJECTED", "この境界では処理できない入力です。")
@@ -262,7 +274,7 @@ class LocalSandboxApp:
                 value = strict_loads(body.decode("utf-8", errors="strict"))
                 if not isinstance(value, Mapping):
                     raise BoundaryViolation("request body must be an object")
-                response = handle(support_operations[path], {"body": value})
+                response = handle(support_operations[path], {"body": value}, trusted_context=LOCAL_DEMO_CONTEXT)
                 return AppResponse(HTTPStatus.OK, "application/json; charset=utf-8", _json_safe(response))
             except (UnicodeDecodeError, BoundaryViolation, ValueError):
                 return self.json_error(HTTPStatus.BAD_REQUEST, "BOUNDARY_REJECTED", "この境界では処理できない入力です。")
@@ -350,7 +362,7 @@ class _Handler(BaseHTTPRequestHandler):
         self.send_header("X-Permitted-Cross-Domain-Policies", "none")
         self.send_header(
             "Content-Security-Policy",
-            "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; "
+            "default-src 'self'; img-src 'self' data:; style-src 'self'; "
             "script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; object-src 'none'",
         )
         self.send_header("Connection", "close")
@@ -406,7 +418,67 @@ class LocalSandboxServer(ThreadingHTTPServer):
 
     def __init__(self, address: tuple[str, int], app: LocalSandboxApp) -> None:
         self.app = app
+        self._worker_slots = threading.BoundedSemaphore(MAX_CONCURRENT_REQUESTS)
+        self._rate_lock = threading.Lock()
+        self._rate_windows: dict[str, deque[float]] = defaultdict(deque)
         super().__init__(address, _Handler)
+
+    @staticmethod
+    def _reject_connection(request: socket.socket, status: int, reason: str, code: str) -> None:
+        body = _json_safe({"error": {"code": code, "message": reason}, "productionWritePermitted": False})
+        phrase = HTTPStatus(status).phrase
+        header = (
+            f"HTTP/1.1 {status} {phrase}\r\n"
+            "Content-Type: application/json; charset=utf-8\r\n"
+            f"Content-Length: {len(body)}\r\n"
+            "Cache-Control: no-store\r\n"
+            "Connection: close\r\n\r\n"
+        ).encode("ascii")
+        try:
+            request.sendall(header + body)
+        except OSError:
+            pass
+        finally:
+            request.close()
+
+    def _allow_rate(self, client_address: tuple[object, ...]) -> bool:
+        source = str(client_address[0]) if client_address else "unknown"
+        now = time.monotonic()
+        with self._rate_lock:
+            cutoff = now - RATE_LIMIT_WINDOW_SECONDS
+            active_windows = {
+                key: window
+                for key, window in self._rate_windows.items()
+                if window and window[-1] > cutoff
+            }
+            if source not in active_windows and len(active_windows) >= MAX_RATE_LIMIT_SOURCES:
+                oldest_source = min(active_windows, key=lambda key: active_windows[key][-1])
+                del active_windows[oldest_source]
+            window = active_windows.setdefault(source, deque())
+            while window and window[0] <= cutoff:
+                window.popleft()
+            if len(window) >= RATE_LIMIT_REQUESTS_PER_WINDOW:
+                self._rate_windows = active_windows
+                return False
+            window.append(now)
+            self._rate_windows = active_windows
+            return True
+
+    def process_request(self, request: socket.socket, client_address: tuple[object, ...]) -> None:
+        if not self._worker_slots.acquire(blocking=False):
+            self._reject_connection(request, HTTPStatus.SERVICE_UNAVAILABLE, "処理量の上限に達したため停止しました。", "CONCURRENCY_LIMIT")
+            return
+        if not self._allow_rate(client_address):
+            self._worker_slots.release()
+            self._reject_connection(request, HTTPStatus.TOO_MANY_REQUESTS, "短時間の要求回数が上限に達しました。", "RATE_LIMITED")
+            return
+        super().process_request(request, client_address)
+
+    def process_request_thread(self, request: socket.socket, client_address: tuple[object, ...]) -> None:
+        try:
+            super().process_request_thread(request, client_address)
+        finally:
+            self._worker_slots.release()
 
 
 class IPv6LocalSandboxServer(LocalSandboxServer):

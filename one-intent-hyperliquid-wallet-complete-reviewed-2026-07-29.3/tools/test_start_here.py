@@ -31,13 +31,14 @@ REGRESSION_COUNT = len(strict_load_json(ROOT / "tests/loophole-regression-cases.
 
 def test_html() -> str:
     html = SOURCE.read_text(encoding="utf-8")
+    css = (ROOT / "START_HERE.css").read_text(encoding="utf-8")
     regression_metric = f'<div class="metric">{REGRESSION_COUNT}</div>'
     if regression_metric not in html:
         raise RuntimeError(f"START_HERE regression metric is stale; expected {REGRESSION_COUNT}")
     exact = '<a class="button primary" href="prototype/index.html">'
     if exact not in html:
         raise RuntimeError("START_HERE prototype link marker changed; update the deterministic test fixture")
-    return html
+    return html.replace('<link rel="stylesheet" href="START_HERE.css" />', f"<style>{css}</style>")
 
 
 LAYOUT_CHECK = r"""

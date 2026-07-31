@@ -109,10 +109,11 @@ components:
       name: referenceId
       in: path
       required: true
-      description: Opaque random read-only reference. It must not encode recipient, amount, asset, network, order, quote, or transaction content.
+      description: High-entropy opaque read-only reference owned by the authenticated subject and tenant. It must not encode recipient, amount, asset, network, order, quote, or transaction content.
       schema:
         type: string
-        pattern: '^[A-Za-z0-9._-]{12,128}$'
+        minLength: 24
+        pattern: '^[A-Za-z0-9_-]{24,128}$'
     TermId:
       name: termId
       in: path
@@ -204,7 +205,8 @@ components:
           type:
           - string
           - 'null'
-          pattern: '^[A-Za-z0-9._-]{12,128}$'
+          minLength: 24
+          pattern: '^[A-Za-z0-9_-]{24,128}$'
     SafetyHelpRequest:
       type: object
       additionalProperties: false

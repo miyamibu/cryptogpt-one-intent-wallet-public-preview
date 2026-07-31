@@ -1,9 +1,14 @@
-"""Strict canonical JSON and decimal primitives.
+"""Strict, versioned canonical JSON and decimal primitives.
 
 The reference implementation intentionally rejects inputs which common mobile,
 server, and JavaScript JSON implementations can interpret differently.  The
 limits in this module are part of the defensive contract: canonicalization must
 also fail closed on excessive depth, size, precision, and cyclic structures.
+
+``CGPT-C14N-1`` is deliberately not advertised as RFC 8785 JCS.  Its contract
+is NFC Unicode, UTF-16 code-unit object-key ordering, UTF-8 output, minimal JSON
+separators, no binary floating point, and rejection of default-ignorable or
+bidirectional-control code points.
 """
 
 from __future__ import annotations
@@ -13,9 +18,10 @@ import json
 import re
 import unicodedata
 from decimal import Decimal, InvalidOperation
-from typing import Any
+from typing import Any, Mapping
 
 
+CANONICAL_PROFILE_VERSION = "CGPT-C14N-1"
 MAX_SAFE_INTEGER = 9_007_199_254_740_991
 MAX_DECIMAL_TEXT_LENGTH = 128
 MAX_DECIMAL_FRACTION_DIGITS = 38
@@ -27,6 +33,26 @@ MAX_STRING_LENGTH = 256 * 1024
 MAX_HASH_DOMAIN_LENGTH = 128
 _DECIMAL_RE = re.compile(r"^(0|[1-9][0-9]*)(?:\.[0-9]+)?$")
 _CONFUSABLE_SCRIPT_NAMES = ("CYRILLIC", "GREEK")
+_NETWORK_ID_RE = re.compile(r"^(?:eip155:[0-9]+|hyperliquid:(?:mainnet|testnet))$")
+_LOWER_EVM_ADDRESS_RE = re.compile(r"^0x[0-9a-f]{40}$")
+_DEFAULT_IGNORABLE_RANGES = (
+    (0x00AD, 0x00AD),
+    (0x034F, 0x034F),
+    (0x061C, 0x061C),
+    (0x115F, 0x1160),
+    (0x17B4, 0x17B5),
+    (0x180B, 0x180F),
+    (0x200B, 0x200F),
+    (0x202A, 0x202E),
+    (0x2060, 0x206F),
+    (0x3164, 0x3164),
+    (0xFE00, 0xFE0F),
+    (0xFEFF, 0xFEFF),
+    (0xFFA0, 0xFFA0),
+    (0x1BCA0, 0x1BCA3),
+    (0x1D173, 0x1D17A),
+    (0xE0000, 0xE0FFF),
+)
 
 
 class CanonicalizationError(ValueError):
@@ -99,6 +125,29 @@ def strict_loads(text: str) -> Any:
     return ensure_nfc(value)
 
 
+def strict_loads_bytes(raw: bytes, *, require_canonical: bool = True) -> Any:
+    """Decode strict UTF-8 JSON and optionally require exact canonical bytes."""
+
+    if not isinstance(raw, bytes):
+        raise TypeError("strict_loads_bytes expects bytes")
+    if raw.startswith(b"\xef\xbb\xbf"):
+        raise CanonicalizationError("UTF-8 BOM is not allowed")
+    if len(raw) > MAX_JSON_TEXT_BYTES:
+        raise ResourceLimitError("JSON bytes exceed the canonical size limit")
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError as exc:
+        raise CanonicalizationError("JSON bytes are not strict UTF-8") from exc
+    value = strict_loads(text)
+    if require_canonical and canonical_bytes(value) != raw:
+        raise CanonicalizationError("JSON bytes do not match the canonical profile")
+    return value
+
+
+def _is_default_ignorable(code_point: int) -> bool:
+    return any(start <= code_point <= end for start, end in _DEFAULT_IGNORABLE_RANGES)
+
+
 def _validate_string(value: str) -> str:
     if len(value) > MAX_STRING_LENGTH:
         raise ResourceLimitError("string exceeds the canonical length limit")
@@ -108,6 +157,8 @@ def _validate_string(value: str) -> str:
         raise CanonicalizationError("string contains an invalid Unicode scalar") from exc
     if unicodedata.normalize("NFC", value) != value:
         raise NonNFCError("string is not NFC normalized")
+    if any(_is_default_ignorable(ord(char)) for char in value):
+        raise CanonicalizationError("string contains a default-ignorable or bidirectional-control code point")
     return value
 
 
@@ -140,7 +191,7 @@ def ensure_nfc(value: Any) -> Any:
             return item
         if isinstance(item, float):
             raise UnsafeNumberError("float values are not allowed")
-        if isinstance(item, (list, tuple, dict)):
+        if isinstance(item, (list, tuple, Mapping)):
             marker = id(item)
             if marker in active_containers:
                 raise CanonicalizationError("cyclic values are not allowed")
@@ -166,13 +217,28 @@ def ensure_nfc(value: Any) -> Any:
         raise ResourceLimitError("value exceeds the canonical depth limit") from exc
 
 
+def _utf16_sort_key(value: str) -> bytes:
+    return value.encode("utf-16-be", errors="strict")
+
+
+def _ordered_json_value(value: Any) -> Any:
+    if isinstance(value, Mapping):
+        return {
+            key: _ordered_json_value(value[key])
+            for key in sorted(value.keys(), key=_utf16_sort_key)
+        }
+    if isinstance(value, (list, tuple)):
+        return [_ordered_json_value(child) for child in value]
+    return value
+
+
 def canonical_bytes(value: Any) -> bytes:
     ensure_nfc(value)
     try:
         encoded = json.dumps(
-            value,
+            _ordered_json_value(value),
             ensure_ascii=False,
-            sort_keys=True,
+            sort_keys=False,
             separators=(",", ":"),
             allow_nan=False,
         ).encode("utf-8", errors="strict")
@@ -214,7 +280,41 @@ def decimal_string(raw: str, *, scale: int | None = None) -> Decimal:
     return value
 
 
+def canonical_decimal_string(raw: str, *, scale: int) -> Decimal:
+    """Parse the signer decimal profile and reject equivalent spellings."""
+
+    value = decimal_string(raw, scale=scale)
+    if "." in raw and raw.endswith("0"):
+        raise CanonicalizationError("decimal text must not contain trailing fractional zeros")
+    return value
+
+
+def canonical_network_address(network: str, address: str) -> bytes:
+    """Decode a canonical EVM-compatible account under an explicit network."""
+
+    if not isinstance(network, str) or not _NETWORK_ID_RE.fullmatch(network):
+        raise CanonicalizationError("unsupported canonical network identifier")
+    if not isinstance(address, str) or not _LOWER_EVM_ADDRESS_RE.fullmatch(address):
+        raise CanonicalizationError("address must be a lowercase 20-byte hexadecimal value")
+    _validate_string(address)
+    return bytes.fromhex(address[2:])
+
+
+def scoped_address_fingerprint(network: str, address: str) -> str:
+    address_bytes = canonical_network_address(network, address)
+    return canonical_hash(
+        "address-fingerprint-v2",
+        {
+            "canonicalProfile": CANONICAL_PROFILE_VERSION,
+            "network": network,
+            "addressBytes": address_bytes.hex(),
+        },
+    )[:12].upper()
+
+
 def address_fingerprint(address: str) -> str:
+    """Legacy unscoped display fingerprint; signer code must use v2."""
+
     if not isinstance(address, str) or not address or len(address) > 512 or address != address.strip():
         raise CanonicalizationError("address is required and must be bounded text")
     _validate_string(address)

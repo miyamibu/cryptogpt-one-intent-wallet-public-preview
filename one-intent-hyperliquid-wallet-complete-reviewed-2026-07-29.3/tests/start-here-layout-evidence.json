@@ -8,11 +8,11 @@
   ],
   "source": {
     "path": "START_HERE.html",
-    "sha256": "3901e692b0838dec679e59659306946b6880edfd4e3a5cad260eb5e727f3246c"
+    "sha256": "edc2d150e0565de043c17a06774ed0775b7258d2c5100013ea16c7f82b5971be"
   },
   "testHarness": {
     "path": "tools/test_start_here.py",
-    "sha256": "bee2ceef08a40ed1276f37cb7fb41d46b3e728d8c6e151fd5627e3e44a408f2f"
+    "sha256": "2195c0205cfa8434a356d3bfb37a15c1dffdc0c5015aea049b3cdc53454879ba"
   },
   "toolchain": {
     "playwrightPython": "1.57.0",

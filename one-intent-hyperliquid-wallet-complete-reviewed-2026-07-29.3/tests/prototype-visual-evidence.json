@@ -19,12 +19,12 @@
   },
   "testHarness": {
     "path": "tools/test_prototype.py",
-    "sha256": "29988ade86894d00a49e63a1cb45ea5129911f43ac0658cc1fb9187109d153bb"
+    "sha256": "b81f967013cd254162e16fe19aaacaf46adffee4eae43258dd5406dd25a1daf5"
   },
   "prototypeFiles": {
-    "prototype/index.html": "3b8c543d8405a569f8cfb581b93fb82dfac279db2ef42a2b09a8d7030a6e2396",
-    "prototype/styles.css": "85effe27349342313d18049dfd2dbea30ae57beeb398fd7bc2f927d66016cdec",
-    "prototype/app.js": "1c6e6af6345365e083e24a1099cc6d9ae8c827d24f98b910ff84b2f2c45f8540"
+    "prototype/index.html": "653d4842ac70b18200ffbcd659a756af9afa59009c7df09385d2b968f3042f35",
+    "prototype/styles.css": "ca6dde65469b30e1724ee674f38645d02b4be1d95b95cb4997718df08b50c3ec",
+    "prototype/app.js": "e787cdad1559fba8236e9527e1294e1749381a1a13d29511a0fe372415937550"
   },
   "viewports": [
     {
@@ -104,15 +104,15 @@
     "iphone-perp-before-confirmation.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 815,
+      "maxScroll": 995,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
     },
     "iphone-perp-after-confirmation.png": {
       "captureMode": "BOTTOM_ACTION",
-      "scrollTop": 669,
-      "maxScroll": 674,
+      "scrollTop": 788,
+      "maxScroll": 820,
       "actionVisible": true,
       "partialTopBlocks": 0,
       "scrollCue": "bottom"
@@ -120,7 +120,7 @@
     "pixel9a-fee-dark.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 711,
+      "maxScroll": 868,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
@@ -128,7 +128,7 @@
     "iphone-large-withdraw.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 955,
+      "maxScroll": 1080,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
@@ -136,7 +136,7 @@
     "pixel9a-manual.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 545,
+      "maxScroll": 683,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
@@ -144,23 +144,23 @@
     "iphone-limited-authorization.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 780,
+      "maxScroll": 960,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
     },
     "android-tall-partial-dark.png": {
       "captureMode": "BOTTOM_ACTION",
-      "scrollTop": 125,
-      "maxScroll": 125,
+      "scrollTop": 263,
+      "maxScroll": 263,
       "actionVisible": true,
       "partialTopBlocks": 0,
       "scrollCue": "bottom"
     },
     "iphone-jpyc-large.png": {
       "captureMode": "BOTTOM_ACTION",
-      "scrollTop": 702,
-      "maxScroll": 709,
+      "scrollTop": 508,
+      "maxScroll": 508,
       "actionVisible": true,
       "partialTopBlocks": 0,
       "scrollCue": "bottom"
@@ -168,15 +168,15 @@
     "iphone-se-composite-top.png": {
       "captureMode": "TOP",
       "scrollTop": 0,
-      "maxScroll": 894,
+      "maxScroll": 1048,
       "actionVisible": false,
       "partialTopBlocks": 0,
       "scrollCue": "top"
     },
     "android-compact-spot-large-dark.png": {
       "captureMode": "BOTTOM_ACTION",
-      "scrollTop": 649,
-      "maxScroll": 659,
+      "scrollTop": 710,
+      "maxScroll": 733,
       "actionVisible": true,
       "partialTopBlocks": 0,
       "scrollCue": "bottom"

@@ -106,6 +106,7 @@ REQUIRED_FILES = [
     "FINAL_DELIVERY_INDEX.md",
     "AUDIT_ITERATION_LOG.md",
     "START_HERE.html",
+    "START_HERE.css",
     "PROJECT_STATUS.yaml",
     f"CHANGELOG_{PACKAGE_VERSION}.md",
     "EXTERNAL_ACTIONS_REQUIRED.md",
@@ -667,6 +668,12 @@ def check_openapi() -> list[str]:
     )
     if "must not encode" not in reference_description:
         errors.append(f"{chat_rel}: referenceId must be explicitly opaque and non-transactional")
+    reference_schema = chat.get("components", {}).get("parameters", {}).get("ReferenceId", {}).get("schema", {})
+    if reference_schema.get("minLength") != 24 or reference_schema.get("pattern") != "^[A-Za-z0-9_-]{24,128}$":
+        errors.append(f"{chat_rel}: referenceId must use the high-entropy opaque identifier profile")
+    support_reference = schemas.get("ErrorExplanationRequest", {}).get("properties", {}).get("supportReference", {})
+    if support_reference.get("minLength") != 24 or support_reference.get("pattern") != "^[A-Za-z0-9_-]{24,128}$":
+        errors.append(f"{chat_rel}: supportReference must use the high-entropy opaque identifier profile")
     boundary_doc = (ROOT / "42_NATURAL_LANGUAGE_AND_CHATGPT_BOUNDARY.md").read_text(encoding="utf-8")
     canonical_prompt = (ROOT / "codex/CODEX_REMAINING_WORK_MASTER_PROMPT.md").read_text(encoding="utf-8")
     if "get_manual_steps" in boundary_doc or "manual button-by-button instructions" in canonical_prompt:
@@ -1017,8 +1024,8 @@ def check_version_and_placeholders() -> list[str]:
         "DESIGN_GO",
         "OFFLINE_PROTOTYPE_GO",
         "CODEX_IMPLEMENTATION_GO",
-        "ANDROID_BUILD_NO_GO",
-        "IOS_BUILD_NO_GO",
+        "ANDROID_RELEASE_SIGNING_NO_GO",
+        "IOS_DISTRIBUTION_ARCHIVE_NO_GO",
         "TESTNET_WRITE_NO_GO",
         "PERSONAL_SMALL_MAINNET_NO_GO",
         "CLOSED_ALPHA_NO_GO",
@@ -1162,7 +1169,7 @@ def check_prototype() -> list[str]:
         "requiresCorrectionConfirmation: true",
         "window.__WALLET_PROTOTYPE__",
         "resetScrollAndStatus",
-        "scrollStatusHtml",
+        "document.getElementById('scrollStatus')",
         "class=\"action-footer\"",
     ):
         if marker not in js:
