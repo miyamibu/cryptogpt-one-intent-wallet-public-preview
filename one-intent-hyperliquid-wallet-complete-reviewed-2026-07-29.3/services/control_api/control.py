@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from shared.domain import ActionPlanDraft, AuthorizationEnvelope, DomainError, ExecutionCapsule, PolicyDecision
+from shared.domain import ActionPlanDraft, AuthorizationEnvelope, CanonicalQuote, DomainError, ExecutionCapsule, PolicyDecision, SignedRegistry
 from services.signer_interface.signer import SignerInterface
 
 
@@ -27,6 +27,8 @@ class ControlApi:
         policy_decision: PolicyDecision | None = None,
         release: dict[str, object] | None = None,
         runtime: dict[str, object] | None = None,
+        registry: SignedRegistry | None = None,
+        quote: CanonicalQuote | None = None,
         now: int,
     ) -> str:
         if not self.write_enabled:
@@ -41,8 +43,16 @@ class ControlApi:
         if type(policy_decision.allowed) is not bool or not policy_decision.allowed:
             reason = policy_decision.reason_code if isinstance(policy_decision.reason_code, str) else "INVALID_POLICY"
             raise DomainError(f"policy denied: {reason}")
-        self.signer.sign_if_all_gates_pass(capsule, authorization, release=release, runtime=runtime, now=now)
-        return "signed_reference_only"
+        self.signer.sign_if_all_gates_pass(
+            capsule,
+            authorization,
+            release=release,
+            runtime=runtime,
+            registry=registry,
+            quote=quote,
+            now=now,
+        )
+        return "signing_gate_passed_no_broadcast"
 
     def create_draft(self, draft: ActionPlanDraft) -> dict[str, object]:
         if not isinstance(draft, ActionPlanDraft):

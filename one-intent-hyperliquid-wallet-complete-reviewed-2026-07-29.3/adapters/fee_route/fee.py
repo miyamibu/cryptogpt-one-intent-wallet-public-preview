@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from urllib.parse import urlsplit
 
 from shared.canonical import CanonicalizationError, canonical_hash, decimal_string, ensure_nfc
 
@@ -25,6 +26,26 @@ def _strict_bool(value: object) -> bool:
 
 def _strict_time(value: object) -> bool:
     return isinstance(value, int) and not isinstance(value, bool) and 0 <= value <= 9_007_199_254_740_991
+
+
+def _https_terms_url(value: object) -> bool:
+    """Accept only an ordinary HTTPS terms origin without authority tricks."""
+    if not isinstance(value, str) or not _text(value):
+        return False
+    try:
+        parsed = urlsplit(value)
+        return (
+            parsed.scheme == "https"
+            and parsed.hostname is not None
+            and parsed.username is None
+            and parsed.password is None
+            and parsed.query == ""
+            and parsed.fragment == ""
+            and parsed.path not in {"", "."}
+            and parsed.port in {None, 443}
+        )
+    except ValueError:
+        return False
 
 
 @dataclass(frozen=True)
@@ -108,7 +129,7 @@ def zero_native_balance_eligible(capability: FeeRouteCapability, quote: Operatio
         )
         if not all(_text(value) for value in capability_text):
             return False
-        if capability.account_model not in _ACCOUNT_MODELS or not capability.terms_url.startswith("https://"):
+        if capability.account_model not in _ACCOUNT_MODELS or not _https_terms_url(capability.terms_url):
             return False
         if not all(
             _strict_bool(value)

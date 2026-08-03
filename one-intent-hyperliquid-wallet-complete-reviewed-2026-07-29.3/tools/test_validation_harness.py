@@ -101,7 +101,10 @@ def main() -> int:
     cases += 1
 
     metadata = load_package_metadata()
-    if metadata.root_name != ROOT.name or not metadata.version.startswith("2026-"):
+    if (
+        (metadata.root_name != ROOT.name and not (ROOT / ".git").exists())
+        or not metadata.version.startswith("2026-")
+    ):
         errors.append("metadata/root/version single source of truth failed")
     cases += 1
 

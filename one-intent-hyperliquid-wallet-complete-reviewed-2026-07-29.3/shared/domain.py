@@ -7,11 +7,14 @@ cannot turn malformed untrusted data into executable material.
 
 from __future__ import annotations
 
+import base64
+import binascii
+import hmac
 import re
 import sqlite3
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Mapping
+from typing import Any, Mapping, Protocol
 
 from .canonical import (
     MAX_SAFE_INTEGER,
@@ -107,6 +110,90 @@ def _mapping(value: Any, label: str, *, maximum_fields: int) -> dict[str, Any]:
     except CanonicalizationError as exc:
         raise DomainError(f"{label} is not canonical") from exc
     return result
+
+
+def _decode_urlsafe_signature(value: str) -> bytes:
+    _bounded_text(value, "signature", maximum=MAX_SIGNATURE_FIELD)
+    try:
+        encoded = value.encode("ascii")
+        if len(encoded) % 4 == 1:
+            raise ValueError("invalid base64 length")
+        padding = b"=" * (-len(encoded) % 4)
+        return base64.b64decode(encoded + padding, altchars=b"-_", validate=True)
+    except (UnicodeEncodeError, ValueError, binascii.Error) as exc:
+        raise DomainError("signature encoding is invalid") from exc
+
+
+class RegistrySignatureVerifier(Protocol):
+    def verify(self, registry: "SignedRegistry") -> bool:
+        """Return True only for an authenticated registry signature."""
+
+
+class QuoteSignatureVerifier(Protocol):
+    def verify(self, quote: "CanonicalQuote") -> bool:
+        """Return True only for an authenticated provider quote signature."""
+
+
+class ReferenceOnlyRegistrySignatureVerifier:
+    """Fixture verifier for the offline reference package; not production trust."""
+
+    reference_only = True
+
+    def verify(self, registry: "SignedRegistry") -> bool:
+        return registry.signature_valid is True
+
+
+class ReferenceOnlyQuoteSignatureVerifier:
+    """Fixture verifier for the offline reference package; not production trust."""
+
+    reference_only = True
+
+    def verify(self, quote: "CanonicalQuote") -> bool:
+        return quote.signature_valid is True
+
+
+class _Ed25519DocumentVerifier:
+    reference_only = False
+
+    def __init__(self, public_keys: Mapping[str, bytes]) -> None:
+        try:
+            from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+        except ImportError as exc:  # pragma: no cover - dependency/environment gate
+            raise DomainError("cryptographic document verification is unavailable") from exc
+        self._keys = {}
+        for key_id, raw_key in public_keys.items():
+            _bounded_text(key_id, "document signer key id")
+            if not isinstance(raw_key, bytes) or len(raw_key) != 32:
+                raise DomainError("Ed25519 public key must contain exactly 32 bytes")
+            self._keys[key_id] = Ed25519PublicKey.from_public_bytes(raw_key)
+
+    def _verify(self, key_id: str, signature: str, digest: str) -> bool:
+        key = self._keys.get(key_id)
+        if key is None:
+            return False
+        try:
+            key.verify(_decode_urlsafe_signature(signature), digest.encode("ascii"))
+            return True
+        except Exception:
+            return False
+
+
+class Ed25519RegistrySignatureVerifier(_Ed25519DocumentVerifier):
+    def verify(self, registry: "SignedRegistry") -> bool:
+        return self._verify(
+            registry.signer_key_id,
+            registry.signature,
+            canonical_hash("asset-registry-signature-v1", registry.signature_payload()),
+        )
+
+
+class Ed25519QuoteSignatureVerifier(_Ed25519DocumentVerifier):
+    def verify(self, quote: "CanonicalQuote") -> bool:
+        return self._verify(
+            quote.provider_id,
+            quote.signature,
+            canonical_hash("canonical-quote-signature-v1", quote.payload()),
+        )
 
 
 @dataclass(frozen=True)
@@ -300,7 +387,10 @@ class SignedRegistry:
 
     @property
     def digest(self) -> str:
-        payload = {
+        return canonical_hash("asset-registry-v1", self.signature_payload())
+
+    def signature_payload(self) -> dict[str, Any]:
+        return {
             "registryId": self.registry_id,
             "sequence": self.sequence,
             "validFrom": self.valid_from,
@@ -308,9 +398,8 @@ class SignedRegistry:
             "signerKeyId": self.signer_key_id,
             "entries": {key: value.as_dict() for key, value in self.entries.items()},
         }
-        return canonical_hash("asset-registry-v1", payload)
 
-    def verify(self, now: int) -> None:
+    def verify(self, now: int, *, signature_verifier: RegistrySignatureVerifier | None = None) -> None:
         _strict_int(now, "registry verification time", minimum=0)
         _bounded_text(self.registry_id, "registry id")
         _strict_int(self.sequence, "registry sequence", minimum=1)
@@ -322,7 +411,14 @@ class SignedRegistry:
         _strict_bool(self.revoked, "registry revoked flag")
         if valid_from >= expires_at:
             raise DomainError("asset registry validity interval is invalid")
-        if not self.signature_valid:
+        if signature_verifier is None:
+            signature_ok = self.signature_valid is True
+        else:
+            try:
+                signature_ok = signature_verifier.verify(self)
+            except Exception as exc:
+                raise DomainError("asset registry signature verification failed") from exc
+        if signature_ok is not True:
             raise DomainError("asset registry signature is invalid")
         if self.revoked:
             raise DomainError("asset registry is revoked")
@@ -339,11 +435,19 @@ class SignedRegistry:
         # runtime type checks; this also applies the shared resource limits.
         _ = self.digest
 
-    def resolve(self, asset_id: str, network: str, now: int, *, production: bool) -> AssetIdentity:
+    def resolve(
+        self,
+        asset_id: str,
+        network: str,
+        now: int,
+        *,
+        production: bool,
+        signature_verifier: RegistrySignatureVerifier | None = None,
+    ) -> AssetIdentity:
         _bounded_text(asset_id, "requested asset id")
         _bounded_text(network, "requested network")
         _strict_bool(production, "production mode")
-        self.verify(now)
+        self.verify(now, signature_verifier=signature_verifier)
         entry = self.entries.get(asset_id)
         if entry is None or entry.caip2_network != network:
             raise DomainError("asset or network identity mismatch")
@@ -403,7 +507,16 @@ class CanonicalQuote:
     def full_digest(self) -> str:
         return canonical_hash("canonical-quote-v1", self.payload())
 
-    def verify(self, now: int, *, network: str, asset_id: str, account: str, amount: str) -> None:
+    def verify(
+        self,
+        now: int,
+        *,
+        network: str,
+        asset_id: str,
+        account: str,
+        amount: str,
+        signature_verifier: QuoteSignatureVerifier | None = None,
+    ) -> None:
         _strict_int(now, "quote verification time", minimum=0)
         identity_fields = {
             "quote id": self.quote_id,
@@ -437,7 +550,14 @@ class CanonicalQuote:
             raise DomainError("quote decimal field is invalid") from exc
         if generated_at >= expires_at:
             raise DomainError("quote validity interval is invalid")
-        if not self.signature_valid:
+        if signature_verifier is None:
+            signature_ok = self.signature_valid is True
+        else:
+            try:
+                signature_ok = signature_verifier.verify(self)
+            except Exception as exc:
+                raise DomainError("provider quote signature verification failed") from exc
+        if signature_ok is not True:
             raise DomainError("quote signature is invalid")
         if self.provider_revoked:
             raise DomainError("quote provider is revoked")
@@ -491,6 +611,12 @@ class ExecutionCapsule:
     @property
     def hash(self) -> str:
         return canonical_hash("execution-capsule-v1", self.material)
+
+    @property
+    def review_digest(self) -> str:
+        """Digest of the exact material that a production review must show."""
+        self.validate(self.expires_at - 1 if self.expires_at > 0 else 0)
+        return canonical_hash("user-review-v1", self.material)
 
     def validate(self, now: int) -> None:
         _strict_int(now, "capsule verification time", minimum=0)
@@ -557,6 +683,8 @@ def compile_capsule(
     quote: CanonicalQuote,
     now: int,
     production: bool = False,
+    registry_verifier: RegistrySignatureVerifier | None = None,
+    quote_verifier: QuoteSignatureVerifier | None = None,
 ) -> ExecutionCapsule:
     if not isinstance(draft, ActionPlanDraft):
         raise DomainError("draft has the wrong runtime type")
@@ -564,6 +692,13 @@ def compile_capsule(
         raise DomainError("registry and quote runtime types are required")
     _strict_int(now, "capsule compilation time", minimum=0)
     _strict_bool(production, "production mode")
+    if production and (
+        registry_verifier is None
+        or quote_verifier is None
+        or getattr(registry_verifier, "reference_only", False)
+        or getattr(quote_verifier, "reference_only", False)
+    ):
+        raise DomainError("production capsule compilation requires cryptographic registry and quote verifiers")
     draft.validate()
     if not draft.executable:
         raise DomainError("user confirmation and ambiguity resolution are required")
@@ -610,8 +745,15 @@ def compile_capsule(
     payload = _mapping(state["finalPayload"], "live final payload", maximum_fields=MAX_FINAL_PAYLOAD_FIELDS)
     expires_at = _strict_int(state["expiresAt"], "live expiry", minimum=0)
 
-    registry.resolve(asset_id, network, now, production=production)
-    quote.verify(now, network=network, asset_id=asset_id, account=account, amount=amount)
+    registry.resolve(asset_id, network, now, production=production, signature_verifier=registry_verifier)
+    quote.verify(
+        now,
+        network=network,
+        asset_id=asset_id,
+        account=account,
+        amount=amount,
+        signature_verifier=quote_verifier,
+    )
     payload_commitment = canonical_hash("final-payload-v1", payload)
     if quote.final_payload_commitment != payload_commitment:
         raise DomainError("final payload commitment mismatch")
@@ -700,6 +842,22 @@ class AuthorizationEnvelope:
     nonce: str
     user_review_digest: str
     proof_of_possession: str
+    proof_key_id: str | None = None
+
+    @property
+    def proof_material(self) -> dict[str, Any]:
+        """All user-visible and operation-critical material signed by a device key."""
+        return {
+            "authorizationId": self.authorization_id,
+            "deviceId": self.device_id,
+            "account": self.account,
+            "capsuleHash": self.capsule_hash,
+            "operationType": self.operation_type,
+            "issuedAt": self.issued_at,
+            "expiresAt": self.expires_at,
+            "nonce": self.nonce,
+            "userReviewDigest": self.user_review_digest,
+        }
 
     @property
     def expected_proof_of_possession(self) -> str:
@@ -731,6 +889,10 @@ class AuthorizationEnvelope:
         for label, value in fields.items():
             _bounded_text(value, f"authorization {label}")
         _bounded_text(self.proof_of_possession, "authorization proof", maximum=MAX_SIGNATURE_FIELD)
+        if self.proof_key_id is not None:
+            _bounded_text(self.proof_key_id, "authorization proof key id")
+            if not re.fullmatch(r"[0-9a-f]{64}", self.user_review_digest):
+                raise DomainError("cryptographic authorization review digest is malformed")
         issued_at = _strict_int(self.issued_at, "authorization issued-at", minimum=0)
         expires_at = _strict_int(self.expires_at, "authorization expiry", minimum=0)
         lifetime = expires_at - issued_at
@@ -743,7 +905,62 @@ class AuthorizationEnvelope:
         if self.capsule_hash != capsule.hash or self.operation_type != capsule.operation_type:
             raise DomainError("authorization capsule mismatch")
         if self.proof_of_possession != self.expected_proof_of_possession:
-            raise DomainError("sender-constrained proof binding is invalid")
+            # The reference hash is retained only as a deterministic fixture
+            # format. Production signing additionally requires an injected
+            # cryptographic verifier below.
+            if self.proof_key_id is None:
+                raise DomainError("sender-constrained proof binding is invalid")
+
+
+class AuthorizationProofVerifier(Protocol):
+    def verify(self, authorization: AuthorizationEnvelope) -> bool:
+        """Return True only for a sender-constrained proof accepted by policy."""
+
+
+class ReferenceOnlyProofVerifier:
+    """Deterministic fixture verifier; never use this for a production signer."""
+
+    reference_only = True
+
+    def verify(self, authorization: AuthorizationEnvelope) -> bool:
+        return authorization.proof_key_id is None and hmac.compare_digest(
+            authorization.proof_of_possession,
+            authorization.expected_proof_of_possession,
+        )
+
+
+class Ed25519ProofVerifier:
+    """Verify device signatures over the complete operation authorization."""
+
+    reference_only = False
+
+    def __init__(self, public_keys: Mapping[str, bytes]) -> None:
+        try:
+            from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+        except ImportError as exc:  # pragma: no cover - dependency/environment gate
+            raise DomainError("cryptographic proof verification is unavailable") from exc
+        self._keys = {}
+        for key_id, raw_key in public_keys.items():
+            _bounded_text(key_id, "proof key id")
+            if not isinstance(raw_key, bytes) or len(raw_key) != 32:
+                raise DomainError("Ed25519 public key must contain exactly 32 bytes")
+            self._keys[key_id] = Ed25519PublicKey.from_public_bytes(raw_key)
+
+    def verify(self, authorization: AuthorizationEnvelope) -> bool:
+        if authorization.proof_key_id is None:
+            return False
+        key = self._keys.get(authorization.proof_key_id)
+        if key is None:
+            return False
+        try:
+            encoded = authorization.proof_of_possession.encode("ascii")
+            padding = b"=" * (-len(encoded) % 4)
+            signature = base64.urlsafe_b64decode(encoded + padding)
+            digest = canonical_hash("authorization-proof-v2", authorization.proof_material).encode("ascii")
+            key.verify(signature, digest)
+            return True
+        except (UnicodeEncodeError, ValueError, binascii.Error):
+            return False
 
 
 class DurableAuthorizationStore:
@@ -770,7 +987,17 @@ class DurableAuthorizationStore:
                 "(authorization_id TEXT PRIMARY KEY, nonce TEXT NOT NULL UNIQUE, "
                 "operation_fingerprint TEXT NOT NULL UNIQUE)"
             )
+            self._connection.execute(
+                "CREATE TABLE IF NOT EXISTS signer_state "
+                "(singleton INTEGER PRIMARY KEY CHECK(singleton = 1), "
+                "state TEXT NOT NULL, last_signed_hash TEXT)"
+            )
+            self._connection.execute(
+                "INSERT OR IGNORE INTO signer_state (singleton, state, last_signed_hash) "
+                "VALUES (1, 'READY', NULL)"
+            )
             self._verify_schema()
+            self._verify_state_schema()
         except Exception:
             self._connection.close()
             self._closed = True
@@ -803,11 +1030,30 @@ class DurableAuthorizationStore:
         if integrity is None or integrity[0] != "ok":
             raise DomainError("authorization store integrity check failed")
 
+    def _verify_state_schema(self) -> None:
+        rows = list(self._connection.execute("PRAGMA table_info(signer_state)"))
+        if len(rows) != 3 or [row[1] for row in rows] != ["singleton", "state", "last_signed_hash"]:
+            raise DomainError("signer state schema is unsafe or requires explicit migration")
+        if str(rows[0][2]).upper() != "INTEGER" or rows[0][5] != 1:
+            raise DomainError("signer state singleton key is unsafe")
+        if str(rows[1][2]).upper() != "TEXT" or str(rows[2][2]).upper() != "TEXT":
+            raise DomainError("signer state columns are unsafe")
+        singleton = self._connection.execute(
+            "SELECT singleton FROM signer_state WHERE singleton = 1"
+        ).fetchone()
+        if singleton is None:
+            raise DomainError("signer state singleton is missing")
+
     def reserve(self, authorization_id: str, nonce: str, operation_fingerprint: str) -> bool:
         _bounded_text(authorization_id, "authorization store id")
         _bounded_text(nonce, "authorization store nonce")
         _bounded_text(operation_fingerprint, "operation fingerprint")
         try:
+            # Re-check the schema at every trust boundary. A schema or trigger
+            # added after process startup must never silently change replay
+            # semantics.
+            self._verify_schema()
+            self._verify_state_schema()
             self._connection.execute("BEGIN IMMEDIATE")
             self._connection.execute(
                 "INSERT INTO consumed_authorization "
@@ -819,6 +1065,72 @@ class DurableAuthorizationStore:
         except sqlite3.IntegrityError:
             self._connection.execute("ROLLBACK")
             return False
+        except Exception:
+            if self._connection.in_transaction:
+                self._connection.execute("ROLLBACK")
+            raise
+
+    def reserve_and_mark_unknown(
+        self,
+        authorization_id: str,
+        nonce: str,
+        operation_fingerprint: str,
+        signed_hash: str,
+    ) -> bool:
+        """Atomically consume auth material and persist the conservative state."""
+        _bounded_text(authorization_id, "authorization store id")
+        _bounded_text(nonce, "authorization store nonce")
+        _bounded_text(operation_fingerprint, "operation fingerprint")
+        _bounded_text(signed_hash, "signed operation hash", maximum=128)
+        try:
+            self._verify_schema()
+            self._verify_state_schema()
+            self._connection.execute("BEGIN IMMEDIATE")
+            self._connection.execute(
+                "INSERT INTO consumed_authorization "
+                "(authorization_id, nonce, operation_fingerprint) VALUES (?, ?, ?)",
+                (authorization_id, nonce, operation_fingerprint),
+            )
+            self._connection.execute(
+                "UPDATE signer_state SET state = 'SIGNED_BROADCAST_UNKNOWN', last_signed_hash = ? WHERE singleton = 1",
+                (signed_hash,),
+            )
+            self._connection.execute("COMMIT")
+            return True
+        except sqlite3.IntegrityError:
+            if self._connection.in_transaction:
+                self._connection.execute("ROLLBACK")
+            return False
+        except Exception:
+            if self._connection.in_transaction:
+                self._connection.execute("ROLLBACK")
+            raise
+
+    def load_signer_state(self) -> tuple[str, str | None]:
+        self._verify_schema()
+        self._verify_state_schema()
+        row = self._connection.execute(
+            "SELECT state, last_signed_hash FROM signer_state WHERE singleton = 1"
+        ).fetchone()
+        if row is None or not isinstance(row[0], str):
+            raise DomainError("signer state is missing")
+        if row[1] is not None and not isinstance(row[1], str):
+            raise DomainError("signer state hash is malformed")
+        return row[0], row[1]
+
+    def save_signer_state(self, state: str, last_signed_hash: str | None) -> None:
+        _bounded_text(state, "signer state", maximum=64)
+        if last_signed_hash is not None:
+            _bounded_text(last_signed_hash, "signed operation hash", maximum=128)
+        self._verify_schema()
+        self._verify_state_schema()
+        try:
+            self._connection.execute("BEGIN IMMEDIATE")
+            self._connection.execute(
+                "UPDATE signer_state SET state = ?, last_signed_hash = ? WHERE singleton = 1",
+                (state, last_signed_hash),
+            )
+            self._connection.execute("COMMIT")
         except Exception:
             if self._connection.in_transaction:
                 self._connection.execute("ROLLBACK")
@@ -843,6 +1155,8 @@ class MemoryAuthorizationStore:
         self._authorization_ids: set[str] = set()
         self._nonces: set[str] = set()
         self._operation_fingerprints: set[str] = set()
+        self._signer_state = "READY"
+        self._last_signed_hash: str | None = None
 
     def reserve(self, authorization_id: str, nonce: str, operation_fingerprint: str) -> bool:
         _bounded_text(authorization_id, "authorization store id")
@@ -857,6 +1171,26 @@ class MemoryAuthorizationStore:
         self._authorization_ids.add(authorization_id)
         self._nonces.add(nonce)
         self._operation_fingerprints.add(operation_fingerprint)
+        return True
+
+    def load_signer_state(self) -> tuple[str, str | None]:
+        return self._signer_state, self._last_signed_hash
+
+    def save_signer_state(self, state: str, last_signed_hash: str | None) -> None:
+        self._signer_state = state
+        self._last_signed_hash = last_signed_hash
+
+    def reserve_and_mark_unknown(
+        self,
+        authorization_id: str,
+        nonce: str,
+        operation_fingerprint: str,
+        signed_hash: str,
+    ) -> bool:
+        _bounded_text(signed_hash, "signed operation hash", maximum=128)
+        if not self.reserve(authorization_id, nonce, operation_fingerprint):
+            return False
+        self.save_signer_state("SIGNED_BROADCAST_UNKNOWN", signed_hash)
         return True
 
 
@@ -879,11 +1213,22 @@ class SignerGate:
         SignerState.REJECTED_BEFORE_EFFECT,
     }
 
-    def __init__(self, *, store: DurableAuthorizationStore | MemoryAuthorizationStore | None = None, require_durable_store: bool = False) -> None:
+    def __init__(
+        self,
+        *,
+        store: DurableAuthorizationStore | MemoryAuthorizationStore | None = None,
+        require_durable_store: bool = False,
+        proof_verifier: AuthorizationProofVerifier | None = None,
+    ) -> None:
         self._store = store or MemoryAuthorizationStore()
         self._require_durable_store = _strict_bool(require_durable_store, "durable store requirement")
-        self.state = SignerState.READY
-        self.last_signed_hash: str | None = None
+        self._proof_verifier = proof_verifier
+        stored_state, stored_hash = self._store.load_signer_state()
+        try:
+            self.state = SignerState(stored_state)
+        except ValueError as exc:
+            raise DomainError("persisted signer state is unknown") from exc
+        self.last_signed_hash = stored_hash
 
     def sign(
         self,
@@ -911,14 +1256,28 @@ class SignerGate:
             raise DomainError("capsule and authorization runtime types are required")
         capsule.validate(now)
         authorization.validate(now, capsule)
-        if not self._store.reserve(authorization.authorization_id, authorization.nonce, capsule.hash):
-            raise DomainError("authorization, nonce, or operation replay")
+        if self._proof_verifier is None:
+            raise DomainError("cryptographic authorization proof verifier is required")
+        try:
+            proof_valid = self._proof_verifier.verify(authorization)
+        except Exception as exc:
+            raise DomainError("authorization proof verification failed") from exc
+        if proof_valid is not True:
+            raise DomainError("authorization proof verification failed")
         signed = canonical_bytes({"capsuleHash": capsule.hash, "authorizationId": authorization.authorization_id})
         self.last_signed_hash = canonical_hash("signed-operation-v1", {"bytes": signed.hex()})
+        if not self._store.reserve_and_mark_unknown(
+            authorization.authorization_id,
+            authorization.nonce,
+            capsule.hash,
+            self.last_signed_hash,
+        ):
+            raise DomainError("authorization or nonce replay")
+        self.state = SignerState.SIGNED_BROADCAST_UNKNOWN
         if fail_after_sign:
-            self.state = SignerState.SIGNED_BROADCAST_UNKNOWN
             raise RuntimeError("crash after signing; broadcast state is unknown")
         self.state = SignerState.BROADCAST_ACCEPTED_UNCONFIRMED
+        self._store.save_signer_state(self.state.value, self.last_signed_hash)
         return signed
 
     def reconcile(self, outcome: str) -> SignerState:
@@ -936,6 +1295,7 @@ class SignerGate:
         if self.state == SignerState.PARTIAL and outcome == "rejected":
             raise DomainError("a partially effective operation cannot be rejected before effect")
         self.state = allowed[outcome]
+        self._store.save_signer_state(self.state.value, self.last_signed_hash)
         return self.state
 
 
@@ -957,10 +1317,193 @@ class SagaStep:
     precondition_hash: str = ""
 
 
+class DurableSagaStore:
+    """SQLite-backed Saga state with atomic idempotency and transitions."""
+
+    def __init__(self, path: str) -> None:
+        if not isinstance(path, str) or not path:
+            raise DomainError("saga store path is invalid")
+        self._connection = sqlite3.connect(path, isolation_level=None)
+        self._closed = False
+        try:
+            self._connection.execute("PRAGMA trusted_schema=OFF")
+            self._connection.execute("PRAGMA busy_timeout=5000")
+            self._connection.execute("PRAGMA synchronous=FULL")
+            self._connection.execute("PRAGMA foreign_keys = ON")
+            self._connection.execute(
+                "CREATE TABLE IF NOT EXISTS saga_steps ("
+                "operation_id TEXT NOT NULL, step_id TEXT NOT NULL, "
+                "idempotency_key TEXT NOT NULL, state TEXT NOT NULL, "
+                "external_reference TEXT NOT NULL, precondition_hash TEXT NOT NULL, "
+                "PRIMARY KEY (operation_id, step_id), "
+                "UNIQUE (operation_id, idempotency_key))"
+            )
+            self._verify_schema()
+        except Exception:
+            self._connection.close()
+            self._closed = True
+            raise
+
+    def _verify_schema(self) -> None:
+        rows = list(self._connection.execute("PRAGMA table_info(saga_steps)"))
+        expected = [
+            ("operation_id", "TEXT", 1, 1),
+            ("step_id", "TEXT", 1, 2),
+            ("idempotency_key", "TEXT", 1, 0),
+            ("state", "TEXT", 1, 0),
+            ("external_reference", "TEXT", 1, 0),
+            ("precondition_hash", "TEXT", 1, 0),
+        ]
+        actual = [(str(row[1]), str(row[2]).upper(), int(row[3]), int(row[5])) for row in rows]
+        if actual != expected:
+            raise DomainError("Saga store schema is unsafe or requires explicit migration")
+        triggers = list(
+            self._connection.execute(
+                "SELECT name FROM sqlite_master WHERE type = 'trigger' AND tbl_name = 'saga_steps'"
+            )
+        )
+        if triggers:
+            raise DomainError("Saga store triggers are not permitted")
+        unique_idempotency = False
+        for index in self._connection.execute("PRAGMA index_list(saga_steps)"):
+            if int(index[2]) != 1:
+                continue
+            columns = [row[2] for row in self._connection.execute(f'PRAGMA index_info("{index[1]}")')]
+            if columns == ["operation_id", "idempotency_key"]:
+                unique_idempotency = True
+        if not unique_idempotency:
+            raise DomainError("Saga store idempotency uniqueness is missing")
+
+    @staticmethod
+    def _row_to_step(row: tuple[object, ...]) -> SagaStep:
+        try:
+            state = SagaStepState(str(row[3]))
+        except ValueError as exc:
+            raise DomainError("Saga store contains an unknown state") from exc
+        step = SagaStep(
+            step_id=str(row[1]),
+            idempotency_key=str(row[2]),
+            state=state,
+            external_reference=str(row[4]),
+            precondition_hash=str(row[5]),
+        )
+        _bounded_text(step.step_id, "saga step id")
+        _bounded_text(step.idempotency_key, "saga idempotency key")
+        _bounded_text(step.external_reference, "saga external reference", maximum=512)
+        _bounded_text(step.precondition_hash, "saga precondition hash", maximum=128)
+        return step
+
+    def load(self, operation_id: str) -> list[SagaStep]:
+        _bounded_text(operation_id, "saga operation id")
+        self._verify_schema()
+        rows = self._connection.execute(
+            "SELECT operation_id, step_id, idempotency_key, state, external_reference, precondition_hash "
+            "FROM saga_steps WHERE operation_id = ? ORDER BY rowid",
+            (operation_id,),
+        ).fetchall()
+        return [self._row_to_step(tuple(row)) for row in rows]
+
+    def submit(self, operation_id: str, candidate: SagaStep) -> SagaStep:
+        _bounded_text(operation_id, "saga operation id")
+        if not isinstance(candidate, SagaStep) or candidate.state is not SagaStepState.SUBMITTED:
+            raise DomainError("Saga submission has the wrong runtime state")
+        _bounded_text(candidate.step_id, "saga step id")
+        _bounded_text(candidate.idempotency_key, "saga idempotency key")
+        _bounded_text(candidate.external_reference, "saga external reference", maximum=512)
+        _bounded_text(candidate.precondition_hash, "saga precondition hash", maximum=128)
+        self._verify_schema()
+        try:
+            self._connection.execute("BEGIN IMMEDIATE")
+            row = self._connection.execute(
+                "SELECT operation_id, step_id, idempotency_key, state, external_reference, precondition_hash "
+                "FROM saga_steps WHERE operation_id = ? AND idempotency_key = ?",
+                (operation_id, candidate.idempotency_key),
+            ).fetchone()
+            if row is None:
+                row = self._connection.execute(
+                    "SELECT operation_id, step_id, idempotency_key, state, external_reference, precondition_hash "
+                    "FROM saga_steps WHERE operation_id = ? AND step_id = ?",
+                    (operation_id, candidate.step_id),
+                ).fetchone()
+            if row is not None:
+                existing = self._row_to_step(tuple(row))
+                if (
+                    existing.step_id != candidate.step_id
+                    or existing.idempotency_key != candidate.idempotency_key
+                    or existing.external_reference != candidate.external_reference
+                    or existing.precondition_hash != candidate.precondition_hash
+                ):
+                    raise DomainError("Saga idempotency material was reused differently")
+                self._connection.execute("COMMIT")
+                return existing
+            self._connection.execute(
+                "INSERT INTO saga_steps "
+                "(operation_id, step_id, idempotency_key, state, external_reference, precondition_hash) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    operation_id,
+                    candidate.step_id,
+                    candidate.idempotency_key,
+                    candidate.state.value,
+                    candidate.external_reference,
+                    candidate.precondition_hash,
+                ),
+            )
+            self._connection.execute("COMMIT")
+            return candidate
+        except Exception:
+            if self._connection.in_transaction:
+                self._connection.execute("ROLLBACK")
+            raise
+
+    def transition(
+        self,
+        operation_id: str,
+        step_id: str,
+        state: SagaStepState,
+        transitions: Mapping[SagaStepState, set[SagaStepState]],
+    ) -> SagaStep:
+        _bounded_text(operation_id, "saga operation id")
+        _bounded_text(step_id, "saga step id")
+        if not isinstance(state, SagaStepState) or not isinstance(transitions, Mapping):
+            raise DomainError("Saga transition has the wrong runtime type")
+        self._verify_schema()
+        try:
+            self._connection.execute("BEGIN IMMEDIATE")
+            row = self._connection.execute(
+                "SELECT operation_id, step_id, idempotency_key, state, external_reference, precondition_hash "
+                "FROM saga_steps WHERE operation_id = ? AND step_id = ?",
+                (operation_id, step_id),
+            ).fetchone()
+            if row is None:
+                raise DomainError("unknown saga step")
+            current = self._row_to_step(tuple(row))
+            allowed_states = transitions.get(current.state)
+            if not isinstance(allowed_states, set) or state not in allowed_states:
+                raise DomainError("invalid or backward saga state transition")
+            self._connection.execute(
+                "UPDATE saga_steps SET state = ? WHERE operation_id = ? AND step_id = ?",
+                (state.value, operation_id, step_id),
+            )
+            self._connection.execute("COMMIT")
+            current.state = state
+            return current
+        except Exception:
+            if self._connection.in_transaction:
+                self._connection.execute("ROLLBACK")
+            raise
+
+    def close(self) -> None:
+        if not self._closed:
+            self._connection.close()
+            self._closed = True
+
+
 @dataclass
 class DurableSaga:
     operation_id: str
     steps: list[SagaStep] = field(default_factory=list)
+    store: DurableSagaStore | None = field(default=None, repr=False, compare=False)
 
     def __post_init__(self) -> None:
         _bounded_text(self.operation_id, "saga operation id")
@@ -977,6 +1520,15 @@ class DurableSaga:
                 raise DomainError("saga contains duplicate step or idempotency key")
             seen_steps.add(step.step_id)
             seen_keys.add(step.idempotency_key)
+        if self.store is not None:
+            persisted = self.store.load(self.operation_id)
+            if self.steps:
+                for step in self.steps:
+                    if step.state is not SagaStepState.SUBMITTED:
+                        raise DomainError("only submitted initial Saga steps may be persisted")
+                    self.store.submit(self.operation_id, step)
+                persisted = self.store.load(self.operation_id)
+            self.steps = persisted
 
     def submit(self, step_id: str, idempotency_key: str, external_reference: str) -> SagaStep:
         _bounded_text(step_id, "saga step id")
@@ -1004,6 +1556,10 @@ class DurableSaga:
                 "externalReference": external_reference,
             },
         )
+        if self.store is not None:
+            persisted = self.store.submit(self.operation_id, step)
+            self.steps = self.store.load(self.operation_id)
+            return next(item for item in self.steps if item.step_id == persisted.step_id)
         self.steps.append(step)
         return step
 
@@ -1019,6 +1575,10 @@ class DurableSaga:
             SagaStepState.FINALIZED: {SagaStepState.FINALIZED},
             SagaStepState.FAILED: {SagaStepState.FAILED},
         }
+        if self.store is not None:
+            step = self.store.transition(self.operation_id, step_id, authoritative_state, transitions)
+            self.steps = self.store.load(self.operation_id)
+            return next(item for item in self.steps if item.step_id == step.step_id)
         for step in self.steps:
             if step.step_id == step_id:
                 if authoritative_state not in transitions[step.state]:

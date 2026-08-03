@@ -23,9 +23,15 @@ class FileRecord:
 
 def file_sha256(path: Path) -> str:
     digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+    descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+    try:
+        file_stat = os.fstat(descriptor)
+        if not stat.S_ISREG(file_stat.st_mode):
+            raise ValueError(f"hash target is not a regular file: {path}")
+        for chunk in iter(lambda: os.read(descriptor, 1024 * 1024), b""):
             digest.update(chunk)
+    finally:
+        os.close(descriptor)
     return digest.hexdigest()
 
 
@@ -34,6 +40,11 @@ def _scan(root: Path, current: Path, records: list[FileRecord], seen: dict[str, 
         for entry in sorted(entries, key=lambda item: item.name):
             path = Path(entry.path)
             rel = path.relative_to(root).as_posix()
+            # A working checkout may contain Git's administrative worktree
+            # metadata. It is never a package input and must not be traversed
+            # (it can contain arbitrary worktree names and control files).
+            if rel == ".git" or rel.startswith(".git/"):
+                continue
             problems = member_name_problems(rel, is_directory=entry.is_dir(follow_symlinks=False))
             if problems:
                 raise ValueError(f"unsafe package path {rel!r}: {problems}")
@@ -73,9 +84,13 @@ def _scan(root: Path, current: Path, records: list[FileRecord], seen: dict[str, 
 
 
 def snapshot(root: Path, *, exclude: Iterable[str] = ()) -> tuple[FileRecord, ...]:
-    root = root.resolve(strict=True)
+    requested_root = Path(root)
+    requested_stat = requested_root.lstat()
+    if stat.S_ISLNK(requested_stat.st_mode):
+        raise ValueError(f"package root must be a real directory: {requested_root}")
+    root = requested_root.resolve(strict=True)
     root_stat = root.lstat()
-    if not stat.S_ISDIR(root_stat.st_mode) or root.is_symlink():
+    if not stat.S_ISDIR(root_stat.st_mode):
         raise ValueError(f"package root must be a real directory: {root}")
     records: list[FileRecord] = []
     _scan(root, root, records, {})

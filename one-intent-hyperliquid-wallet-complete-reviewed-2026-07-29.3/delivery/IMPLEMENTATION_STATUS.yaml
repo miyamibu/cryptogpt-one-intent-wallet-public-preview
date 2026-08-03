@@ -19,11 +19,16 @@ implemented:
   - durable_nonce_schema_verification_and_pending_signature_lock
   - external_operationalization_codex_execution_contract
   - operationalization_evidence_binding_801_37_93
+  - cryptographic_ed25519_compatibility_proof_registry_and_quote_verification_boundary
+  - atomic_compatibility_signer_unknown_state_persistence
+  - sqlite_durable_saga_restart_and_transition_reconciliation
+  - no_follow_reproducible_zip_and_static_http_input_reads
+  - explicit_simulated_adapter_and_caip2_fee_handoff_status
 tested_locally:
   command: python3 -B -m unittest discover -s tests -p 'test_*.py'
   result: PASS
   python_source_files_compiled: 112
-  test_count: 118
+  test_count: 124
   browser_matrix: 288
   local_sandbox_self_test: PASS
   swift_contract_tests: 5

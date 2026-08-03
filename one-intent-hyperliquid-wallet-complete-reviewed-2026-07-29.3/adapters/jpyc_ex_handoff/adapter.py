@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import re
 
 from shared.canonical import CanonicalizationError, address_fingerprint, canonical_hash, decimal_string, ensure_nfc
 
 
 MAX_HANDOFF_LIFETIME_SECONDS = 30 * 60
+_CAIP2_RE = re.compile(r"^[a-z0-9][a-z0-9-]{0,31}:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 
 
 def _text(value: object, label: str, *, maximum: int = 512) -> str:
@@ -54,7 +56,9 @@ class JpycHandoff:
 
     def validate(self) -> None:
         _text(self.handoff_id, "handoff id")
-        _text(self.destination_network, "destination network")
+        network = _text(self.destination_network, "destination network")
+        if not _CAIP2_RE.fullmatch(network):
+            raise ValueError("destination network must be a CAIP-2 identifier")
         _text(self.receiving_address, "receiving address")
         _text(self.address_fingerprint, "address fingerprint", maximum=32)
         if type(self.production_enabled) is not bool or self.production_enabled:
@@ -76,6 +80,8 @@ class JpycHandoff:
 def prepare_handoff(*, handoff_id: str, amount: str, network: str, address: str, now: int, expires_at: int) -> JpycHandoff:
     _text(handoff_id, "handoff id")
     _text(network, "destination network")
+    if not _CAIP2_RE.fullmatch(network):
+        raise ValueError("destination network must be a CAIP-2 identifier")
     _text(address, "receiving address")
     now = _time(now, "handoff creation time")
     expires_at = _time(expires_at, "handoff expiry")
@@ -97,6 +103,8 @@ def validate_return(handoff: JpycHandoff, *, now: int, network: str, address: st
     handoff.validate()
     now = _time(now, "return validation time")
     _text(network, "return network")
+    if not _CAIP2_RE.fullmatch(network):
+        raise ValueError("return network must be a CAIP-2 identifier")
     _text(address, "return address")
     if now < handoff.created_at or now >= handoff.expires_at:
         raise ValueError("handoff expired or is not yet valid")

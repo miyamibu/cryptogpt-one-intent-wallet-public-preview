@@ -14,6 +14,7 @@ from shared.domain import (
     ExecutionCapsule,
     SignedRegistry,
     SignerGate,
+    ReferenceOnlyProofVerifier,
     compile_capsule,
     parse_intent_locally,
 )
@@ -33,14 +34,14 @@ def typed_resolutions(draft: ActionPlanDraft) -> dict[str, str]:
     return {ambiguity: values[ambiguity] for ambiguity in draft.material_ambiguities}
 
 
-def fixtures(now: int = 1000):
+def fixtures(now: int = 1000, *, production_eligible: bool = False):
     draft = parse_intent_locally("BTCを500 USDC、ペイパチャルで3倍。生産価格も見せて。")
     draft = draft.confirm(typed_resolutions(draft), "BTCを500 USDCで先物取引（期限なし）。清算価格を表示。")
     registry = SignedRegistry(
         registry_id="registry-test-1", sequence=1, valid_from=900, expires_at=2000,
         signer_key_id="test-key", signature="test-signature", signature_valid=True,
         revoked=False,
-        entries={"BTC-USDC": AssetIdentity("BTC-USDC", "eip155:42161", "contract-test", 8, "code-test", False)},
+        entries={"BTC-USDC": AssetIdentity("BTC-USDC", "eip155:42161", "contract-test", 8, "code-test", production_eligible)},
     )
     payload = {"marketId": "BTC-USDC-PERP", "side": "buy", "amount": "500"}
     payload_hash = canonical_hash("final-payload-v1", payload)
@@ -104,7 +105,7 @@ class CapsuleSignerTests(unittest.TestCase):
     def test_signer_requires_release_runtime_and_consumes_authorization(self) -> None:
         _, _, capsule = fixtures()
         auth = __import__("shared.domain", fromlist=["AuthorizationEnvelope"]).AuthorizationEnvelope("auth-1", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-1", "review", proof("auth-1", "device-1", "acct-1", capsule.hash, "nonce-1"))
-        signer = SignerGate()
+        signer = SignerGate(proof_verifier=ReferenceOnlyProofVerifier())
         with self.assertRaises(DomainError):
             signer.sign(capsule, auth, release_go=False, runtime_lease_valid=True, now=1001)
         signer.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001)
@@ -114,7 +115,7 @@ class CapsuleSignerTests(unittest.TestCase):
     def test_crash_after_sign_never_allows_second_signature(self) -> None:
         _, _, capsule = fixtures()
         auth = AuthorizationEnvelope("auth-crash", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-crash", "review", proof("auth-crash", "device-1", "acct-1", capsule.hash, "nonce-crash"))
-        signer = SignerGate()
+        signer = SignerGate(proof_verifier=ReferenceOnlyProofVerifier())
         with self.assertRaises(RuntimeError):
             signer.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001, fail_after_sign=True)
         self.assertEqual(signer.state.value, "SIGNED_BROADCAST_UNKNOWN")
@@ -126,9 +127,17 @@ class CapsuleSignerTests(unittest.TestCase):
         auth = AuthorizationEnvelope("auth-durable", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-durable", "review", proof("auth-durable", "device-1", "acct-1", capsule.hash, "nonce-durable"))
         with TemporaryDirectory() as directory:
             database = f"{directory}/authorization.sqlite"
-            first = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            first = SignerGate(
+                store=DurableAuthorizationStore(database),
+                require_durable_store=True,
+                proof_verifier=ReferenceOnlyProofVerifier(),
+            )
             first.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001)
-            restarted = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            restarted = SignerGate(
+                store=DurableAuthorizationStore(database),
+                require_durable_store=True,
+                proof_verifier=ReferenceOnlyProofVerifier(),
+            )
             with self.assertRaises(DomainError):
                 restarted.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001)
 
@@ -138,11 +147,41 @@ class CapsuleSignerTests(unittest.TestCase):
         second = AuthorizationEnvelope("auth-op-b", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "nonce-op-b", "review", proof("auth-op-b", "device-1", "acct-1", capsule.hash, "nonce-op-b"))
         with TemporaryDirectory() as directory:
             database = f"{directory}/authorization.sqlite"
-            initial = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            initial = SignerGate(
+                store=DurableAuthorizationStore(database),
+                require_durable_store=True,
+                proof_verifier=ReferenceOnlyProofVerifier(),
+            )
             initial.sign(capsule, first, release_go=True, runtime_lease_valid=True, now=1001)
-            restarted = SignerGate(store=DurableAuthorizationStore(database), require_durable_store=True)
+            restarted = SignerGate(
+                store=DurableAuthorizationStore(database),
+                require_durable_store=True,
+                proof_verifier=ReferenceOnlyProofVerifier(),
+            )
             with self.assertRaises(DomainError):
                 restarted.sign(capsule, second, release_go=True, runtime_lease_valid=True, now=1001)
+
+    def test_durable_store_persists_unknown_before_crash_window(self) -> None:
+        _, _, capsule = fixtures()
+        auth = AuthorizationEnvelope(
+            "auth-unknown", "device-1", "acct-1", capsule.hash, capsule.operation_type,
+            1000, 1100, "nonce-unknown", "review",
+            proof("auth-unknown", "device-1", "acct-1", capsule.hash, "nonce-unknown"),
+        )
+        with TemporaryDirectory() as directory:
+            database = f"{directory}/authorization.sqlite"
+            first_store = DurableAuthorizationStore(database)
+            first = SignerGate(store=first_store, require_durable_store=True, proof_verifier=ReferenceOnlyProofVerifier())
+            with self.assertRaises(RuntimeError):
+                first.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001, fail_after_sign=True)
+            first_store.close()
+            restarted_store = DurableAuthorizationStore(database)
+            restarted = SignerGate(store=restarted_store, require_durable_store=True, proof_verifier=ReferenceOnlyProofVerifier())
+            self.assertEqual(restarted.state.value, "SIGNED_BROADCAST_UNKNOWN")
+            with self.assertRaises(DomainError):
+                restarted.sign(capsule, auth, release_go=True, runtime_lease_valid=True, now=1001)
+            restarted_store.close()
+
     def test_future_or_outliving_authorization_fails_closed(self) -> None:
         _, _, capsule = fixtures()
         future = AuthorizationEnvelope("auth-future", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1010, 1100, "nonce-future", "review", proof("auth-future", "device-1", "acct-1", capsule.hash, "nonce-future"))
@@ -156,7 +195,7 @@ class CapsuleSignerTests(unittest.TestCase):
         _, _, capsule = fixtures()
         first = AuthorizationEnvelope("auth-nonce-a", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "shared-nonce", "review", proof("auth-nonce-a", "device-1", "acct-1", capsule.hash, "shared-nonce"))
         second = AuthorizationEnvelope("auth-nonce-b", "device-1", "acct-1", capsule.hash, capsule.operation_type, 1000, 1100, "shared-nonce", "review", proof("auth-nonce-b", "device-1", "acct-1", capsule.hash, "shared-nonce"))
-        signer = SignerGate()
+        signer = SignerGate(proof_verifier=ReferenceOnlyProofVerifier())
         signer.sign(capsule, first, release_go=True, runtime_lease_valid=True, now=1001)
         signer.reconcile("confirmed")
         with self.assertRaises(DomainError):
