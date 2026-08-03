@@ -44,11 +44,13 @@ class FakeHyperliquidAdapter:
     def read_account(self, account: str) -> dict[str, object]:
         _text(account, "account")
         visible = sorted(client_id for client_id, order in self.orders.items() if order.account == account)
+        # A fake adapter can describe deterministic fixture state only.  It
+        # must never present that state as network-confirmed evidence.
         return {
             "account": account,
             "source": "fake",
-            "confirmationState": "SIMULATED_ACCEPTED",
-            "confirmed": False,
+            "simulated": True,
+            "confirmationStatus": "SIMULATED_NOT_NETWORK_CONFIRMED",
             "positions": [],
             "orders": visible,
         }

@@ -11,9 +11,11 @@ import argparse
 from collections import defaultdict, deque
 import ipaddress
 import mimetypes
+import os
 import re
 import socket
 import threading
+import stat
 import time
 from dataclasses import dataclass
 from http import HTTPStatus
@@ -34,6 +36,7 @@ MAX_CONCURRENT_REQUESTS = 16
 RATE_LIMIT_WINDOW_SECONDS = 1.0
 RATE_LIMIT_REQUESTS_PER_WINDOW = 60
 MAX_RATE_LIMIT_SOURCES = 1024
+MAX_REQUEST_SECONDS = 5.0
 LOCAL_STATUS = "LOCAL_SANDBOX_OPERATIONAL_GO"
 PRODUCTION_STATUS = "BLOCKED_NOT_OPERATIONAL"
 _PERCENT_ESCAPE = re.compile(r"%(?![0-9A-Fa-f]{2})")
@@ -124,14 +127,22 @@ class LocalSandboxApp:
         try:
             relative = configured.relative_to(ROOT)
             unresolved = self.root / relative
-            if unresolved.is_symlink():
-                raise OSError("static symlink is not permitted")
+            # Resolve containment before opening, then use O_NOFOLLOW for the
+            # final path component.  This closes the common symlink-swap race
+            # between a path check and a later path-based open.
             target = unresolved.resolve(strict=True)
+            if target != unresolved:
+                raise OSError("static symlink is not permitted")
             target.relative_to(self.root)
-            if not target.is_file():
-                raise OSError("static target is not a regular file")
-            with target.open("rb") as handle:
-                body = handle.read(MAX_STATIC_BYTES + 1)
+            flags = os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0)
+            descriptor = os.open(target, flags)
+            try:
+                file_stat = os.fstat(descriptor)
+                if not stat.S_ISREG(file_stat.st_mode):
+                    raise OSError("static target is not a regular file")
+                body = os.read(descriptor, MAX_STATIC_BYTES + 1)
+            finally:
+                os.close(descriptor)
             if len(body) > MAX_STATIC_BYTES:
                 raise OSError("static file exceeds limit")
         except (OSError, RuntimeError, ValueError):
@@ -190,6 +201,8 @@ class LocalSandboxApp:
         if not isinstance(method, str) or not isinstance(raw_path, str) or not isinstance(body, bytes):
             return self.json_error(HTTPStatus.BAD_REQUEST, "INVALID_REQUEST", "要求を確認できません。")
         parsed = urlsplit(raw_path)
+        if parsed.scheme or parsed.netloc:
+            return self.json_error(HTTPStatus.BAD_REQUEST, "ABSOLUTE_URI_REJECTED", "絶対URI形式は受け付けません。")
         if parsed.query or parsed.fragment or _PERCENT_ESCAPE.search(parsed.path):
             return self.json_error(HTTPStatus.BAD_REQUEST, "URL_CONTEXT_REJECTED", "URLに追加情報を含めないでください。")
         try:
@@ -298,7 +311,8 @@ class _Handler(BaseHTTPRequestHandler):
 
     def setup(self) -> None:
         super().setup()
-        self.connection.settimeout(5.0)
+        self._request_deadline = time.monotonic() + MAX_REQUEST_SECONDS
+        self.connection.settimeout(MAX_REQUEST_SECONDS)
 
     def _guard_headers(self) -> AppResponse | None:
         host_values = self.headers.get_all("Host", failobj=[])
@@ -339,10 +353,22 @@ class _Handler(BaseHTTPRequestHandler):
             return None, self.app.json_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "REQUEST_TOO_LARGE", "入力が長すぎます。")
         if length and self.command in {"GET", "HEAD", "OPTIONS"}:
             return None, self.app.json_error(HTTPStatus.BAD_REQUEST, "UNEXPECTED_BODY", "この要求には本文を含めないでください。")
+        chunks: list[bytes] = []
+        remaining = length
         try:
-            body = self.rfile.read(length)
+            while remaining:
+                timeout = self._request_deadline - time.monotonic()
+                if timeout <= 0:
+                    return None, self.app.json_error(HTTPStatus.REQUEST_TIMEOUT, "REQUEST_TIMEOUT", "要求の処理時間が上限を超えました。")
+                self.connection.settimeout(timeout)
+                chunk = self.rfile.read(min(remaining, 4096))
+                if not chunk:
+                    break
+                chunks.append(chunk)
+                remaining -= len(chunk)
+            body = b"".join(chunks)
         except (OSError, TimeoutError):
-            return None, self.app.json_error(HTTPStatus.BAD_REQUEST, "BODY_READ_FAILED", "要求本文を確認できません。")
+            return None, self.app.json_error(HTTPStatus.REQUEST_TIMEOUT, "REQUEST_TIMEOUT", "要求の処理時間が上限を超えました。")
         if len(body) != length:
             return None, self.app.json_error(HTTPStatus.BAD_REQUEST, "BODY_TRUNCATED", "要求本文を確認できません。")
         return body, None

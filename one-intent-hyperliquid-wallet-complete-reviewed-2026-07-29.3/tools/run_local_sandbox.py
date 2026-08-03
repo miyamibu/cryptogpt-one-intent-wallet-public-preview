@@ -113,6 +113,12 @@ def self_test() -> int:
         ).encode("ascii")
         if _raw_status(port, transfer_encoding) != 400:
             raise RuntimeError("Transfer-Encoding request was not rejected")
+        absolute_uri = (
+            f"GET http://127.0.0.1:{port}/healthz HTTP/1.1\r\nHost: 127.0.0.1:{port}\r\n"
+            "Connection: close\r\n\r\n"
+        ).encode("ascii")
+        if _raw_status(port, absolute_uri) != 400:
+            raise RuntimeError("absolute-form request was not rejected")
     finally:
         server.shutdown()
         server.server_close()

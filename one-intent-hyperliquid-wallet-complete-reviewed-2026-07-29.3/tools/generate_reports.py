@@ -25,6 +25,7 @@ def tracked_files() -> list[Path]:
         p
         for p in ROOT.rglob("*")
         if p.is_file()
+        and ".git" not in p.relative_to(ROOT).parts
         and p.relative_to(ROOT).as_posix() not in EXCLUDED_FROM_MANIFEST
         and "__pycache__" not in p.parts
         and p.suffix != ".pyc"

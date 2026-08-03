@@ -29,6 +29,19 @@ class FeeJpycHyperliquidTests(unittest.TestCase):
         self.assertFalse(zero_native_balance_eligible(capability, quote.__class__(**{**quote.__dict__, "capability": self.capability(provider_id="other")}), now=1000))
         self.assertFalse(zero_native_balance_eligible(capability, quote.__class__(**{**quote.__dict__, "expiry": 1000}), now=1000))
 
+    def test_fee_terms_url_rejects_authority_tricks_and_query_context(self) -> None:
+        capability = self.capability()
+        quote = self.quote(capability)
+        for url in (
+            "https://user:[REDACTED_EMAIL]/terms",
+            "https://offline.invalid/terms?redirect=https://evil.invalid",
+            "https://offline.invalid/terms#fragment",
+            "https://offline.invalid:444/terms",
+        ):
+            with self.subTest(url=url):
+                invalid = FeeRouteCapability(**{**capability.__dict__, "terms_url": url})
+                self.assertFalse(zero_native_balance_eligible(invalid, quote, now=1000))
+
     def test_failed_action_charge_is_capped_and_reimbursement_is_idempotent(self) -> None:
         capability = self.capability(failure_charge_cap="0.1")
         quote = self.quote(capability)
@@ -46,6 +59,10 @@ class FeeJpycHyperliquidTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_return(handoff, now=1050, network="eip155:42161", address="address-2")
         self.assertEqual(reconcile_return(on_chain_receipt=True, application_state="pending"), "PARTIAL_RECONCILIATION_REQUIRED")
+
+    def test_jpyc_handoff_requires_caip2_network_identity(self) -> None:
+        with self.assertRaises(ValueError):
+            prepare_handoff(handoff_id="h1", amount="1", network="mainnet", address="address-1", now=1000, expires_at=1100)
 
     def test_fake_hyperliquid_write_gate_and_stale_liquidation_stop(self) -> None:
         adapter = FakeHyperliquidAdapter()

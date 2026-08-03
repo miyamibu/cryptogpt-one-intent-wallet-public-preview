@@ -3,8 +3,8 @@
   "scope": "SANITIZED_PUBLIC_PREVIEW_ONLY",
   "productionEvidence": false,
   "signed": false,
-  "privateSourceCommit": "bc446c6948713a0eb2f8008e08e60034f4f7877b",
+  "privateSourceCommit": "8b6a9403bc2586e648b25ad5abefd73d7491430a",
   "exportPolicySha256": "d8a7b1618dae953315e26cc4e1e5f02d156cc89a02ba6a9d946cc42bc38329da",
-  "sanitizedPackageTreeSha256": "bfdbbc4cca99b0be7ed60c22e5966babbc1157c47826aa467e11e3390ce70292",
+  "sanitizedPackageTreeSha256": "8f445555d02751d4052a7efa38c822f30256e6d1fd5e0c4ac319df47b8d21448",
   "scannerStatus": "PASS_BEFORE_DESTINATION_UPDATE"
 }

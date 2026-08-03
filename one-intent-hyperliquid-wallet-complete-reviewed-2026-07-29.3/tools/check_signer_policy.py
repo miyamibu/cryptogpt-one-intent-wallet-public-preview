@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from shared.domain import AuthorizationEnvelope, DomainError, ExecutionCapsule, SignerGate  # noqa: E402
+from shared.domain import AuthorizationEnvelope, DomainError, ExecutionCapsule, ReferenceOnlyProofVerifier, SignerGate  # noqa: E402
 
 
 def denied(callable_):
@@ -32,7 +32,7 @@ def main() -> int:
     valid = AuthorizationEnvelope(**{**valid.__dict__, "proof_of_possession": valid.expected_proof_of_possession})
     expired = AuthorizationEnvelope("expired", "device", "acct", capsule.hash, capsule.operation_type, 900, 1000, "nonce-expired", "review", "")
     expired = AuthorizationEnvelope(**{**expired.__dict__, "proof_of_possession": expired.expected_proof_of_possession})
-    signer = SignerGate()
+    signer = SignerGate(proof_verifier=ReferenceOnlyProofVerifier())
     checks = {
         "release_go_required": denied(lambda: signer.sign(capsule, valid, release_go=False, runtime_lease_valid=True, now=1001)),
         "runtime_lease_required": denied(lambda: signer.sign(capsule, valid, release_go=True, runtime_lease_valid=False, now=1001)),

@@ -73,6 +73,25 @@ class LocalSandboxTests(unittest.TestCase):
             self.assertEqual(response.status, 500)
             self.assertFalse(self.body(response)["productionWritePermitted"])
 
+    def test_absolute_uri_form_is_rejected(self) -> None:
+        response = self.app.route("GET", "http://127.0.0.1/healthz")
+        self.assertEqual(response.status, 400)
+        self.assertEqual(self.body(response)["error"]["code"], "ABSOLUTE_URI_REJECTED")
+
+    def test_static_symlink_is_not_served(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "prototype").mkdir()
+            (root / "START_HERE.html").write_text("safe", encoding="utf-8")
+            (root / "prototype/app.js").write_text("safe", encoding="utf-8")
+            (root / "prototype/styles.css").write_text("safe", encoding="utf-8")
+            outside = root / "outside.txt"
+            outside.write_text("secret", encoding="utf-8")
+            (root / "prototype/index.html").symlink_to(outside)
+            response = LocalSandboxApp(root).route("GET", "/prototype")
+            self.assertEqual(response.status, 500)
+            self.assertFalse(self.body(response)["productionWritePermitted"])
+
 
 if __name__ == "__main__":
     unittest.main()

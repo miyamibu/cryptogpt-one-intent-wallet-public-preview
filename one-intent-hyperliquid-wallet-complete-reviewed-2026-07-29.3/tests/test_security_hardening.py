@@ -7,15 +7,18 @@ import sqlite3
 import tempfile
 import threading
 import unittest
+from base64 import urlsafe_b64encode
 from dataclasses import replace
 from pathlib import Path
 
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 from adapters.fee_route.fee import FeeRouteCapability, OperationBoundQuote, fee_readiness_plan, zero_native_balance_eligible
 from adapters.hyperliquid.fake_adapter import FakeHyperliquidAdapter
 from adapters.jpyc_ex_handoff.adapter import JpycHandoff, prepare_handoff, validate_return
 from services.local_sandbox.server import MAX_RATE_LIMIT_SOURCES, LocalSandboxApp, create_server
 from services.signer_interface.signer import SignerInterface
-from shared.canonical import CanonicalizationError, ResourceLimitError, canonical_bytes, decimal_string, strict_loads
+from shared.canonical import CanonicalizationError, ResourceLimitError, canonical_bytes, canonical_hash, decimal_string, strict_loads
 from shared.domain import (
     ActionPlanDraft,
     AssetIdentity,
@@ -24,11 +27,15 @@ from shared.domain import (
     DomainError,
     DurableAuthorizationStore,
     DurableSaga,
+    Ed25519QuoteSignatureVerifier,
+    Ed25519ProofVerifier,
+    Ed25519RegistrySignatureVerifier,
     ExecutionCapsule,
     PolicyInput,
     SagaStepState,
     SignedRegistry,
     SignerGate,
+    ReferenceOnlyProofVerifier,
     evaluate_policy,
 )
 from tests.test_capsule_signer import fixtures, proof
@@ -121,7 +128,7 @@ class DomainHardeningTests(unittest.TestCase):
             1000, 1100, "nonce-state-b", "review",
             proof("auth-state-b", "device-1", "acct-1", capsule.hash, "nonce-state-b"),
         )
-        signer = SignerGate()
+        signer = SignerGate(proof_verifier=ReferenceOnlyProofVerifier())
         with self.assertRaises(RuntimeError):
             signer.sign(capsule, first, release_go=True, runtime_lease_valid=True, now=1001, fail_after_sign=True)
         with self.assertRaises(DomainError):
@@ -200,9 +207,10 @@ class AdapterHardeningTests(unittest.TestCase):
 
     def test_fake_hyperliquid_rejects_idempotency_conflict_overfill_and_negative_age(self) -> None:
         adapter = FakeHyperliquidAdapter(testnet_write_enabled=True)
-        account = adapter.read_account("acct")
-        self.assertEqual(account["confirmationState"], "SIMULATED_ACCEPTED")
-        self.assertFalse(account["confirmed"])
+        snapshot = adapter.read_account("acct")
+        self.assertTrue(snapshot["simulated"])
+        self.assertEqual(snapshot["confirmationStatus"], "SIMULATED_NOT_NETWORK_CONFIRMED")
+        self.assertNotIn("confirmed", snapshot)
         adapter.place_order(account="acct", market_id="BTC-PERP", side="buy", amount="1", client_id="client")
         with self.assertRaises(DomainError):
             adapter.place_order(account="acct", market_id="BTC-PERP", side="buy", amount="2", client_id="client")
@@ -224,14 +232,37 @@ class AdapterHardeningTests(unittest.TestCase):
 
 class SignerInterfaceHardeningTests(unittest.TestCase):
     def test_runtime_lease_must_be_current_and_bound_to_exact_release(self) -> None:
-        _, _, capsule = fixtures()
+        registry, quote, capsule = fixtures(production_eligible=True)
         auth = AuthorizationEnvelope(
             "auth-interface", "device-1", "acct-1", capsule.hash, capsule.operation_type,
-            1000, 1100, "nonce-interface", "review",
+            1000, 1100, "nonce-interface", capsule.review_digest,
             proof("auth-interface", "device-1", "acct-1", capsule.hash, "nonce-interface"),
+        )
+        private_key = Ed25519PrivateKey.generate()
+        auth = replace(
+            auth,
+            proof_key_id="test-device-key",
+            proof_of_possession=urlsafe_b64encode(
+                private_key.sign(canonical_hash("authorization-proof-v2", auth.proof_material).encode("ascii"))
+            ).decode("ascii").rstrip("="),
+        )
+        registry_key = Ed25519PrivateKey.generate()
+        registry = replace(
+            registry,
+            signature=urlsafe_b64encode(
+                registry_key.sign(canonical_hash("asset-registry-signature-v1", registry.signature_payload()).encode("ascii"))
+            ).decode("ascii").rstrip("="),
+        )
+        quote_key = Ed25519PrivateKey.generate()
+        quote = replace(
+            quote,
+            signature=urlsafe_b64encode(
+                quote_key.sign(canonical_hash("canonical-quote-signature-v1", quote.payload()).encode("ascii"))
+            ).decode("ascii").rstrip("="),
         )
         release = {
             "status": "PRODUCTION_OPERATIONAL_GO",
+            "environment": "PRODUCTION",
             "releaseEligibleForRuntimeActivation": True,
             "releaseSubjectSha256": "a" * 64,
         }
@@ -239,18 +270,48 @@ class SignerInterfaceHardeningTests(unittest.TestCase):
             "leaseValid": True,
             "transactionAuthorizationGranted": False,
             "releaseSubjectSha256": "a" * 64,
+            "executionCapsuleHash": capsule.hash,
+            "authorizationId": auth.authorization_id,
+            "nonce": auth.nonce,
+            "account": capsule.account,
             "leaseLifetimeSeconds": 100,
             "issuedAt": 1000,
             "expiresAt": 1100,
         }
         with tempfile.TemporaryDirectory() as directory:
             store = DurableAuthorizationStore(f"{directory}/auth.sqlite")
-            signer = SignerInterface(store)
+            signer = SignerInterface(
+                store,
+                proof_verifier=Ed25519ProofVerifier(
+                    {
+                        "test-device-key": private_key.public_key().public_bytes(
+                            serialization.Encoding.Raw,
+                            serialization.PublicFormat.Raw,
+                        )
+                    }
+                ),
+                registry_verifier=Ed25519RegistrySignatureVerifier(
+                    {
+                        "test-key": registry_key.public_key().public_bytes(
+                            serialization.Encoding.Raw,
+                            serialization.PublicFormat.Raw,
+                        )
+                    }
+                ),
+                quote_verifier=Ed25519QuoteSignatureVerifier(
+                    {
+                        "provider-test": quote_key.public_key().public_bytes(
+                            serialization.Encoding.Raw,
+                            serialization.PublicFormat.Raw,
+                        )
+                    }
+                ),
+            )
             with self.assertRaises(DomainError):
-                signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime={**runtime, "releaseSubjectSha256": "b" * 64}, now=1001)
+                signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime={**runtime, "releaseSubjectSha256": "b" * 64}, registry=registry, quote=quote, now=1001)
             with self.assertRaises(DomainError):
-                signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime={**runtime, "expiresAt": 1301}, now=1001)
-            signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime=runtime, now=1001)
+                signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime={**runtime, "expiresAt": 1301}, registry=registry, quote=quote, now=1001)
+            signer.sign_if_all_gates_pass(capsule, auth, release=release, runtime=runtime, registry=registry, quote=quote, now=1001)
             store.close()
 
 

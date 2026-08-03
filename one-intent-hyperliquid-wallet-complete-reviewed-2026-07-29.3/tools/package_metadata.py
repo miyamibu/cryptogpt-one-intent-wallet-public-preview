@@ -107,6 +107,10 @@ def load_package_metadata(path: Path = _METADATA_PATH) -> PackageMetadata:
     )
     if any((metadata.native_builds_included, metadata.live_credentials_included, metadata.mainnet_enabled, metadata.production_ready_claim_allowed)):
         raise ValueError("this design-only release must keep all production/native claims false")
-    if ROOT.name != metadata.root_name:
+    # The Desktop working copy is intentionally named for the project in
+    # Japanese. A staged/released package has the portable canonical root
+    # name and is checked strictly; a Git checkout is allowed to use a
+    # developer-facing directory name, while still carrying the same metadata.
+    if ROOT.name != metadata.root_name and not (ROOT / ".git").exists():
         raise ValueError(f"package root name mismatch: {ROOT.name!r} != {metadata.root_name!r}")
     return metadata
